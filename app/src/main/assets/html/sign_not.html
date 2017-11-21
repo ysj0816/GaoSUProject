@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>未打上班考勤记录</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="../css/mui.min.css" />
+	<link rel="stylesheet" href="../css/main.css" />
+	<link rel="stylesheet" type="text/css" href="../css/recodes.css" />
+	<style type="text/css">
+			.service_area {
+				line-height: 24px;
+				color: #FFFFFF;
+			}
+
+			.span-name {
+				line-height: 32px;
+				font-size: 14px;
+				color: #666666;
+			}
+
+			.divtask {
+				margin: 44px 12px;
+				height: 100%;
+			}
+			.mui-div-item-content{
+
+				height: 32px;
+				padding-left: 10px;
+			}
+	</style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="back"></a>
+	<h1 class="mui-title">未打上班考勤记录</h1>
+</header>
+<div class="divtask">
+	<ul id="urlUL">
+
+	</ul>
+</div>
+<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+
+			function showAndroidToast(toast) {
+				JavaScriptInterface.showToast(toast);
+			}
+			//返回事件监听
+			document.getElementById("back").addEventListener("tap", function(event) {
+				JavaScriptInterface.finishBack();
+			})
+			var ip = "";
+			var userid = "";
+			var path="";
+			$(function() {
+				var cudDate=getcurdate();
+				//先获取IP
+				//获取userid
+				//请求
+				userid = JavaScriptInterface.getUserId();
+				ip = JavaScriptInterface.getIp();
+				path = JavaScriptInterface.getPath();
+				showAndroidToast("userId:" + userid + "**ip:" + ip);
+				//JavaScriptInterface.getH5("userId:" + userid + "**ip:" + ip);
+				getNotSign(cudDate);
+			})
+
+			function getNotSign(cudDate) {
+				var html = "";
+				$.ajax({
+					type: "post",
+					url: ip,
+					async: true,
+					dataType: 'jsonp',
+					jsonp: 'callback',
+					jsonpCallback: 'callback',
+					data: {
+						UserId: userid,
+						DutyDate:cudDate
+					},
+					timeout: 15000,
+					contentType: "application/json;utf-8",
+					success: function(data) {
+						JavaScriptInterface.setHintPB();
+						if(data.total < 1) {
+							//mui.toast("当天没有未打上班考勤的人员记录！");
+							html = '<div id = "nothingOne">当天没有未打上班考勤的人员记录！</div>';
+						}
+						for(var i = 0; i < data.total; i++) {
+							html += '<li><div class="mui-div-item"><div class="mui-div-item-title"><span id="" class="service_area">'+data.rows[i].DeptName + '</span>'+'<span id="" class="span-time">'+cudDate+'</span></div>';
+							html += '<div class="mui-div-item-content"><span id="" class="span-name">'+data.rows[i].UserName + '</span></div>';
+							html += '</div></li>';
+						}
+						document.getElementById("urlUL").innerHTML = html;
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						html = '<div id = "nothingOne">网络错误！</div>';
+						document.getElementById("urlUL").innerHTML = html;
+						JavaScriptInterface.setHintPB();
+					}
+
+				});
+			}
+			//获取当前日期
+			function getcurdate() {
+
+				var today = new Date();
+				var jinnian = today.getFullYear();
+				var month=today.getMonth() + 1;
+				if(month<10){
+					month="0"+month;
+				}else{
+					month=month;
+				}
+				var day=today.getDate();
+				if (day<10) {
+					day="0"+day;
+				}else{
+					day=day;
+				}
+				//var jinyue = today.getMonth() + 1;
+				//var jinDay = today.getDate();
+				var timeDay = (jinnian + "-" + month + "-" + day);
+				return timeDay;
+			}
+		</script>
+</body>
+
+</html>

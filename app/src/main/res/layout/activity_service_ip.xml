@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/view_distance_52"
+        android:background="@color/a37a0bc">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:paddingLeft="@dimen/view_distance_12"
+            android:paddingRight="@dimen/view_distance_30"
+            android:src="@mipmap/left_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="服务器设置"
+            android:textColor="@color/colorWihte"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_distance_52"
+        android:layout_marginLeft="@dimen/view_distance_10"
+        android:layout_marginRight="@dimen/view_distance_10"
+        android:layout_marginTop="@dimen/view_distance_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="IP:"
+            android:textColor="@color/t33333"
+            android:textSize="@dimen/text_size_14" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_distance_44"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/view_distance_52"
+            android:background="@drawable/solid_edittext_stork">
+
+            <EditText
+                android:id="@+id/edit_ip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/view_distance_5"
+                android:textColor="@color/t33333"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_distance_52"
+        android:layout_marginLeft="@dimen/view_distance_10"
+        android:layout_marginRight="@dimen/view_distance_10"
+        android:layout_marginTop="@dimen/view_distance_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="端口:"
+            android:textColor="@color/t33333"
+            android:textSize="@dimen/text_size_14" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_distance_44"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/view_distance_52"
+            android:background="@drawable/solid_edittext_stork">
+
+            <EditText
+                android:id="@+id/edit_port"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/view_distance_5"
+                android:textColor="@color/t33333"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/view_distance_10"
+        android:layout_marginTop="@dimen/view_distance_90"
+        android:orientation="vertical"
+        android:padding="@dimen/view_distance_10">
+
+        <Button
+            android:id="@+id/bt_recover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_distance_40"
+            android:layout_marginTop="@dimen/view_distance_10"
+            android:background="@drawable/white_bt"
+            android:text="恢复默认设置"
+            android:textColor="@color/a37a0bc"
+            android:textSize="@dimen/text_size_14" />
+
+        <Button
+            android:id="@+id/bt_save"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_distance_40"
+            android:layout_marginTop="@dimen/view_distance_20"
+            android:background="@drawable/green_bt"
+            android:text="保存"
+            android:textColor="@color/colorWihte"
+            android:textSize="@dimen/text_size_14" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

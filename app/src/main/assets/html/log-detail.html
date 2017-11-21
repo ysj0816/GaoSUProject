@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>日志管理</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css"/>
+    <script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <style type="text/css">
+			body {
+				margin: 0;
+				background: #f2f2f2;
+			}
+
+			.mui-div-header {
+				width: 100%;
+				height: 52px;
+				background-color: #37a0dc;
+				position: fixed;
+				text-align: center;
+				z-index: 10;
+				top: 0;
+				left: 0;
+			}
+
+			.admin-title {
+				font-size: 16px;
+				color: #FFFFFF;
+				display: inline-block;
+				line-height: 52px;
+			}
+
+			.img-left {
+				float: left;
+				margin: 16px 5px 12px 12px;
+				height: 20px;
+			}
+
+			.img-right {
+				float: right;
+				padding-right: 12px;
+				margin: 16px 10px 12px 12px;
+				height: 20px;
+			}
+
+			.mui-div-title {
+				float: left;
+				font-size: 16px;
+				color: #FFFFFF;
+				text-align: center;
+				line-height: 52px;
+			}
+
+
+			.mui-select-time {
+				width: 100%;
+				height: 55px;
+				background: #F2F2F2;
+				<!--margin-top: 52px;-->
+				text-align: center;
+				padding-top: 10px;
+			}
+
+			.mui-select-daily-time {
+				width: 35%;
+				height: 35px;
+				border: 1px solid #37a0dc;
+				margin-left: 12px;
+				margin-bottom: -30px;
+				border-width: 1px 1px 1px 1px;
+				border-top-left-radius: 4px;
+				border-top-right-radius: 4px;
+				border-bottom-left-radius: 4px;
+				border-bottom-right-radius: 4px;
+			}
+
+			.mui-select-daily-word {
+				color: #37a0dc;
+				font-size: 14px;
+				line-height: 35px;
+				text-align: center;
+				font-family: "微软雅黑";
+			}
+
+			.mui-time {
+				font-size: 14px;
+				color: #333333;
+				font-family: "微软雅黑";
+				text-align: center;
+				padding-top: 2px;
+				vertical-align: middle;
+				margin-left: 40px;
+			}
+
+			.mui-watc-personnel {
+				margin-top: 10px;
+				font-family: "微软雅黑";
+				color: #333333;
+				font-size: 14px;
+			}
+
+			.mui-watc-name {
+				/*color: #00A0DA;*/
+				color: #37a0dc;
+				margin-top: 10px;
+				margin-bottom: 15px;
+				font-family: "微软雅黑";
+				font-size: 14px;
+			}
+
+			.mui-watc-time {
+				margin-top: 10px;
+				font-family: "微软雅黑";
+				color: #333333;
+				font-size: 14px;
+				/*margin-left: 12px;
+				margin-left: 118px;*/
+			}
+
+			.div-left {
+				float: left;
+				width: 50%;
+			}
+
+			.div-right {
+				float: left;
+				width: 50%;
+			}
+
+			.mui-div-time {
+				color: #000000;
+				margin-top: 10px;
+				margin-bottom: 15px;
+				font-family: "微软雅黑";
+				font-size: 14px;
+			}
+			.left-margin {
+				padding-left: 12px;
+			}
+			/*从这开始修改*/
+			.main {
+				width: 100%;
+				height: 70px;
+				<!--padding: 0px 0px 0px 12px;-->
+			}
+
+			.log-titel {
+				border: solid #dce1e8;
+				border-width: 0px 0px 1px 0px;
+			}
+
+			.mui-div-duty-hour {
+				width: 100%;
+				height: auto;
+				padding: 0px 12px 0px 0px;
+				border: solid #dce1e8;
+				border-width: 0px 0px 1px 0px;
+			}
+            .mui-div-duty-other{
+				width: 100%;
+				height: auto;
+				padding: 0px 12px 0px 0px;
+			}
+			.mui-word {
+				font-family: "微软雅黑";
+				color: #333333;
+				margin-top: 15px;
+				font-size: 14px;
+			}
+
+			.mui-time-word {
+				width: 100%;
+				font-family: "微软雅黑";
+				font-size: 14px;
+				color: #999999;
+				margin-top: 10px;
+				margin-bottom: 15px;
+				box-sizing: border-box;
+				overflow: hidden;
+				word-wrap: break-word;
+				word-break: break-all;
+			}
+			.mui-other{
+				width: 100%;
+				font-family: "微软雅黑";
+				font-size: 14px;
+				color: #999999;
+				margin-top: 10px;
+				padding-bottom: 15px;
+				box-sizing: border-box;
+				overflow: hidden;
+				word-wrap: break-word;
+				word-break: break-all;
+			}
+            .button-margin {
+				margin-left: 12px;
+				margin-right: 12px;
+				/*margin-top: 30px;*/
+				margin-bottom: 60px;
+			}
+
+			.btn {
+				outline: none;
+				width: 100%;
+				font-size: 14px;
+				font-family: "微软雅黑";
+				color: #fff;
+				padding: 10px;
+				/*margin-bottom: 25px;*/
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+				border-bottom-right-radius: 6px;
+				border-bottom-left-radius: 6px;
+				background-color: #ff9f00;
+				border: 0px solid #ff9f00;
+				color: #fff;
+			}
+
+			.alter{
+				margin-top: 20px;
+				margin-bottom: 25px;
+			}
+			.delete {
+				margin-top: 30px;
+				border: 0px solid #FF0000;
+				background: #FF0000;
+			}
+
+			.mui-div-bottom {
+				width: 100%;
+				height: 49px;
+				border-top:1px solid #37a0dc;
+				background: #FFFFFF;
+				position: fixed;
+				bottom: 0;
+				z-index: 66;
+			}
+
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #FFFFFF;
+				border-bottom: 2px solid #37a0dc;
+				background: #37a0dc 0;
+			}
+
+			.mui-segmented-control .mui-control-item {
+				line-height: 49px;
+				display: table-cell;
+				overflow: hidden;
+				width: 1%;
+				-webkit-transition: background-color .1s linear;
+				transition: background-color .1s linear;
+				text-align: center;
+				white-space: nowrap;
+				font-family: arial;
+				font-size: 14px;
+				text-overflow: ellipsis;
+				color: #37a0dc;
+				border-color: #37a0dc;
+				border-left: 1px solid #37a0dc;
+			}
+
+			#topPopover {
+				position: absolute;
+				font: 14px Arial;
+				right: 0px;
+				height: 85px;
+				width: 150px;
+			}
+	        .mui-table-view-cell:after {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 15px;
+				right: 15px;
+				height: 1px;
+				content: '';
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #c8c7cc;
+			}
+			<!--#topPopover.mui-popover-arrow {-->
+				<!--left: auto;-->
+				<!--right: 1px;-->
+			<!--}-->
+
+			#div_admin_log {
+				margin-bottom: 40px;
+			}
+
+			#div_ele_plum_log {
+			    //width: 200px;
+			    //height: 100px;
+				margin-bottom: 40px;
+			}
+            #checkself{
+				height: 35px;
+				padding-left: 16px;
+			}
+			#checkbelow{
+				height: 40px;
+				padding-left: 16px;
+			}
+			#col{
+				background: #ffffff;
+			}
+    </style>
+</head>
+
+<body>
+<!--<div class="mui-div-header">-->
+    <!--<div class="mui-action-back" id="divback">-->
+        <!--<img src="../img/left_back.png" class="img-left"/>-->
+        <!--<span id="" class="mui-div-title">首页</span>-->
+    <!--</div>-->
+    <!--<span id="" class="admin-title">-->
+				<!--日志管理-->
+			<!--</span>-->
+    <!--<a id="serchhistory" class="mui-pull-right" href="#topPopover">-->
+        <!--<img src="../img/add.png" class="img-right" id="addLog"/>-->
+    <!--</a>-->
+<!--</div>-->
+<!--&lt;!&ndash;右上角菜单&ndash;&gt;-->
+<!--<div id="topPopover" class="mui-popover">-->
+    <!--&lt;!&ndash;<div class="mui-popover-arrow"></div>&ndash;&gt;-->
+    <!--<div class="mui-scroll-wrapper" style="overflow: visible;">-->
+        <!--<div class="mui-scroll">-->
+            <!--<ul class="mui-table-view">-->
+                <!--<li id="checkself" class="mui-table-view-cell">-->
+                    <!--<a href="#">-->
+                        <!--<span style="color: #000;" ></span>添加管理员日志</a>-->
+                <!--</li>-->
+                <!--<li id="checkbelow" class="mui-table-view-cell">-->
+                    <!--<a href="#">-->
+                        <!--<span style="color: #000;" ></span>添加水电工日志</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<div class="mui-select-time">
+    <div class="btns mui-select-daily-time" id="div_time_sel1">
+        <div class="mui-select-daily-word">
+            选择日志时间
+        </div>
+    </div>
+    <div class="mui-time" id="timecontent">
+
+    </div>
+</div>
+<div class="mui-content" id="Parent">
+    <div id="div_admin_log" class="mui-control-content mui-active">
+
+    </div>
+    <div id="div_ele_plum_log" class="mui-control-content ">
+
+    </div>
+</div>
+
+<div class="mui-div-bottom">
+    <div id="sliderSegmentedControl"
+         class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+        <a id="admin_log" class=" mui-control-item mui-active" href="#div_admin_log">管理员日志</a>
+        <a id="electrician_log" class="mui-control-item" href="#div_ele_plum_log">水电工日志</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+            var name="";
+            var sendname="";
+            var datetime="";
+            var senddatetime="";
+            var watername="";
+            var sendwatername="";
+            var waterdatetime="";
+            var sendwaterdatetime="";
+			var USEid = jsback.GetUserID();
+			var uri=jsback.GetDate();
+			var temp=jsback.backtempflag();
+
+			var flag =temp;
+			var date = new Date();
+			var seperator1 = "-";
+			var seperator2 = ":";
+			var month = date.getMonth() + 1;
+			var strDate = date.getDate();
+			if(month >= 1 && month <= 9) {
+				month = "0" + month;
+			}
+			if(strDate >= 0 && strDate <= 9) {
+				strDate = "0" + strDate;
+			}
+			var today = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+			/*********点击**********/
+			var btns = $('.btns');
+			mui.init();
+			(function($) {
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var picker = new mui.DtPicker({
+							type: "date",
+							beginDate: new Date(2016, 04),
+							endDate: new Date(2080, 05),
+							labels: ['年', '月', '日'],
+						})
+						picker.show(function(rs) {
+							timecontent.innerText = rs.text;
+							showMobileGetWorkDairys(flag, rs.text);
+							showMobileGetWorkDairys(flag, rs.text);
+
+						})
+					}, false);
+				});
+			})(mui);
+			var timecontent = document.getElementById("timecontent");
+			timecontent.innerText = today;
+
+			showlog(flag, today);
+			//点击切换日志
+			var electricianlog=document.getElementById("electrician_log");
+			electricianlog.style.color="#37a0dc";
+			electricianlog.addEventListener('tap', function(e) {
+				flag = "2";
+				electricianlog.style.color="#FFFFFF";
+				adminlog.style.color="#37a0dc";
+				var logDate=timecontent.innerText;
+				showMobileGetWorkDairys(flag, logDate);
+			})
+			var adminlog=document.getElementById("admin_log");
+			adminlog.addEventListener('tap', function(event) {
+				flag = "1";
+				adminlog.style.color="#FFFFFF";
+				electricianlog.style.color="#37a0dc";
+				var logDate=timecontent.innerText;
+				showMobileGetWorkDairys(flag, logDate);
+			})
+
+			function showMobileGetWorkDairys(typeLog, time) {
+				console.log("data:" + typeLog + "***时间:" + time);
+				$.ajax({
+					async: true,
+					type: "POST",
+					dataType: 'jsonp',
+					jsonp: 'callback',
+					jsonpCallback: 'callback',
+					url: uri + "/GS/a/mobile/WorkDiary/MobileGetWorkDairy?",
+					data: {
+						UserID: USEid,
+						SearchDate: time,
+						Category: typeLog
+					},
+					timeout: 3000,
+					contentType: "application/json;utf-8",
+					success: function(data) {
+						var result = data.rows;
+						var html = "";
+						if(typeLog == "1") {
+							if(data.total > 0) {
+								console.log("成功1：");
+								for(var i = 0; i < result.length; i++) {
+								    //name += result[i].AuthorUserName + ",";
+									//sendname = name.substring(0, name.length - 1);
+									//datetime+=formatDateTime(result[i].CreateTime)+ ","
+									//senddatetime=datetime.substring(0, datetime.length - 1);
+                                    //jsback.showmanagelog(sendname,senddatetime);
+									//console.log("成功：" + result[i].Remark);
+									//html += '<div id="col"><div class="mui-log-content"><div class="main log-titel"><div class="div-left"><div class="mui-watc-personnel">值班人员:</div><div class="mui-watc-name">' + result[i].AuthorUserName + '</div></div><div class="div-right"><div class="mui-watc-time">值班时间:</div><div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div></div></div><div class="mui-div-duty-hour"><div class="mui-word">经营检查情况:</div><div class="mui-time-word">' + result[i].FinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">公益情况:</div><div class="mui-time-word">' + result[i].UnFinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">值班记录:</div><div class="mui-time-word">' + result[i].NeedAssistWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">备注:</div><div class="mui-time-word">' + result[i].Remark + '</div></div><div class="button-margin"><div class=""><button id="delete' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div><div class=""><button id="submit' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div></div></div></div>'
+								    if(today == time) {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">经营检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">公益检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">值班记录:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">备注:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="button-margin">';
+										html += '<div class=""><button id="delete' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div>';
+										html += '<div class=""><button id="submit' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div>';
+										html += '</div>';
+
+									} else {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">经营检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">公益检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">值班记录:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">备注:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+									}
+
+								}
+								document.getElementById("div_admin_log").innerHTML = html;
+							}else if(data.total == 0){
+								mui.toast("当天没有管理员日志");
+								document.getElementById("div_admin_log").innerHTML="";
+							}
+							for(var i = 0; i < result.length; i++) {
+								//更新
+								document.getElementById("submit" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									var workdiaryid = result[ids].WorkDiaryID;
+									console.log("跟新id:" + thisID);
+									console.log("更换后id:" + ids);
+									var authoruserid = result[ids].AuthorUserID;
+									var finishwork = result[ids].FinishWork;
+									var unnfinishwork = result[ids].UnFinishWork;
+									var needassistwork = result[ids].NeedAssistWork;
+									var remark = result[ids].Remark;
+									console.log("remark:" + remark);
+									var creattime = formatDateTime(result[ids].CreateTime);
+									jsback.getupdatelogmessage(flag, workdiaryid, authoruserid, finishwork, unnfinishwork, needassistwork, remark, creattime);
+								}
+								//删除
+								document.getElementById("delete" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									var useridvar = result[ids].WorkDiaryID;
+									console.log("thisID:" + thisID);
+									//执行删除操作
+									mui.confirm('确认删除日志?','友情提示',['取消','确认'],function(event) {
+										var tapIndex = event.index;
+										switch(tapIndex) {
+											case 0:
+												break;
+											case 1:
+											deletediv(typeLog,useridvar, thisID);
+												break;
+										}
+									},'div');
+								}
+							}
+
+						}
+						else if(typeLog == "2"){
+							if(data.total > 0) {
+								console.log("成功1：");
+								for(var i = 0; i < result.length; i++) {
+								    watername = result[i].AuthorUserName + ",";
+								    sendwatername= watername.substring(0, watername.length - 1);
+								    waterdatetime=formatDateTime(result[i].CreateTime)+ ","
+									sendwaterdatetime=waterdatetime.substring(0, waterdatetime.length - 1);
+									//jsback.showwaterelectrician(sendwatername,sendwaterdatetime);
+									//console.log("成功：" + result[i].Remark);
+									//html += '<div id="col"><div class="mui-log-content"><div class="main log-titel"><div class="div-left"><div class="mui-watc-personnel">值班人员:</div><div class="mui-watc-name">' + result[i].AuthorUserName + '</div></div><div class="div-right"><div class="mui-watc-time">值班时间:</div><div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div></div></div><div class="mui-div-duty-hour"><div class="mui-word">供水情况:</div><div class="mui-time-word">' + result[i].FinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">供电情况:</div><div class="mui-time-word">' + result[i].UnFinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">维修 (保养) 情况:</div><div class="mui-time-word">' + result[i].NeedAssistWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">其它:</div><div class="mui-time-word">' + result[i].Remark + '</div></div><div class="button-margin"><div class=""><button id="deletes' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div><div class=""><button id="submits' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div></div></div></div>'
+								    if(today == time) {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';;
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供水情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供电情况:</div>';
+										html += ' <div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">维修 (保养) 情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">其它:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="button-margin">';
+										html += '<div class=""><button id="deletes' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div>';
+										html += '<div class=""><button id="submits' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div>';
+										html += '</div>';
+
+									} else {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';;
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供水情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供电情况:</div>';
+										html += ' <div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">维修 (保养) 情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">其它:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+									}
+
+								}
+								document.getElementById("div_ele_plum_log").innerHTML = html;
+							}else if(data.total == 0){
+								mui.toast("当天没有水电工日志");
+								document.getElementById("div_ele_plum_log").innerHTML = "";
+							}
+
+							for(var i = 0; i < result.length; i++) {
+								//更新
+								document.getElementById("submits" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									var workdiaryid = result[ids].WorkDiaryID;
+									console.log("跟新id:" + thisID);
+									console.log("更换后id:" + ids);
+									var authoruserid = result[ids].AuthorUserID;
+									var finishwork = result[ids].FinishWork;
+									var unnfinishwork = result[ids].UnFinishWork;
+									var needassistwork = result[ids].NeedAssistWork;
+									var remark = result[ids].Remark;
+									console.log("remark:" + remark);
+									var creattime = formatDateTime(result[ids].CreateTime);
+									jsback.getupdatelogmessage(flag, workdiaryid, authoruserid, finishwork, unnfinishwork, needassistwork, remark, creattime);
+								}
+								document.getElementById("deletes" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									console.log("id:" + ids);
+									var useridvar = result[ids].WorkDiaryID;
+									console.log("useridvar:" + useridvar);
+									//执行删除操作
+									mui.confirm('确认删除日志?','友情提示',['取消','确认'],function(event) {
+										var tapIndex = event.index;
+										switch(tapIndex) {
+											case 0:
+												break;
+											case 1:
+											deletediv(typeLog,useridvar, thisID);
+												break;
+										}
+									},'div');
+									//deletediv(useridvar, this);
+								}
+							}
+						}
+
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+					}
+				});
+			}
+
+			document.getElementById("divback").addEventListener('tap', function(event) {
+				window.jsback.showback();
+			})
+
+			<!--document.getElementById("checkself").addEventListener('tap', function(event) {-->
+				<!--window.jsback.showmanagelog(sendname,senddatetime);-->
+				<!--//mui.alert(sendname,senddatetime);-->
+				<!--//隐藏popover-->
+				<!--mui('#topPopover').popover('hide');-->
+			<!--})-->
+			<!--document.getElementById("checkbelow").addEventListener('tap', function(event) {-->
+				<!--window.jsback.showwaterelectrician(sendwatername,sendwaterdatetime);-->
+				<!--//隐藏popover-->
+				<!--mui('#topPopover').popover('hide');-->
+			<!--})-->
+			<!--mui.init();-->
+			<!--(function($) {-->
+				<!--btns.each(function(i, btn) {-->
+					<!--btn.addEventListener('tap', function() {-->
+					    <!--mui.alert("ss");-->
+						<!--var picker = new mui.DtPicker({-->
+							<!--type: "date",-->
+							<!--beginDate: new Date(2016, 04),-->
+							<!--endDate: new Date(2080, 05),-->
+							<!--labels: ['年', '月', '日'],-->
+						<!--})-->
+						<!--picker.show(function(rs) {-->
+							<!--timecontent.innerText = rs.text;-->
+							<!--showMobileGetWorkDairys(flag, rs.text);-->
+							<!--showMobileGetWorkDairys(flag, rs.text);-->
+
+						<!--})-->
+					<!--}, false);-->
+				<!--});-->
+			<!--})(mui);-->
+
+
+			function showlog(flag, time) {
+				$.ajax({
+					async: true,
+					type: "POST",
+					dataType: 'jsonp',
+					jsonp: 'callback',
+					jsonpCallback: 'callback',
+					url: uri + "/GS/a/mobile/WorkDiary/MobileGetWorkDairy?",
+					data: {
+						UserID: USEid,
+						SearchDate: time,
+						Category: flag
+					},
+					timeout: 3000,
+					contentType: "application/json;utf-8",
+						success: function(data) {
+						var result = data.rows;
+						var html = "";
+						if(flag == "1") {
+						    adminlog.style.color="#FFFFFF";
+				            electricianlog.style.color="#37a0dc";
+						    document.getElementById("admin_log").className="mui-control-item mui-active";
+							document.getElementById("electrician_log").className="mui-control-item";
+							if(data.total > 0) {
+								console.log("成功1：");
+								for(var i = 0; i < result.length; i++) {
+									name += result[i].AuthorUserName + ",";
+									sendname = name.substring(0, name.length - 1);
+									datetime+=formatDateTime(result[i].CreateTime)+ ","
+									senddatetime=datetime.substring(0, datetime.length - 1);
+									jsback.showmanagelog(sendname,senddatetime);
+									//html += '<div id="col"><div class="mui-log-content"><div class="main log-titel"><div class="div-left"><div class="mui-watc-personnel">值班人员:</div><div class="mui-watc-name">' + result[i].AuthorUserName + '</div></div><div class="div-right"><div class="mui-watc-time">值班时间:</div><div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div></div></div><div class="mui-div-duty-hour"><div class="mui-word">经营检查情况:</div><div class="mui-time-word">' + result[i].FinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">公益情况:</div><div class="mui-time-word">' + result[i].UnFinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">值班记录:</div><div class="mui-time-word">' + result[i].NeedAssistWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">备注:</div><div class="mui-time-word">' + result[i].Remark + '</div></div><div class="button-margin"><div class=""><button id="delete' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div><div class=""><button id="submit' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div></div></div></div>'
+								    if(today == time) {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">经营检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">公益检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">值班记录:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">备注:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="button-margin">';
+										html += '<div class=""><button id="delete' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div>';
+										html += '<div class=""><button id="submit' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div>';
+										html += '</div>';
+
+									} else {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">经营检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">公益检查情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">值班记录:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">备注:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+									}
+
+								}
+							} else if(data.total == 0) {
+								mui.toast("当天没有管理员日志");
+							}
+							console.log("管理员：");
+							document.getElementById("div_admin_log").innerHTML = html;
+							var temps="2";
+                            showwaterlog(temps,time);
+							for(var i = 0; i < result.length; i++) {
+								//更新
+								document.getElementById("submit" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									var workdiaryid = result[ids].WorkDiaryID;
+									console.log("跟新id:" + thisID);
+									console.log("更换后id:" + ids);
+									var authoruserid = result[ids].AuthorUserID;
+									var finishwork = result[ids].FinishWork;
+									var unnfinishwork = result[ids].UnFinishWork;
+									var needassistwork = result[ids].NeedAssistWork;
+									var remark = result[ids].Remark;
+									console.log("remark:" + remark);
+									var creattime = formatDateTime(result[ids].CreateTime);
+									jsback.getupdatelogmessage(flag, workdiaryid, authoruserid, finishwork, unnfinishwork, needassistwork, remark, creattime);
+								}
+								//删除
+								document.getElementById("delete" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									var useridvar = result[ids].WorkDiaryID;
+									console.log("thisID:" + thisID);
+									//执行删除操作
+									mui.confirm('确认删除日志?', '友情提示', ['取消', '确认'], function(event) {
+										var tapIndex = event.index;
+										switch(tapIndex) {
+											case 0:
+												break;
+											case 1:
+												deletediv(flag, useridvar, thisID);
+												break;
+										}
+									}, 'div');
+								}
+							}
+
+						} else if(flag == "2"){
+						    electricianlog.style.color="#FFFFFF";
+				            adminlog.style.color="#37a0dc";
+                            document.getElementById("admin_log").className="mui-control-item";
+							document.getElementById("electrician_log").className="mui-control-item mui-active";
+							document.getElementById("div_admin_log").className="mui-control-content";
+							document.getElementById("div_ele_plum_log").className="mui-control-content mui-active";
+							if(data.total > 0) {
+								console.log("成功1：");
+								for(var i = 0; i < result.length; i++) {
+									watername += result[i].AuthorUserName + ",";
+									sendwatername = watername.substring(0, watername.length - 1);
+									waterdatetime += formatDateTime(result[i].CreateTime) + ","
+									sendwaterdatetime = waterdatetime.substring(0, waterdatetime.length - 1);
+									jsback.showwaterelectrician(sendwatername,sendwaterdatetime);
+									//html = '<div id="col"><div class="mui-log-content"><div class="main log-titel"><div class="div-left"><div class="mui-watc-personnel">值班人员:</div><div class="mui-watc-name">' + result[i].AuthorUserName + '</div></div><div class="div-right"><div class="mui-watc-time">值班时间:</div><div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div></div></div><div class="mui-div-duty-hour"><div class="mui-word">供水情况:</div><div class="mui-time-word">' + result[i].FinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">供电情况:</div><div class="mui-time-word">' + result[i].UnFinishWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">维修 (保养) 情况:</div><div class="mui-time-word">' + result[i].NeedAssistWork + '</div></div><div class="mui-div-duty-hour"><div class="mui-word">其它:</div><div class="mui-time-word">' + result[i].Remark + '</div></div><div class="button-margin"><div class=""><button id="deletes' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div><div class=""><button id="submits' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div></div></div></div>'
+								    if(today == time) {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';;
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供水情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供电情况:</div>';
+										html += ' <div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">维修 (保养) 情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">其它:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="button-margin">';
+										html += '<div class=""><button id="deletes' + i + '"type="button" data-loading-text="删除中" class="btn delete">删除</button></div>';
+										html += '<div class=""><button id="submits' + i + '" type="button" data-loading-text="更新中" class="btn alter">更新</button></div>';
+										html += '</div>';
+
+									} else {
+										html += '<div id="col">';
+										html += '<div class="mui-log-content">';
+										html += '<div class="left-margin">';
+										html += '<div class="main log-titel">';
+										html += '<div class="div-left">';
+										html += '<div class="mui-watc-personnel">值班人员:</div>';
+										html += '<div class="mui-watc-name">' + result[i].AuthorUserName + '</div>';;
+										html += '</div>';
+										html += '<div class="div-right">';
+										html += '<div class="mui-watc-time">值班时间:</div>';
+										html += '<div class="mui-div-time">' + formatDateTime(result[i].CreateTime) + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '<div class="left-margin">';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供水情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].FinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">供电情况:</div>';
+										html += ' <div class="mui-time-word">' + result[i].UnFinishWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-hour">';
+										html += '<div class="mui-word">维修 (保养) 情况:</div>';
+										html += '<div class="mui-time-word">' + result[i].NeedAssistWork + '</div>';
+										html += '</div>';
+										html += '<div class="mui-div-duty-other">';
+										html += '<div class="mui-word">其它:</div>';
+										html += '<div class="mui-other">' + result[i].Remark + '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+										html += '</div>';
+									}
+
+								}
+							} else if(data.total == 0) {
+								mui.toast("当天没有水电工日志");
+							}
+							document.getElementById("div_ele_plum_log").innerHTML = html;
+							document.getElementById("admin_log").className="mui-control-item";
+							document.getElementById("electrician_log").className="mui-control-item mui-active";
+							for(var i = 0; i < result.length; i++) {
+								//更新
+								document.getElementById("submits" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									var workdiaryid = result[ids].WorkDiaryID;
+									console.log("跟新id:" + thisID);
+									console.log("更换后id:" + ids);
+									var authoruserid = result[ids].AuthorUserID;
+									var finishwork = result[ids].FinishWork;
+									var unnfinishwork = result[ids].UnFinishWork;
+									var needassistwork = result[ids].NeedAssistWork;
+									var remark = result[ids].Remark;
+									console.log("remark:" + remark);
+									var creattime = formatDateTime(result[ids].CreateTime);
+									jsback.getupdatelogmessage(flag, workdiaryid, authoruserid, finishwork, unnfinishwork, needassistwork, remark, creattime);
+								}
+								document.getElementById("deletes" + i).onclick = function() {
+									var thisID = this.id;
+									var ids = thisID.replace(/[^0-9]+/g, '');
+									console.log("id:" + ids);
+									var useridvar = result[ids].WorkDiaryID;
+									console.log("useridvar:" + useridvar);
+									//执行删除操作
+									mui.confirm('确认删除日志?', '友情提示', ['取消', '确认'], function(event) {
+										var tapIndex = event.index;
+										switch(tapIndex) {
+											case 0:
+												break;
+											case 1:
+												deletediv(flag, useridvar, thisID);
+												break;
+										}
+									}, 'div');
+								}
+							}
+							var temps="1";
+                            showwaterlog(temps,time);
+						}
+                        //showwaterlog(flag,time);
+					},
+				});
+			}
+            function showwaterlog(flag,time) {
+				$.ajax({
+					async: true,
+					type: "POST",
+					dataType: 'jsonp',
+					jsonp: 'callback',
+					jsonpCallback: 'callback',
+					url: uri + "/GS/a/mobile/WorkDiary/MobileGetWorkDairy?",
+					data: {
+						UserID: USEid,
+						SearchDate: time,
+						Category: flag
+					},
+					timeout: 3000,
+					contentType: "application/json;utf-8",
+						success: function(data) {
+						if(data.total > 0) {
+							var result = data.rows;
+							for(var i = 0; i < result.length; i++) {
+							    if(flag=="1"){
+							        name += result[i].AuthorUserName + ",";
+									sendname = name.substring(0, name.length - 1);
+									datetime+=formatDateTime(result[i].CreateTime)+ ","
+									senddatetime=datetime.substring(0, datetime.length - 1);
+									jsback.showmanagelog(sendname,senddatetime);
+							    }else if(flag=="2"){
+							          watername += result[i].AuthorUserName + ",";
+								      sendwatername= watername.substring(0, watername.length - 1);
+								      waterdatetime+=formatDateTime(result[i].CreateTime)+ ","
+								      sendwaterdatetime=waterdatetime.substring(0, waterdatetime.length - 1);
+								      jsback.showwaterelectrician(sendwatername,sendwaterdatetime);
+							    }
+								console.log("成功：" + result[i].Remark);
+							}
+						}
+					},
+				});
+			}
+
+			function deletediv(flagtype,workid, there) {
+				$.ajax({
+					async: true,
+					type: "POST",
+					dataType: 'jsonp',
+					jsonp: 'callback',
+					jsonpCallback: 'callback',
+					url: uri + "/GS/a/mobile/WorkDiary/DeleteDairy?",
+					data: {
+						WorkDiaryID: workid,
+						UserID: USEid
+					},
+					timeout: 3000,
+					contentType: "application/json;utf-8",
+					success: function(data) {
+						if(data.success) {
+						    if(flagtype=="1"){
+						        var obj = document.getElementById(there).parentNode.parentNode.parentNode;
+                                obj.innerHTML = "";
+							    sendname="";
+							    senddatetime="";
+							    jsback.showmanagelog(sendname,senddatetime);
+						    }else if(flagtype=="2"){
+						        var obj = document.getElementById(there).parentNode.parentNode.parentNode;
+                                obj.innerHTML = "";
+							    sendwatername="";
+							    sendwaterdatetime="";
+							    jsback.showwaterelectrician(sendwatername,sendwaterdatetime);
+						    }
+
+						}
+					},
+			    })
+			}
+
+			function formatDateTime(inputTime) {
+				var date = new Date(inputTime);
+				var y = date.getFullYear();
+				var m = date.getMonth() + 1;
+				m = m < 10 ? ('0' + m) : m;
+				var d = date.getDate();
+				d = d < 10 ? ('0' + d) : d;
+				var h = date.getHours();
+				h = h < 10 ? ('0' + h) : h;
+				var minute = date.getMinutes();
+				var second = date.getSeconds();
+				minute = minute < 10 ? ('0' + minute) : minute;
+				second = second < 10 ? ('0' + second) : second;
+				return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+			};
+
+</script>
+</body>
+
+</html>

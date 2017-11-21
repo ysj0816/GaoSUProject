@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="474dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/mes">
+
+    <ListView
+        android:layout_marginTop="@dimen/view_distance_4"
+        android:layout_marginBottom="@dimen/view_distance_4"
+        android:layout_marginRight="@dimen/view_distance_12"
+        android:layout_marginLeft="@dimen/view_distance_12"
+        android:id="@+id/infoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWihte">
+
+    </ListView>
+</LinearLayout>

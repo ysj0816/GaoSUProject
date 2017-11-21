@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/trm_popup_bg"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/layout_addmanagelog"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/view_distance_34"
+            android:paddingLeft="@dimen/view_distance_16"
+            android:paddingRight="@dimen/view_distance_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="添加管理员日志"
+                android:textColor="@color/t33333"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/view_distance_16"
+            android:layout_marginRight="@dimen/view_distance_16"
+            android:background="@color/lineColor" />
+
+        <LinearLayout
+            android:id="@+id/layout_addelectricianlog"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/view_distance_34"
+            android:paddingLeft="@dimen/view_distance_16"
+            android:paddingRight="@dimen/view_distance_16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="添加水电工日志"
+                android:textColor="@color/t33333"
+                android:textSize="@dimen/text_size_13" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

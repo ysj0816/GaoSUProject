@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBg"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.chuyu.gaosuproject.activity.AddManagerLogActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/a37a0bc"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:paddingLeft="@dimen/view_distance_12"
+                android:paddingRight="@dimen/view_distance_30"
+                android:src="@mipmap/left_back" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_waterlog"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:gravity="center"
+                android:text="日志管理"
+                android:textColor="@color/colorWihte"
+                android:textSize="@dimen/text_size_16" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="水电工日志"
+            android:textColor="@color/colorWihte"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="54dp"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/view_distance_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_distance_8"
+                    android:text="值班时间:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_distance_2"
+                    android:textColor="@color/textcolor"
+                    android:text="2017"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="140dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_distance_10"
+                    android:text="供水情况:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <com.chuyu.gaosuproject.widget.MyEditText
+                    android:id="@+id/tv_watersupplysituation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="@dimen/view_distance_4"
+                    android:textColorHint="@color/edittext"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/view_distance_14"
+                    android:background="@drawable/solid_edittext_stork"
+                    android:gravity="left"
+                    android:hint="请输入文字"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:paddingTop="@dimen/view_distance_5"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="140dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_distance_10"
+                    android:text="供电情况:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <com.chuyu.gaosuproject.widget.MyEditText
+                    android:id="@+id/tv_powersupplysituation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="@dimen/view_distance_4"
+                    android:background="@drawable/solid_edittext_stork"
+                    android:gravity="left"
+                    android:hint="请输入文字"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:paddingTop="@dimen/view_distance_5"
+                    android:textColor="@color/textcolor"
+                    android:textColorHint="@color/edittext"
+                    android:textSize="@dimen/view_distance_14"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="140dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_distance_10"
+                    android:text="维修 (保养) 情况:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <com.chuyu.gaosuproject.widget.MyEditText
+                    android:id="@+id/tv_repairsituation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="@dimen/view_distance_4"
+                    android:background="@drawable/solid_edittext_stork"
+                    android:gravity="left"
+                    android:hint="请输入文字"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:paddingTop="@dimen/view_distance_5"
+                    android:textColorHint="@color/edittext"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/view_distance_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="140dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_distance_10"
+                    android:text="其他:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <com.chuyu.gaosuproject.widget.MyEditText
+                    android:id="@+id/tv_other"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="@dimen/view_distance_4"
+                    android:background="@drawable/solid_edittext_stork"
+                    android:gravity="left"
+                    android:hint="请输入文字"
+                    android:textColorHint="@color/edittext"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/view_distance_14"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:paddingTop="@dimen/view_distance_5" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <Button
+                android:id="@+id/bt_submit"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="@dimen/view_distance_10"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:layout_marginTop="@dimen/view_distance_10"
+                android:background="@drawable/login_button_selector"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/colorWihte"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="360dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/alert_bg">
+
+
+    <RadioGroup
+        android:id="@+id/groupBroadcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbtn_Rule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:drawablePadding="20dp"
+            android:paddingLeft="18dp"
+            android:layout_marginLeft="10dp"
+            android:text="正常"
+            android:button="@drawable/radio_butt_img"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lineColor"
+            android:layout_marginTop="10dp"/>
+        <RadioButton
+            android:id="@+id/rbtn_Ruban"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="20dp"
+            android:paddingLeft="18dp"
+            android:layout_marginLeft="10dp"
+            android:text="入班"
+            android:button="@drawable/radio_butt_img"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lineColor"
+            android:layout_marginTop="10dp"/>
+        <RadioButton
+            android:id="@+id/rbtn_Evection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawablePadding="20dp"
+            android:paddingLeft="18dp"
+            android:text="出差"
+            android:layout_marginTop="10dp"
+            android:button="@drawable/radio_butt_img"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lineColor"
+            android:layout_marginTop="10dp"/>
+        <RadioButton
+            android:id="@+id/rbtn_OutWork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="20dp"
+            android:paddingLeft="18dp"
+            android:text="出班"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:button="@drawable/radio_butt_img"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+
+    </RadioGroup>
+</LinearLayout>
+

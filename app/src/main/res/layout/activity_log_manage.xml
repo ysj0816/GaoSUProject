@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.chuyu.gaosuproject.activity.LogManageActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_distance_52"
+        android:background="@color/a37a0bc"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/view_distance_10"
+            android:paddingRight="@dimen/view_distance_10">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/view_distance_52"
+                android:src="@mipmap/left_back" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首页"
+                android:textSize="@dimen/text_size_16"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:paddingLeft="4dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="日志管理"
+            android:textColor="@color/colorWihte"
+            android:textSize="@dimen/text_size_16" />
+
+        <ImageView
+            android:id="@+id/addImg"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/view_distance_10"
+            android:paddingRight="@dimen/view_distance_10"
+            android:src="@drawable/add" />
+    </RelativeLayout>
+    <WebView
+        android:id="@+id/logmanage_webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"></WebView>
+</LinearLayout>

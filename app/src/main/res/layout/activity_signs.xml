@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBg"
+    android:orientation="vertical"
+    tools:context="com.chuyu.gaosuproject.activity.SignActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_distance_52"
+        android:background="@color/a37a0bc"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="30dp"
+            android:src="@mipmap/left_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="签到"
+            android:textColor="@color/colorWihte"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/view_distance_10"
+                android:layout_marginTop="@dimen/view_distance_10"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/view_distance_10"
+                android:paddingRight="@dimen/view_distance_10"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="0dp">
+
+                <RadioButton
+                    android:id="@+id/up_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/view_distance_44"
+                    android:button="@drawable/radio_butt_img"
+                    android:checked="true"
+                    android:padding="@dimen/view_distance_12"
+                    android:text="上班"
+                    android:textColor="@color/t33333"
+                    android:textSize="@dimen/text_size_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lineColor" />
+
+                <RadioButton
+                    android:id="@+id/down_rb"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/view_distance_44"
+                    android:button="@drawable/radio_butt_img"
+                    android:padding="@dimen/view_distance_12"
+                    android:text="下班"
+                    android:textColor="@color/t33333"
+                    android:textSize="@dimen/text_size_14" />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/view_distance_14"
+                    android:layout_marginTop="@dimen/view_distance_15"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/view_distance_13"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/view_distance_10"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:src="@mipmap/sign_time_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:gravity="center_vertical"
+                        android:text="签到时间:"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_13" />
+
+                    <TextView
+                        android:id="@+id/signTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/t666666"
+                        android:textSize="@dimen/text_size_13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/view_distance_12"
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/view_distance_10">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/view_distance_14"
+                        android:layout_marginLeft="@dimen/view_distance_10"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:paddingTop="1dp"
+                        android:src="@mipmap/sign_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="签到地点:"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_13" />
+
+                    <TextView
+                        android:id="@+id/signLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/t666666"
+                        android:textSize="@dimen/text_size_13" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/refres_bt"
+                    android:layout_width="@dimen/view_distance_110"
+                    android:layout_height="@dimen/view_distance_35"
+                    android:layout_marginBottom="@dimen/view_distance_3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/select_button"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:text="刷新定位信息"
+                    android:textColor="@color/a37a0bc"
+                    android:textSize="@dimen/text_size_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/view_distance_10"
+                android:layout_marginBottom="@dimen/view_distance_2"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/camerll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/view_distance_10"
+                    android:background="@drawable/solid_round_yellow"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/view_distance_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/view_distance_10"
+                        android:text="自拍签到"
+                        android:textColor="@color/colorWihte"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/view_distance_10"
+                    android:layout_marginLeft="@dimen/view_distance_10"
+                    android:text="照片内容"
+                    android:textColor="@color/t999"
+                    android:textSize="@dimen/text_size_14" />
+
+                <GridView
+                    android:id="@+id/graidview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="@dimen/view_distance_2"
+                    android:numColumns="4"></GridView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/view_distance_10"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/view_distance_44"
+                    android:layout_marginLeft="@dimen/view_distance_10"
+                    android:gravity="center_vertical"
+                    android:text="请选择特请（默认正常上班，必填项）"
+                    android:textColor="@color/a37a0bc"
+                    android:textSize="@dimen/text_size_14" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/view_distance_10"
+                    android:layout_marginRight="@dimen/view_distance_10"
+                    android:background="@color/lineColor" />
+
+                <RelativeLayout
+                    android:id="@+id/typell"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/view_distance_10">
+
+                    <TextView
+                        android:id="@+id/typeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="正常"
+                        android:textColor="@color/t33333"
+                        android:textSize="@dimen/text_size_14" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/signs_type"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_distance_1"
+                android:layout_marginTop="@dimen/view_distance_10"
+                android:background="@color/lineColor" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/view_distance_10">
+
+                <EditText
+                    android:id="@+id/edit_Remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/view_distance_70"
+                    android:layout_margin="@dimen/view_distance_10"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:hint="请输入您要备注的信息，非必填选项"
+                    android:textColorHint="@color/t999"
+                    android:padding="@dimen/view_distance_5"
+                    android:textSize="@dimen/text_size_14" />
+                <TextView
+                    android:id="@+id/remarkLenth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/t999"
+                    android:text="0/255"
+                    android:layout_marginRight="@dimen/view_distance_10"
+                    android:textSize="@dimen/text_size_11"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lineColor" />
+
+            <Button
+                android:id="@+id/commit_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/view_distance_40"
+                android:layout_margin="@dimen/view_distance_10"
+                android:layout_marginBottom="@dimen/view_distance_30"
+                android:background="@drawable/sign_submit_selecter"
+                android:text="提交"
+                android:textColor="@color/colorWihte"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

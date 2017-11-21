@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.chuyu.gaosuproject.activity.GuideActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/guide_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"></android.support.v4.view.ViewPager>
+    <Button
+        android:id="@+id/bt_login_guide"
+        android:layout_width="@dimen/view_distance_105"
+        android:layout_height="@dimen/view_distance_32"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/guide_login_bt"
+        android:text="登录"
+        android:textColor="@color/colorWihte"
+        android:visibility="invisible"
+        android:textSize="@dimen/text_size_16"
+        android:layout_marginBottom="@dimen/view_distance_52"/>
+
+</RelativeLayout>

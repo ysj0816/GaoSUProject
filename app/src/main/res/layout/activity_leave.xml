@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/view_distance_52"
+        android:background="@color/a37a0bc">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:paddingLeft="@dimen/view_distance_10"
+            android:paddingRight="@dimen/view_distance_30"
+            android:src="@mipmap/left_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="请假"
+            android:textColor="@color/colorWihte"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/radiogroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/view_distance_10"
+                    android:layout_marginTop="@dimen/view_distance_10"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:paddingRight="@dimen/view_distance_10">
+
+                    <RadioButton
+                        android:id="@+id/rbtn_off"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/view_distance_44"
+                        android:button="@drawable/radio_butt_img"
+                        android:checked="true"
+                        android:padding="@dimen/view_distance_12"
+                        android:text="调休"
+                        android:textColor="@color/t33333"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/lineColor" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_leave"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/view_distance_44"
+                        android:button="@drawable/radio_butt_img"
+                        android:padding="@dimen/view_distance_12"
+                        android:text="请假"
+                        android:textColor="@color/t33333"
+                        android:textSize="@dimen/text_size_14" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWihte"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/view_distance_10">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/view_distance_40"
+                    android:layout_marginTop="@dimen/view_distance_15"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/view_distance_10"
+                        android:text="开始时间:"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/edt_starttime"
+                        android:layout_width="@dimen/view_distance_205"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/view_distance_10"
+                        android:layout_marginRight="@dimen/view_distance_15"
+                        android:layout_toRightOf="@+id/tv_starttime"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/view_distance_15"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/view_distance_40"
+                    android:layout_marginTop="@dimen/view_distance_15"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_endtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/view_distance_8"
+                        android:text="结束时间:"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/edt_endtime"
+                        android:layout_width="@dimen/view_distance_205"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/view_distance_10"
+                        android:layout_toEndOf="@+id/tv_endtime"
+                        android:layout_toRightOf="@+id/tv_endtime"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/view_distance_15"
+                        android:textSize="@dimen/text_size_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/view_distance_4"
+                    android:layout_marginTop="@dimen/view_distance_15"
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/view_distance_10">
+
+                    <TextView
+                        android:id="@+id/tv_leavereason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/view_distance_8"
+                        android:text="请假原因:"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="98dp"
+                        android:layout_alignTop="@+id/tv_leavereason"
+                        android:layout_toEndOf="@+id/tv_leavereason"
+                        android:layout_toRightOf="@+id/tv_leavereason"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:layout_marginLeft="@dimen/view_distance_10"
+                        android:layout_marginRight="@dimen/view_distance_10">
+
+                        <EditText
+                            android:id="@+id/edt_leaveReason"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/view_distance_82"
+                            android:cursorVisible="false"
+                            android:gravity="left"
+                            android:padding="@dimen/view_distance_5"
+                            android:background="@null"
+                            android:paddingTop="@dimen/view_distance_4"
+                            android:textSize="@dimen/text_size_14" />
+
+                        <TextView
+                            android:id="@+id/reasonLenth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/view_distance_10"
+                            android:layout_marginBottom="@dimen/view_distance_2"
+                            android:text="0/100"
+                            android:textColor="@color/t999"
+                            android:textSize="@dimen/text_size_11" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/view_distance_30">
+
+                <Button
+                    android:id="@+id/bt_leave_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/view_distance_40"
+                    android:layout_margin="@dimen/view_distance_10"
+                    android:background="@drawable/login_button_selector"
+                    android:gravity="center"
+                    android:text="提交"
+                    android:textColor="@color/colorWihte"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

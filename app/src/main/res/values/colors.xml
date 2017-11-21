@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="trans">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="layoutbackground">#f2f2f2</color>
+    <color name="layoutBg">#f2f2f2</color>
+    <color name="lineColor">#dce1e8</color>
+    <color name="greenBg">#4cd964</color>
+    <color name="lightBlue">#d9edf7</color>
+    <!--横向直线-->
+    <color name="colorhorizontalline">#dddddd</color>
+    <!--白色-->
+    <color name="colorWihte">#ffffff</color>
+    <!--透明-->
+    <color name="colorTranslucent">#00000000</color>
+    <!--灰色-->
+    <color name="huise">#000000</color>
+    <color name="a37a0bc">#37a0dc</color>
+    <color name="a2a8ac0">#2a8ac0</color>
+    <color name="ff0000">#ff0000</color>
+    <color name="ff9f00">#ff9f00</color>
+    <color name="t33333">#333333</color>
+    <color name="t666666">#666666</color>
+    <color name="t999">#999999</color>
+    <color name="c82cdf7">#82cdf7</color>
+    <color name="d8e9f6">#d8e9f6</color>
+    <color name="de9df7">#d9edf7</color>
+    <color name="f0ad4e">#f0ad4e</color>
+    <color name="dd524d">#dd524d</color>
+    <color name="t0e488f">#0e488f</color>
+    <color name="T509aeb">#509aeb</color>
+    <color name="c58d093">#58d093</color>
+    <!-- QRCode scanner color begin -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#B0000000</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_point_color">#C0FFFF00</color>
+    <color name="laser_color">#0F0</color>
+    <color name="corner_color">#00FF00</color>
+    <!-- QRCode scanner color end -->
+    <color name="head_main_color">#3e96c4</color>
+    <color name="white">#ffffff</color>
+    <color name="textcolor">#333</color>
+    <color name="edittext">#999</color>
+</resources>

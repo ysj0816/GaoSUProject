@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>本人签到记录</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="../css/mui.min.css" />
+	<link rel="stylesheet" href="../css/main.css" />
+	<link rel="stylesheet" type="text/css" href="../css/mui.picker.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/recodes.css" />
+	<style type="text/css">
+			.mui-select-time {
+				position: fixed;
+				width: 100%;
+				z-index: 10;
+				height: 60px;
+				background: #F1EFF3;
+				margin-top: 34px;
+				padding-top: 10px;
+				text-align: center;
+			}
+
+			.mui-select-daily-time {
+				width: 113px;
+				height: 35px;
+				border: 1px solid #37A0DC;
+				margin-left: 30px;
+				border-width: 1px 1px 1px 1px;
+				border-top-left-radius: 4px;
+				border-top-right-radius: 4px;
+				border-bottom-left-radius: 4px;
+				border-bottom-right-radius: 4px;
+               float: left;
+			}
+
+			.mui-select-daily-word {
+				color: #37A0DC;
+				font-size: 14px;
+				line-height: 35px;
+				text-align: center;
+				font-family: "微软雅黑";
+			}
+
+			.mui-time {
+				font-size: 14px;
+				color: #333333;
+				font-family: "微软雅黑";
+				text-align: center;
+				padding-top: 2px;
+				vertical-align: middle;
+				margin-left: 15px;
+                margin-top: 5px;
+                float: left;
+			}
+
+			.div-submit {
+				width: 100%;
+               height:33px;
+               padding-top:4px;
+			}
+
+			.btn-delete {
+				width: 55px;
+                height:23px;
+                padding-top:3px;
+				font-size: 12px;
+				font-family: "微软雅黑";
+				color: #fff;
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;
+				border-bottom-left-radius: 5px;
+				background-color: #FF0000;
+				border: 1px solid #FF0000;
+                float:right;
+                margin-right:10px;
+			}
+
+			.div-content {
+				overflow: hidden;
+				height: 100%;
+                margin-top: 0;
+                padding:0;
+			}
+
+			body {
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+				padding: 10px;
+				overflow: hidden;
+			}
+
+			.mui-scroll {
+				position: absolute;
+				z-index: 1;
+				width: 100%;
+			}
+
+			#urlUL {
+				box-sizing: border-box;
+				padding: 0px 20px 10px 10px;
+				overflow: hidden;
+			}
+
+	</style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav " id="back"></a>
+	<h1 class="mui-title">本人签到记录</h1>
+</header>
+<div class="mui-select-time" id="select-time">
+	<div class="btn mui-select-daily-time">
+		<a>
+			<div data-options='{"type":"date"}' class="mui-select-daily-word" id="seletetime">
+				历史考勤
+			</div>
+		</a>
+	</div>
+	<div class="mui-time" id="seletecontent">
+		<!--2017-7-9-->
+	</div>
+</div>
+<div class="div-content">
+	<div id="scroll" class="mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<ul id="urlUL">
+			</ul>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+			var seletecontent;
+			(function($) {
+				$.init();
+				$('#scroll').scroll({
+					indicators: false //是否显示滚动条
+				});
+				//***********获取所选日期     ***************/
+				var btns = $('#seletetime');
+				seletecontent = document.getElementById("seletecontent");
+
+				btns.each(function(i, btn) {
+					btn.addEventListener('tap', function() {
+						var picker = new mui.DtPicker({
+							type: "date",
+							beginDate: new Date(2016, 04, 01),
+							endDate: new Date(2080, 05, 01),
+							labels: ['年', '月', '日'],
+						})
+						picker.show(function(rs) {
+							seletecontent.innerText = rs.text;
+							//获取服务器数据
+							document.getElementById("urlUL").innerHTML = "";
+							JavaScriptInterface.setShowPB();
+							getUrlData(rs.text);
+						})
+					}, false);
+				});
+			})(mui);
+
+
+			function showAndroidToast(toast) {
+				JavaScriptInterface.showToast(toast);
+			}
+			//返回事件监听
+			document.getElementById("back").addEventListener("tap", function(event) {
+				JavaScriptInterface.finishBack();
+			})
+			//28E87062-2C23-435F-836C-9AFEADFE4753
+			var ip="";
+			var userid="";//5662DB0D-A5B8-4F36-9BFF-5EF77B65828E
+			var path="";
+			var deleUrl=""
+			var curdate
+			$(function() {
+				//console.log("you");
+				curdate= getcurdate();
+				seletecontent.innerText = curdate;
+				userid = JavaScriptInterface.getUserId();
+				ip = JavaScriptInterface.getIp();
+				path = JavaScriptInterface.getPath();
+				deleUrl = JavaScriptInterface.getDeleteIP();
+				//showAndroidToast("userId:" + userid + "**ip:" + ip);
+
+				//获取服务器数据
+				getUrlData(curdate);
+
+			});
+
+			function getUrlData(date) {
+
+				var selcetDate=seletecontent.innerText;
+				var relutz;
+
+				var html = "";
+				$.ajax({
+					async: true,
+					type: "POST",
+					dataType: 'jsonp',
+					jsonp: 'callback',
+					jsonpCallback: 'callback',
+					url: ip,
+					data: {
+						UserId: userid,
+						DutyDate: date
+					},
+					timeout: 15000,
+					contentType: "application/json;utf-8",
+					success: function(data) {
+						JavaScriptInterface.setHintPB();
+						if(data.total < 1) {
+							//mui.toast("当天没有考勤记录！");
+							html = '<div id = "nothingOne">当天没有考勤记录！</div>';
+
+
+						}
+						var count = 0;
+						relutz=data.rows;
+
+						for(var i = 0; i < data.total; i++) {
+							var curType; //特请值
+							var sta = data.rows[i].DutyType; //打卡参数
+							//console.log("打卡:"+sta);
+							var stao = data.rows[i].Type; //加入的特特情参数
+							//console.log("特请:"+stao);
+							var csta = (sta == "3" ? "请假" : sta == "2" ? "下班" : "上班"); //打卡值
+							/* 多么丑的方式啊  但是短期内还是蛮直观的 新版的再写好看一点哈*/
+							if((csta == '上班' || csta == '下班') && (stao == 0 || stao == null)) {
+								curType = '正常';
+							}
+
+							if((csta == '上班' || csta == '下班') && stao == 1) {
+								curType = '入班';
+							}
+
+							if((csta == '上班' || csta == '下班') && stao == 2) {
+								curType = '出差';
+							}
+
+							if((csta == '上班' || csta == '下班') && stao == 3) {
+								curType = '出班';
+							}
+
+							if((csta == '请假') && stao == 1) {
+								curType = '休假';
+							}
+
+							if((csta == '请假') && (stao == 2 || stao == null)) {
+								curType = '请假';
+							}
+							//console.log("特请curType:"+curType);
+							html += '<li><div class="mui-div-item"><div class="mui-div-item-title"><span id="" class="span-name">';
+							html += data.rows[i].UserName + '</span><span id="" class="span-work">' + curType + '</span><span id="" class="span-time">';
+							html += data.rows[i].DutyDate + '</span></div><div class="mui-div-item-content" style="">';
+							//判断一下  如果是请假的
+							if (sta=="3") {
+								//休假的
+								html+='<div class="div-leave onediv"><span class="div_span_leave_title">开始时间：</span><span class="div_span_leave_content">'+data.rows[i].StartDate+'</span></div>';
+								html+='<div class="div-leave"><span class="div_span_leave_title">结束时间：</span><span class="div_span_leave_content">'+data.rows[i].EndDate+'</span></div>';
+								html+='<div class="div-leave"><span class="div_span_leave_title">原因：</span><span class="div_span_leave_content span_leave">'+data.rows[i].LeaveReason+'</span></div></div>';
+
+							}else{
+								//正常上下班的
+								//若未上传图片
+								if(data.rows[i].ImgUrl == null) {
+									html += '';
+								} else { //若上传了图片
+									//console.log(data.rows[i].ImgUrl);
+									html += '<img id="img-' + count + '" src="'+path + data.rows[i].ImgUrl + '"class="mui-action-preview img-photo" />';
+									count++;
+								}
+								html += '<span id="" class="mui-item-name">' + csta + '</span>';
+								if(data.rows[i].Location!=""){
+									html += '<div class="divcon"><span id="" class="mui-item-content">' + data.rows[i].Location + '</span></div>';
+								}
+								html+='</div>'
+							}
+							//如果等于是今天的  加上删除按钮
+							if(selcetDate==curdate){
+								html += '<div class="div-submit" align="center">' + '<button id="del'+i+'" type="button" data-loading-text="提交中" class="btn-delete" >删除</button></div>';
+							}
+							html += '</div></li>';
+
+						}
+						document.getElementById("urlUL").innerHTML = html;
+						initImgPreview();
+						for(var j = 0; j < data.total; j++) {
+
+							document.getElementById("del"+j).onclick=function() {
+									//var reslut=data.rows;
+									var thisid=this.id;
+									var intID=thisid.replace(/[^0-9]+/g, '');
+									var dutytype=data.rows[intID].DutyType;
+									var CurrentDate=curdate;
+									console.log("dutytype:"+dutytype);
+									//delteNode(this,dutytype,CurrentDate);
+									//执行删除操作
+									mui.confirm('确认删除?','友情提示',['取消','确认'],function(event) {
+										var tapIndex = event.index;
+										switch(tapIndex) {
+											case 0:
+												break;
+											case 1:
+												delteNode(thisid,dutytype,CurrentDate);
+												//deletediv(typeLog,useridvar, thisID);
+												break;
+										}
+									},'div');
+							}
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+						html = '<div id = "nothingOne">网络错误！</div>';
+						document.getElementById("urlUL").innerHTML = html;
+						JavaScriptInterface.setHintPB();
+					}
+				});
+			}
+			function delteNode(thisID,dutytype,currentDate){
+				//console.log("调用");
+				console.log("deleUrl"+deleUrl+"dutytype"+dutytype+"**currentDate"+currentDate);
+				$.ajax({
+					async: true,
+					type: "POST",
+					dataType: 'jsonp',
+					jsonp: 'callback',
+					jsonpCallback: 'callback',
+					url: deleUrl,
+					data: {
+						UserId: userid,
+						CurrentDate: currentDate,
+						DutyType:dutytype
+					},
+					timeout: 30000,
+					contentType: "application/json;utf-8",
+					success:function  (data) {
+
+
+						var success=data.success;
+						console.log("sucess:"+success);
+						if(success){
+							var that=document.getElementById(thisID);
+							var liNode=that.parentNode.parentNode.parentNode
+							var urlNode=liNode.parentNode;
+							urlNode.removeChild(liNode);
+							mui.toast("删除成功！");
+						}else{
+							mui.toast("删除失败！");
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						console.log("jsonp.error:" + textStatus);
+					}
+				});
+
+			}
+
+			//点击预览图片
+			function initImgPreview() {
+				//
+				//console.log("预览");
+				var imgs = document.querySelectorAll("img.mui-action-preview");
+				imgs = mui.slice.call(imgs);
+
+				if(imgs && imgs.length > 0) {
+					//console.log("预览2");
+					var slider = document.createElement("div");
+					slider.setAttribute("id", "__mui-imageview__");
+					slider.classList.add("mui-slider");
+					slider.classList.add("mui-fullscreen");
+					slider.style.display = "none";
+					slider.addEventListener("tap", function() {
+						slider.style.display = "none";
+					});
+					slider.addEventListener("touchmove", function(event) {
+						event.preventDefault();
+					})
+					var slider_group = document.createElement("div");
+					slider_group.setAttribute("id", "__mui-imageview__group");
+					slider_group.classList.add("mui-slider-group");
+					imgs.forEach(function(value, index, array) {
+						///console.log("预览3");
+						//slider.style.display = "block";
+						//给图片添加点击事件，触发预览显示；
+						value.addEventListener('tap', function() {
+							slider.style.display = "block";
+							//console.log("预览4");
+							_slider.refresh();
+							_slider.gotoItem(index, 0);
+						});
+						var item = document.createElement("div");
+						item.classList.add("mui-slider-item");
+						var a = document.createElement("a");
+						var img = document.createElement("img");
+						img.setAttribute("src", value.src);
+						a.appendChild(img)
+						item.appendChild(a);
+						//console.log("预览5");
+						slider_group.appendChild(item);
+					});
+					slider.appendChild(slider_group);
+					document.body.appendChild(slider);
+					var _slider = mui(slider).slider();
+				}
+			}
+
+			//获取当前日期
+			function getcurdate() {
+
+				var today = new Date();
+				var jinnian = today.getFullYear();
+				var month=today.getMonth() + 1;
+				if(month<10){
+					month="0"+month;
+				}else{
+					month=month;
+				}
+				var day=today.getDate();
+				if (day<10) {
+					day="0"+day;
+				}else{
+					day=day;
+				}
+				//var jinyue = today.getMonth() + 1;
+				//var jinDay = today.getDate();
+				var timeDay = (jinnian + "-" + month + "-" + day);
+				return timeDay;
+			}
+		</script>
+
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+/*index样式*/
+
+header button {
+    border: 0;
+    color: #fff;
+    /*	font-family: "微软雅黑";*/
+    font-size: .8em;
+    /*	background-color:cornflowerblue;*/
+    padding: 12px;
+}
+
+h4 {
+    color: #3c99ff;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.mui-title {
+    color: floralwhite;
+}
+
+.mui-icon {
+    color: floralwhite;
+}
+
+.mui-button span {
+    color: floralwhite;
+}
+
+.logo>img {
+    margin-top: 8%;
+    width: 3rem;
+    height: 3rem;
+}
+
+.mui-bar {
+    background-color: #37a0dc;
+}
+
+.mui-bar-tab a span {
+    color: floralwhite;
+}
+
+.mui-content {
+    background: transparent;
+}
+
+.mui-table-view.mui-grid-view {
+    background: transparent;
+}
+
+.mui-btn-block {
+    padding: 5px 0;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+
+/*main.html样式*/
+
+header>h2 {
+    color: floralwhite;
+}
+
+.mui-content>img {
+    position: fixed;
+    z-index: -1;
+}
+
+.mui-content>p {
+    padding: 5px;
+    margin: 0px;
+}
+
+ul.mui-table-view>li>a>img {
+    padding: 10px;
+}
+
+.mui-bar-tab {
+    border: none;
+    /*opacity: 0.8;*/
+    z-index: 9999;
+}
+
+ul.mui-table-view>li>a>img:hover {
+    /*padding: 5px;*/
+    background: transparent;
+    border-radius: 50%;
+}
+
+#login-form {
+    margin-bottom: 35px;
+}

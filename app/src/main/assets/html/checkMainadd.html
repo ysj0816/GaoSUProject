@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>添加日常检查项目</title>
+	<link rel="stylesheet" href="../css/mui.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/main.css" />
+	<style>
+			.mui-card {
+				background: #fff;
+				font-size: .9em;
+			}
+			
+			#addBtn {
+				width: 95%;
+				margin: 0 auto;
+				line-height: 22px;
+				background: #017acb;
+			}
+			
+			.mui-input-row label {
+				color: #8f8f94;
+			}
+			
+			#addBtn:active {
+				opacity: .5;
+			}
+			
+			#formBoxWrap {
+				display: none;
+			}
+			
+			.kmLoading {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-top: -40px;
+				margin-left: -40px;
+				width: 80px;
+				height: 80px;
+				background-image: url(url(../img/logo.png));
+				background-size: cover;
+				animation: kmLoading 2s linear infinite normal;
+				-webkit-animation: kmLoading 2s linear infinite normal;
+			}
+			
+			@keyframes kmLoading {
+				from {
+					transform: rotate(0deg);
+				}
+				to {
+					transform: rotate(360deg);
+				}
+			}
+			
+			@-webkit-keyframes kmLoading {
+				from {
+					transform: rotate(0deg);
+				}
+				to {
+					transform: rotate(360deg);
+				}
+			}
+			
+			.mui-content {
+				margin-top: 20px;
+			}
+			.mui-bar{
+			   background-color: #37a0dc;
+			}
+
+
+		</style>
+</head>
+
+<body>
+<!--页面标题栏开始-->
+<header class="mui-bar mui-bar-nav">
+	<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">日常检查上报</h1>
+	<a id="mlist" class="mui-icon  mui-pull-right">
+		<span style="color: floralwhite;font-size: .70em;">列表</span>
+	</a>
+</header>
+<!--页面标题栏结束-->
+<div class="mui-content">
+	<!--<div id="kmLoading" class="kmLoading"></div>-->
+	<form class="mui-input-group mui-card" id="formBoxWrap">
+		<div class="mui-input-row">
+			<label>服务区:</label>
+			<select id="ManagerArea">
+			</select>
+		</div>
+		<div class="mui-input-row">
+			<label>检查时间:</label>
+			<input id='sbtime' type="text" readonly="readonly" value="">
+		</div>
+		<div class="mui-input-row">
+			<label>检查人:</label>
+			<input id='checkuser' type="text" readonly="readonly" value="">
+		</div>
+		<div class="mui-input-row">
+			<label>管理员:</label>
+			<input id='manageuser' type="text" value="" placeholder="请输入管理员姓名">
+		</div>
+		<div class="mui-input-row">
+			<label>类型:</label>
+			<select id="Type">
+				<option value="1">公益项目</option>
+				<option value="2">经营项目</option>
+			</select>
+		</div>
+		<div class="mui-content-padded">
+			<button type="button" id="addBtn" class="mui-btn mui-btn-block mui-btn-primary">上报</button>
+		</div>
+	</form>
+</div>
+</body>
+<script src="../js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/api.js"></script>
+<script src="../js/mui.min.js"></script>
+<script src="../js/keyback.js"></script>
+<script src="../js/unit.js"></script>
+<script src="../js/checkMainAdd.js"></script>
+
+</html>

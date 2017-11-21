@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBg"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="@color/a37a0bc">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:paddingLeft="12dp"
+            android:paddingRight="30dp"
+            android:src="@mipmap/left_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="日常检查表填报"
+            android:textColor="@color/colorWihte"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWihte">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:text="检查单位:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_dailycheckunit"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/textcolor"
+                    android:paddingLeft="@dimen/view_distance_30"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:text="检查项目:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/tv_dailycheckproject"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/textcolor"
+                    android:paddingLeft="@dimen/view_distance_30"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:text="扣分:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <EditText
+                    android:id="@+id/tv_dailycheckpoints"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入0-10的数字"
+                    android:inputType="number"
+                    android:textColor="@color/edittext"
+                    android:paddingLeft="@dimen/view_distance_55"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="44dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:text="检查结果:"
+                    android:textColor="@color/textcolor"
+                    android:textSize="@dimen/text_size_14" />
+
+                <EditText
+                    android:id="@+id/tv_dailycheckresult"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="无需填写,系统自动判断"
+                    android:focusable="false"
+                    android:inputType="number"
+                    android:textColor="@color/edittext"
+                    android:paddingLeft="@dimen/view_distance_25"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="130dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:paddingTop="@dimen/view_distance_10"
+                    android:textColor="@color/textcolor"
+                    android:text="具体情况:"
+                    android:textSize="@dimen/text_size_14" />
+
+                <EditText
+                    android:id="@+id/tv_dailyspecificsituation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/solid_edittext_stork"
+                    android:gravity="left"
+                    android:hint="请输入简单的文字说明"
+                    android:paddingLeft="@dimen/view_distance_10"
+                    android:paddingTop="@dimen/view_distance_6"
+                    android:textSize="@dimen/text_size_15" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/view_distance_10"
+                android:text="图片资料"
+                android:textColor="@color/a37a0bc"
+                android:textSize="@dimen/text_size_14" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/view_distance_10">
+
+                <LinearLayout
+                    android:id="@+id/layout_dailyphoto"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/view_distance_4"
+                    android:background="@drawable/solid_roud_green"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/view_distance_10">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/camer_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:text="上传现场照片"
+                        android:textColor="@color/colorWihte"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+
+                <GridView
+                    android:id="@+id/gd_dailyimg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="4dp"
+                    android:horizontalSpacing="4dp"
+                    android:numColumns="4"
+                    android:verticalSpacing="4dp"></GridView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
+
+            <Button
+                android:id="@+id/bt_dailysubmit"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="@dimen/view_distance_10"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:layout_marginTop="@dimen/view_distance_30"
+                android:background="@drawable/login_button_selector"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/colorWihte"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

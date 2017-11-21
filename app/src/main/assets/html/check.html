@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>日常检查列表页面</title>
+    <link rel="stylesheet" href="../css/mui.min.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/mui.picker.min.css" />
+    <style>
+    #result {
+        width: 60%;
+        float: right;
+        margin-top: 10px;
+    }
+    .mui-bar{
+			   background-color: #37a0dc;
+			}
+    #demo6 {
+        width: 36%;
+        float: left;
+        font-size: 0.8em;
+        margin-bottom: 10px;
+    }
+    
+    #segmentedControl {
+        background: #63b7e9;
+        color: #fff;
+    }
+    
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+        color: #fff;
+        background: #1185fe;
+    }
+    
+    h4 {
+        font-weight: normal;
+        color: #017ACB;
+    }
+    
+    .mui-table-view .mui-media-object {
+        line-height: 20px;
+        max-width: 20px;
+        height: 20px;
+    }
+    
+    .mui-btn-warning {
+        background: #1185fe;
+        border: 1px solid #1185fe;
+    }
+    
+    nav .mui-active {
+        background: #0f53b4;
+    }
+    
+    #col {
+        padding-top: 10px;
+        clear: both;
+        position: relative;
+        min-height: 300px;
+    }
+    
+    .kmLoading {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-top: -40px;
+        margin-left: -40px;
+        width: 80px;
+        height: 80px;
+        background-image: url(../../images/logo.png);
+        background-size: cover;
+        animation: kmLoading 2s linear infinite normal;
+        -webkit-animation: kmLoading 2s linear infinite normal;
+    }
+    
+    @keyframes kmLoading {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    @-webkit-keyframes kmLoading {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a id="addBtn" class="mui-icon mui-icon-plusempty mui-pull-right"></a>
+        <h1 id="title" class="mui-title" style="color: floralwhite;">日常检查</h1>
+    </header>
+    <!--底部菜单-->
+    <nav class="mui-bar mui-bar-tab" style="z-index: 666;">
+        <a class="mui-tab-item mui-active" id="showGY">
+            <span class="mui-tab-label">公益项目</span>
+        </a>
+        <a class="mui-tab-item" id="showJY">
+            <span class="mui-tab-label">经营项目</span>
+        </a>
+    </nav>
+    <div class="mui-content">
+        <div class="mui-control-content mui-active">
+            <div style="margin-left: 20px; height: 30px; padding-top: 10px;">
+                <button id='demo6' data-options='{"type":"month"}' class="btn mui-btn mui-btn-danger mui-btn-outlined">选择检查时间 </button>
+                <h4 id='result' class="ui-alert"></h4>
+            </div>
+            <div id="col">
+                <div id="kmLoading" class="kmLoading"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/keyback.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/unit.js"></script>
+    <script src="../js/datePicker.js"></script>
+    <script src="../js/check.js"></script>
+</body>
+
+</html>

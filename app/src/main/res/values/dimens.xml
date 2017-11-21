@@ -1,0 +1,67 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="spacing_micro">16dp</dimen>
+
+    <!--间隔-->
+    <dimen name="view_distance_0">0dp</dimen>
+    <dimen name="view_distance_1">1dp</dimen>
+    <dimen name="view_distance_2">2dp</dimen>
+    <dimen name="view_distance_3">3dp</dimen>
+    <dimen name="view_distance_4">4dp</dimen>
+    <dimen name="view_distance_5">5dp</dimen>
+    <dimen name="view_distance_6">6dp</dimen>
+    <dimen name="view_distance_7">7dp</dimen>
+    <dimen name="view_distance_8">8dp</dimen>
+    <dimen name="view_distance_9">9dp</dimen>
+    <dimen name="view_distance_10">10dp</dimen>
+    <dimen name="view_distance_12">12dp</dimen>
+    <dimen name="view_distance_13">13dp</dimen>
+    <dimen name="view_distance_14">14dp</dimen>
+    <dimen name="view_distance_15">15dp</dimen>
+    <dimen name="view_distance_16">16dp</dimen>
+    <dimen name="view_distance_18">18dp</dimen>
+    <dimen name="view_distance_20">20dp</dimen>
+    <dimen name="view_distance_22">22dp</dimen>
+    <dimen name="view_distance_25">25dp</dimen>
+    <dimen name="view_distance_30">30dp</dimen>
+    <dimen name="view_distance_31">31dp</dimen>
+    <dimen name="view_distance_32">32dp</dimen>
+    <dimen name="view_distance_33">33dp</dimen>
+    <dimen name="view_distance_34">34dp</dimen>
+    <dimen name="view_distance_35">35dp</dimen>
+    <dimen name="view_distance_38">38dp</dimen>
+    <dimen name="view_distance_40">40dp</dimen>
+    <dimen name="view_distance_44">44dp</dimen>
+    <dimen name="view_distance_47">47dp</dimen>
+    <dimen name="view_distance_48">48dp</dimen>
+    <dimen name="view_distance_52">52dp</dimen>
+    <dimen name="view_distance_55">55dp</dimen>
+    <dimen name="view_distance_60">60dp</dimen>
+    <dimen name="view_distance_64">64dp</dimen>
+    <dimen name="view_distance_70">70dp</dimen>
+    <dimen name="view_distance_82">82dp</dimen>
+    <dimen name="view_distance_83">83dp</dimen>
+    <dimen name="view_distance_84">84dp</dimen>
+    <dimen name="view_distance_90">90dp</dimen>
+    <dimen name="view_distance_100">100dp</dimen>
+    <dimen name="view_distance_105">105dp</dimen>
+    <dimen name="view_distance_110">110dp</dimen>
+    <dimen name="view_distance_120">120dp</dimen>
+    <dimen name="view_distance_160">160dp</dimen>
+    <dimen name="view_distance_200">200dp</dimen>
+    <dimen name="view_distance_205">205dp</dimen>
+
+    <dimen name="updatebar_padding">20.0dip</dimen>
+    <dimen name="common_title_height">48dp</dimen>
+    <dimen name="updatebar_height">72.0dip</dimen>
+    <!--文字大小-->
+    <dimen name="text_size_11">11sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+</resources>

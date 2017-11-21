@@ -1,0 +1,154 @@
+ul {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	padding-right: 10px;
+	width: 100%;
+	list-style: none;
+}
+
+
+li {
+	float: left;
+	width: 100%;
+	margin-left: 5px;
+	border-left: 3px solid #D7E5EE;
+}
+
+.mui-div-item:before {
+	content: "";
+	text-align: center;
+	line-height: 22px;
+	color: #fff;
+	background: #30adff;
+	float: left;
+	position: relative;
+	left: -30px;
+	border-radius: 50%;
+	height: 12px;
+	width: 12px;
+	z-index: 1;
+}
+
+.mui-div-item {
+	background: #FFFFFF;
+	height: auto;
+	margin-top: 19px;
+	margin-left: 22px;
+	border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#scroll {
+	padding-top: 100px;
+	box-sizing: border-box;
+	overflow: hidden;
+	height: 100%;
+}
+
+.mui-scroll-wrapper {
+	position: absolute;
+	z-index: 2;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	width: 100%;
+}
+
+.mui-div-item-title {
+	background: #00AEFF;
+	width: 100%;
+	height: 24px;
+	box-sizing: border-box;
+	border: 1px solid #00AEFF;
+	border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.span-name {
+	color: #FFFFFF;
+	font-size: 14px;
+	line-height: 24px;
+}
+
+.span-work,
+.span-time {
+	color: #FFFFFF;
+	font-size: 14px;
+	line-height: 24px;
+	padding-right: 10px;
+	float: right;
+}
+
+.img-photo {
+	width: 76px;
+	height: 86px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.mui-item-name {
+	color: #666666;
+	font-size: 14px;
+	padding-left: 10px;
+	padding-top: 8px;
+	position: absolute;
+}
+
+.item-left {
+	float: left;
+}
+
+.item-right {
+	float: right;
+}
+
+.divcon {
+	margin-left: 86px;
+	padding-right: 10px;
+	margin-top: -60px;
+	margin-bottom: 8px;
+}
+
+.mui-item-content {
+	font-size: 13px;
+	letter-spacing: 1px;
+	color: #999999;
+	font-family: "微软雅黑";
+}
+
+.span_leave {
+	word-warp: break-word;
+	word-break: break-all;
+}
+
+.div_span_leave_content {
+	color: #999999;
+}
+
+.div_span_leave_title {
+	color: #666666;
+}
+
+.mui-fullscreen {
+	position: fixed;
+	z-index: 20;
+	background-color: #000;
+}
+
+.div-leave {
+	font-size: 14px;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.onediv {
+	white-space: nowrap;
+}
+#nothingOne{
+	margin-top:15px;
+}

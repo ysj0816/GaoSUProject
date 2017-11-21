@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+    defaultConfig {
+        applicationId "com.chuyu.gaosuproject"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            zipAlignEnabled true  // Zipalign优化
+            minifyEnabled true   //压缩打开
+            shrinkResources true // 移除无用的resource文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //添加如下配置就ok了
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'armeabi-v7a', 'armeabi'
+            universalApk false
+        }
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile project(':library')
+    //Btterknife
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    //OkGo网络请求框架
+    //compile 'com.lzy.net:okgo:3.0.3'
+    //compile 'com.lzy.net:okrx:1.0.2'
+    compile 'com.lzy.net:okgo:2.0.0'
+    compile 'com.lzy.net:okrx:0.1.0'
+    //高德定位
+    // compile files('libs/AMap2DMap_5.2.1_AMapSearch_5.2.1_AMapLocation_3.4.1_20170630.jar')
+    //gson解析
+    compile 'com.google.code.gson:gson:2.8.1'
+    //图片 picasson glide
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //popupwindow
+    compile 'com.zaaach:toprightmenu:1.0'
+    //进度条 SVProgressHUD
+    compile 'com.bigkoo:svprogresshud:1.0.6'
+    //时间选择器
+    compile 'com.airsaid.library:pickerview:1.0.3'
+    ///compile files('libs/AMap3DMap_5.2.0_AMapSearch_5.2.1_AMapLocation_3.4.1_20170630.jar')
+    //二维码zXing
+    compile 'com.google.zxing:core:3.3.0'
+    //fastjson解析
+    compile 'com.alibaba:fastjson:1.2.35'
+    //跑马灯
+    compile 'com.dalong:marqueeview:1.0.1'
+    //compile 'com.google.zxing:zxing-parent:3.3.0'
+    compile files('libs/AMap2DMap_5.2.0_AMapSearch_5.2.1_AMapLocation_3.4.1_20170630.jar')
+}
