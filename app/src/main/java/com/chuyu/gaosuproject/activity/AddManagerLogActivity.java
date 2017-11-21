@@ -70,6 +70,7 @@ public class AddManagerLogActivity extends AppCompatActivity implements View.OnC
     private SVProgressHUD svProgressHUD;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
