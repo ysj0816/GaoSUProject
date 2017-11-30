@@ -114,7 +114,7 @@ public class OnWifiUpLoadSign {
             }
         }
         /**
-         * 获取iterator
+         * 获取迭代器iterator
          */
         iteratorAM = amSignData.iterator();
         iteratorPM = pmSignData.iterator();
