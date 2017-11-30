@@ -106,10 +106,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     private static final int REQUEST_CODE = 0; // 请求码
     private static final int REQUEST_CODE_WRITE_SETTINGS = 1;//写入设置
     private static final int SING_ONESELF = 11;
-    private static final int REQUEST_CODE_PIK = 2;
     private static final int TAKE_PICTURE = 100;
-    private static int REQUEST_THUMBNAIL = 1;// 请求缩略图信号标识
-    private static int REQUEST_ORIGINAL = 2;// 请求原图信号标识
     private static final int takePicture = 10;
 
 
@@ -608,7 +605,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
 
         //拍照  的照片返回
         if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
-            Bitmap bitmap = zoomCompressImg();
+            Bitmap bitmap =PictureUtil. zoomCompressImg(cacheImg,SignActivity.this);
             Message message = Message.obtain();
             message.what = takePicture;
             message.obj = bitmap;
@@ -617,20 +614,11 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
 
     }
 
-    /**
-     * 压缩图片
-     */
-    private Bitmap zoomCompressImg() {
-        Bitmap bitmap = PictureUtil.getSmallBitmap(cacheImg, 720, 1080);
-        Bitmap bitmapcanvs = PictureUtil.createBitmap(bitmap, DateUtils.getNowTime(), SignActivity.this);
-        return bitmapcanvs;
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         /**
-         *
+         *停止定位服务
          */
         stopServer();
     }

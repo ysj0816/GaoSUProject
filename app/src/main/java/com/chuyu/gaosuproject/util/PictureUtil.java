@@ -20,6 +20,8 @@ import android.text.TextPaint;
 import android.util.Base64;
 import android.util.Log;
 
+import com.chuyu.gaosuproject.activity.SignActivity;
+
 /**
  * Created by wo on 2017/7/14.
  */
@@ -259,5 +261,24 @@ public class PictureUtil {
             }
         }
         return bitmapPath;
+    }
+
+    /**
+     * 压缩图片 增加水印
+     * @return
+     */
+    public static Bitmap zoomCompressImg(String cacheImg,Context context) {
+        Bitmap bitmap = PictureUtil.getSmallBitmap(cacheImg, 720, 1080);
+        Bitmap bitmapcanvs = PictureUtil.createBitmap(bitmap, DateUtils.getNowTime(), context);
+        return bitmapcanvs;
+    }
+
+    /**
+     * 删除文件
+     * @param filePath
+     * @return
+     */
+    public static boolean deleteFile(String filePath){
+        return true;
     }
 }

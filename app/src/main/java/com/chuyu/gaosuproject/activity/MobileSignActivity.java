@@ -43,6 +43,7 @@ import com.chuyu.gaosuproject.adapter.InfoAdapter;
 import com.chuyu.gaosuproject.bean.SignBean;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
+import com.chuyu.gaosuproject.util.DateUtils;
 import com.chuyu.gaosuproject.util.LocationCityUtil;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
@@ -87,13 +88,9 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
     Gson gson;
 
     private MarkerOptions markerOption;
-    SignBean signBean;
     InfoAdapter infoAdapter;
-  //  private TopRightMenu mTopRightMenu;//popouwindow
-    private List<MenuItem> menuItems;
     private SVProgressHUD svProgressHUD;
     protected String callStr="";
-    //  private OnLocationChangedListener mListener;
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
     private boolean isMarkshow=false;//是否显示
@@ -114,22 +111,12 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
         ButterKnife.bind(this);
         svProgressHUD = new SVProgressHUD(this);
         svProgressHUD.showWithStatus("请稍等！");
-        //获取宽高
-        WindowManager manager = this.getWindowManager();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(outMetrics);
-        int width1 = outMetrics.widthPixels;
-        int height1 =  outMetrics.heightPixels;
-        int wid = (int) ((int) width1 * 0.55);
-        int heig = (int) ((int) height1 * 0.25);
-
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mMapView.onCreate(savedInstanceState);
         //初始化地图控制器对象
         gson = new Gson();
         if (aMap == null) {
             aMap = mMapView.getMap();
-            // addMarkersToMap();
         }
         //初始化定位
         mlocationClient = new AMapLocationClient(getApplicationContext());
@@ -140,7 +127,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
         myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
         //  myLocationStyle.showMyLocation(true);//设置是否显示定位小蓝点，用于满足只想使用定位，不想使用定位小蓝点的场景，设置false以后图面上不再有定位蓝点的概念，但是会持续回调位置信息。
         // aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
-        //aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
+        aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         // aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
         //UiSettings uiSettings = aMap.getUiSettings();
         //uiSettings.setCompassEnabled(true);//指南针
@@ -161,13 +148,11 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
             public boolean onMarkerClick(Marker marker) {
 
                 if (!isMarkshow){
-                    Log.i("test","显示");
                     isMarkshow=true;
                     marker.showInfoWindow();
                     //显示
                     return false;
                 }else {
-                    Log.i("test","隐藏");
                     //隐藏
                     isMarkshow=false;
                     marker.hideInfoWindow();
@@ -177,9 +162,9 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
             }
         });
         aMap.setInfoWindowAdapter(this);
-        //弹窗infowindow
+        //地图弹窗infowindow
         infoAdapter = new InfoAdapter(this, null);
-
+        //右上角弹窗选择
         rightTopWindow=new RightTopWindow(this, new RightTopWindow.LookLinsenter() {
             @Override
             public void clickPosition(int i) {
@@ -213,7 +198,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
      * 初始化数据
      */
     private void initData() {
-        String nowDate = getNowDate();
+        String nowDate = DateUtils.getNowDate();
         Log.i("test","nowDate"+nowDate);
         String userid = (String) SPUtils.get(this, SPConstant.USERID, "");
         OkGo.post(UrlConstant.formatUrl(UrlConstant.ALLPRESONURL))
@@ -234,10 +219,8 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                             if ("0.0".equals(lat)||"0.0".equals(lng)||lat==null||lng==null){
                                 //定位当前位置
                                 getLocationData();
-                                //svProgressHUD.dismissImmediately();
                                 showMarker=1;
                             }else{
-                                //Log.i("test","lat:"+lat);
                                 latitude=Double.parseDouble(lat);
                                 longitude=Double.parseDouble(lng);
                                 latlng = new LatLng(latitude, longitude);
@@ -391,7 +374,6 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
      * 在地图上添加marker
      */
     private void addMarkersToMap() {
-        //  Log.i("test",latlng.toString());
         markerOption = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                 .decodeResource(getResources(),R.drawable.icon_locaiton)))
                 .title("标题")
@@ -419,7 +401,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
         super.onRestart();
         callStr="";
 
-        String nowDate = getNowDate();
+        String nowDate =DateUtils.getNowDate();
         String userid = (String) SPUtils.get(this, SPConstant.USERID, "");
         OkGo.post(UrlConstant.formatUrl(UrlConstant.ALLPRESONURL))
                 .connTimeOut(10000)
@@ -440,7 +422,6 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                            List<SignBean.Rows> list=new ArrayList<SignBean.Rows>();
                            infoAdapter.setList(list);
                            Utility.setListViewHeightBasedOnChildren(infolist);
-                          // marker.hideInfoWindow();
                            svProgressHUD.dismissImmediately();
                            showMarker=2;
                        }
@@ -571,12 +552,5 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
         }
     }
 
-
-    private String getNowDate(){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        return str;
-    }
 
 }
