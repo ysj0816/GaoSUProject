@@ -125,7 +125,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                         leavePresenter.JuGetLeave(userid, dutyType, date);
                         //leavePresenter.submitLeave(userid,dutyType,startDate,endData,reason,type);
                     } else {
-                        svProgressHUD.showInfoWithStatus("请重新选择结束日期！");
+                        svProgressHUD.showInfoWithStatus("开始时间不能大于结束时间，请重新选择时间！");
                     }
                 }
                 break;

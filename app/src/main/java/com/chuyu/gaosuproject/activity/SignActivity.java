@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -15,7 +14,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -39,24 +37,29 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.adapter.SignAdapter;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
+import com.chuyu.gaosuproject.bean.daobean.SignDataDao;
 import com.chuyu.gaosuproject.constant.SPConstant;
+import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.presenter.SignPresenter;
+import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.util.DateUtils;
 import com.chuyu.gaosuproject.util.LocationCityUtil;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.PermissionsChecker;
 import com.chuyu.gaosuproject.util.PictureUtil;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
+import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
+import com.chuyu.gaosuproject.util.upload.OnWifiUpLoadSign;
 import com.chuyu.gaosuproject.view.ISignsView;
+import com.chuyu.gaosuproject.widget.AlertDialog;
 import com.chuyu.gaosuproject.widget.RadioButtonDialog;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -127,9 +130,13 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     private RadioButtonDialog dialog;
     private List<String> listImg;
     private SignAdapter signAdapter;
-    private boolean isLocationSuccess=false;//定位是否成功
+    private boolean isLocationSuccess = false;//定位是否成功
     private SVProgressHUD svProgressHUD;
-
+    private NetChangeObserver mChangeObserver;//网络观察者
+    public NetworkUtils.NetworkType mNetType=NetworkUtils.getNetworkType();//网络连接类型
+    public boolean isAvailable=NetworkUtils.isConnected();//网络是否连接
+    private DBManager<SignDataDao> dbManager;//数据库操作
+    public OnWifiUpLoadSign onWifiUpLoadSign;
     @Override
     protected SignPresenter initPresenter() {
         signPresenter = new SignPresenter();
@@ -154,21 +161,22 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
             @Override
             public void locationSuccess(AMapLocation amapLocation) {
                 //可在其中解析amapLocation获取相应内容。
-                isLocationSuccess=true;
+                isLocationSuccess = true;
                 SignActivity.this.amapLocation = amapLocation;
                 String address = amapLocation.getAddress();//地址
                 float accuracy = amapLocation.getAccuracy();//精度
                 signLocation.setText(address + " (参考距离约" + accuracy + "米)");
-
+                stopLoaction();
             }
 
             @Override
             public void locationFaile(AMapLocation amapLocation) {
-                isLocationSuccess=false;
-               if (amapLocation.getErrorCode()==4){
-                   ToastUtils.show(SignActivity.this,"网络连接异常！");
-               }
+                isLocationSuccess = false;
+                if (amapLocation.getErrorCode() == 4) {
+                    ToastUtils.show(SignActivity.this, "网络连接异常！");
+                }
                 signLocation.setText("定位失败！");
+                stopLoaction();
             }
         });
         dialog = new RadioButtonDialog(this, R.style.Dialogstyle, new RadioButtonDialog.SelectLinstener() {
@@ -209,10 +217,11 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
             }
         });
     }
+
     @Override
     protected void initData() {
         listImg = new ArrayList<>();
-        String time =  DateUtils.getNowTime();
+        String time = DateUtils.getNowTime();
         signTime.setText(time);
         editRemark.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});
         //输入框触摸事件拦截
@@ -242,17 +251,55 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                remarkLenth.setText(length+"/255");
+                remarkLenth.setText(length + "/255");
             }
         });
+
+        /**
+         * 网络观察者
+         */
+        mChangeObserver = new NetChangeObserver() {
+            @Override
+            public void onNetConnected(NetworkUtils.NetworkType type) {
+                isAvailable = true;
+                mNetType = type;
+
+                //查询
+                //List<SignDataDao> daos = dbManager.queryAllList(dbManager.getQueryBuiler());
+                //Log.i("db","数据库中数据："+daos.toString());
+                if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
+                    onWifiUpLoadSign.upLoadSignData();
+                }
+            }
+
+            @Override
+            public void onNetDisConnect() {
+                isAvailable = false;
+                Log.i("con", "网络连接没有连接");
+            }
+        };
+
+        //添加一个网络观察者
+        NetCheckReceiver.registerObserver(mChangeObserver);
+        onWifiUpLoadSign = OnWifiUpLoadSign.getInstace();
+        //数据库操作
+        dbManager = onWifiUpLoadSign.getDbManager();
+        List<SignDataDao> daos = dbManager.queryAllList(dbManager.getQueryBuiler());
+        Log.i("db","初始化查询数据库中数据："+daos.toString());
     }
+    /**
+     * 检查是否重复提交
+     */
+    public String date;
+    public int dutyType;
+    public String userId;
 
     @OnClick({R.id.refres_bt, R.id.camerll, R.id.typell, R.id.commit_bt, R.id.img_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.refres_bt:
                 //刷新定位
-                mLocationClient.startLocation();
+                LocationCityUtil.getInstance().reFreshLocation();
                 signLocation.setText("获取当前定位中...");
                 break;
             case R.id.camerll:
@@ -265,24 +312,61 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                 dialog.show();
                 break;
             case R.id.commit_bt:
-                //首先判断是否重复签到
-                //然后再提交
-                //先获取值
-                //top 1 签到类型
-                //
+
                 if (listImg.size() == 0) {
                     ToastUtils.show(this, "请上传照片！");
                     return;
                 }
-                String date = DateUtils.getNowDate();
-                int dutyType = DutyType;
-                String userId = (String) SPUtils.get(this, SPConstant.USERID, "");
+                date = DateUtils.getNowDate();
+                dutyType = DutyType;
+                userId = (String) SPUtils.get(this, SPConstant.USERID, "");
                 //判断是是否重复签到
                 // Log.i("test","是否重复签到："+userId+"DutyDate:"+date+"dutyType:"+dutyType);
-                signPresenter.isSign(userId, date, dutyType);
+                //判断是否有网 以及是否是wifi
+                if (isAvailable) {
+                    if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+                        /**
+                         * 检差判断是否重复提交
+                         */
+                        signPresenter.isSign(userId, date, dutyType);
+                    } else {
+                        new AlertDialog(this)
+                                .builder()
+                                .setMsg("当前网络不是wifi,将使用流量,确认提交吗?")
+                                .setTitle("确认提交")
+                                .setPositiveButton("确认", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        /**
+                                         * 检差判断是否重复提交
+                                         */
+                                        signPresenter.isSign(userId, date, dutyType);
+                                    }
+                                })
+                                .setNegativeButton("取消", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        /**
+                                         * 取消后，提示数据缓存
+                                         */
+                                        cacheSignData();
+                                        svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
+                                    }
+                                })
+                                .show();
+
+                    }
+                } else {
+                    svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
+                    cacheSignData();
+                }
+
+
                 break;
             case R.id.img_back:
                 finish();
+                break;
+            default:
                 break;
         }
     }
@@ -318,6 +402,37 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         }
     }
 
+    /**
+     * 缓存签到数据
+     */
+    public void cacheSignData(){
+        String s = signLocation.getText().toString();
+        //提交
+        String nowdate = DateUtils.getNowDate();
+        int dutyType = DutyType;
+        String dutyTime = signTime.getText().toString();
+        String location = "";
+        double lng = 0.0;
+        double lat = 0.0;
+        if (isLocationSuccess) {
+            //如果定位成功
+            lng = amapLocation.getLongitude();
+            lat = amapLocation.getLatitude();
+            location = s;
+        }
+        String userId = (String) SPUtils.get(this, SPConstant.USERID, "");
+        int teType = teqingType;
+        String remark = editRemark.getText().toString().trim();
+        String filpath = listImg.get(0);
+
+        SignDataDao signDataDao = new SignDataDao(null,userId,dutyTime,nowdate,teType+""
+                ,dutyType,location,lng+"",lat+"",remark,filpath);
+        /**
+         * 数据库插入一条数据
+         */
+        dbManager.insertObj(signDataDao);
+    }
+    
     /**
      * 创建文件夹
      */
@@ -394,17 +509,17 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         if (isSign) {
             String s = signLocation.getText().toString();
             //提交
-            String date =  DateUtils.getNowDate();
+            String date = DateUtils.getNowDate();
             int dutyType = DutyType;
             String dutyTime = signTime.getText().toString();
-            String location ="";
+            String location = "";
             double lng = 0.0;
             double lat = 0.0;
             if (isLocationSuccess) {
                 //如果定位成功
                 lng = amapLocation.getLongitude();
                 lat = amapLocation.getLatitude();
-                location=s;
+                location = s;
             }
             String userId = (String) SPUtils.get(this, SPConstant.USERID, "");
             int teType = teqingType;
@@ -450,7 +565,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                     Bitmap canvasBitmap = (Bitmap) msg.obj;
                     //保存图片
                     if (canvasBitmap != null) {
-                        String saveFiles = PictureUtil.saveFile(canvasBitmap,SignActivity.this);
+                        String saveFiles = PictureUtil.saveFile(canvasBitmap, SignActivity.this);
                         listImg.clear();
                         listImg.add(0, saveFiles);
                         signAdapter.setImgUrl(listImg);
@@ -461,6 +576,8 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                     Intent intent = new Intent(SignActivity.this, SignOnserlfActivity.class);
                     startActivity(intent);
                     finish();
+                    break;
+                default:
                     break;
             }
             super.handleMessage(msg);
@@ -505,8 +622,37 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
      */
     private Bitmap zoomCompressImg() {
         Bitmap bitmap = PictureUtil.getSmallBitmap(cacheImg, 720, 1080);
-        Bitmap bitmapcanvs =PictureUtil.createBitmap(bitmap,  DateUtils.getNowTime(), SignActivity.this);
+        Bitmap bitmapcanvs = PictureUtil.createBitmap(bitmap, DateUtils.getNowTime(), SignActivity.this);
         return bitmapcanvs;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /**
+         *
+         */
+        stopServer();
+    }
+
+    /**
+     * 停止定位服务
+     */
+    public void stopServer() {
+        /**
+         * 停止定位服务
+         */
+        LocationCityUtil.getInstance().stopServer();
+    }
+
+    /**
+     * 停止定位
+     */
+    public void stopLoaction() {
+        /**
+         * 停止定位
+         */
+        LocationCityUtil.getInstance().stopLcaction();
     }
 
 }

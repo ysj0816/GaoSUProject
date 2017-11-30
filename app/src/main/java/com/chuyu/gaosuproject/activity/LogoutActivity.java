@@ -53,7 +53,7 @@ public class LogoutActivity extends AppCompatActivity {
         logRole.setText(userrole);
     }
 
-    @OnClick({R.id.iv_back, R.id.bt_logout, R.id.bt_quit,R.id.rl_IP_set})
+    @OnClick({R.id.iv_back, R.id.bt_logout, R.id.bt_quit, R.id.rl_IP_set})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -86,7 +86,9 @@ public class LogoutActivity extends AppCompatActivity {
                 break;
             case R.id.bt_quit:
                 //退出
-                new AlertDialog(this).builder().setTitle("退出当前程序")
+                new AlertDialog(this)
+                        .builder()
+                        .setTitle("退出当前程序")
                         .setMsg("确定退出？")
                         .setPositiveButton("确认退出", new View.OnClickListener() {
                             @Override
@@ -107,6 +109,8 @@ public class LogoutActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, ServiceIPActivity.class);
                 startActivity(intent);
                 //finish();
+                break;
+            default:
                 break;
         }
     }

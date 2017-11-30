@@ -39,9 +39,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
-                        android:text="服务区信息管理平台"
+                        android:text="公众服务APP系统(Android) V1.0"
                         android:textColor="@color/t0e488f"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -149,7 +149,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="湖北交投科技发展有限公司"
+                    android:text="武汉楚誉科技股份有限公司"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>

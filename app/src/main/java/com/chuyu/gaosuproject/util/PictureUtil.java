@@ -27,12 +27,13 @@ import android.util.Log;
 public class PictureUtil {
     /**
      * 转换为64位字符串
+     *
      * @param filePath
      * @return
      */
     public static String bitmapToString(String filePath) {
 
-        Bitmap bm = getSmallBitmap(filePath,480,800);
+        Bitmap bm = getSmallBitmap(filePath, 480, 800);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
@@ -41,12 +42,13 @@ public class PictureUtil {
         return Base64.encodeToString(b, Base64.DEFAULT);
 
     }
-    public static int calculateInSampleSize(BitmapFactory.Options options,int reqWidth, int reqHeight) {
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
 
         final int height = options.outHeight;
 
         final int width = options.outWidth;
-        Log.i("test","w:"+width+"**he:"+height);
+        Log.i("test", "w:" + width + "**he:" + height);
         int inSampleSize = 1;
         if (height > reqHeight || width > reqWidth) {
             final int heightRatio = Math.round((float) height
@@ -59,32 +61,33 @@ public class PictureUtil {
     }
 
 
-
-
     /**
      * 根据路径获得突破并压缩返回bitmap用于显示
+     *
      * @param filePath  图片的路径
      * @param reqWidth  要求的图片的像素
      * @param reqHeight 要求的图片的像素
      * @return
      */
-    public static Bitmap getSmallBitmap(String filePath,int reqWidth, int reqHeight) {
+    public static Bitmap getSmallBitmap(String filePath, int reqWidth, int reqHeight) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
 
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        Log.i("test","imgsiz:"+options.inSampleSize);
+        Log.i("test", "imgsiz:" + options.inSampleSize);
         options.inJustDecodeBounds = false;
 
         return BitmapFactory.decodeFile(filePath, options);
     }
+
     public static void deleteTempFile(String path) {
         File file = new File(path);
         if (file.exists()) {
             file.delete();
         }
     }
+
     public static void galleryAddPic(Context context, String path) {
         Intent mediaScanIntent = new Intent(
                 Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -93,6 +96,7 @@ public class PictureUtil {
         mediaScanIntent.setData(contentUri);
         context.sendBroadcast(mediaScanIntent);
     }
+
     public static File getAlbumDir() {
         File dir = new File(
                 Environment
@@ -103,6 +107,7 @@ public class PictureUtil {
         }
         return dir;
     }
+
     public static String getAlbumName() {
         return "sheguantong";
     }
@@ -114,8 +119,7 @@ public class PictureUtil {
      * @param
      * @return
      */
-    public static String convertIconToString(String filePath)
-    {
+    public static String convertIconToString(String filePath) {
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         Log.d("test", "bitmap width: " + bitmap.getWidth() + " height: " + bitmap.getHeight());
         //convert to byte array
@@ -123,25 +127,20 @@ public class PictureUtil {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] bytes = baos.toByteArray();
         //base64 encode
-        byte[] encode = Base64.encode(bytes,Base64.DEFAULT);
+        byte[] encode = Base64.encode(bytes, Base64.DEFAULT);
         String encodeString = new String(encode);
         return encodeString;
 
     }
 
-    private static Bitmap getDiskBitmap(String pathString)
-
-    {
+    private static Bitmap getDiskBitmap(String pathString) {
         Bitmap bitmap = null;
-        try
-        {
+        try {
             File file = new File(pathString);
-            if(file.exists())
-            {
+            if (file.exists()) {
                 bitmap = BitmapFactory.decodeFile(pathString);
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             // TODO: handle exception
         }
         return bitmap;
@@ -152,29 +151,25 @@ public class PictureUtil {
      *
      * @param st
      */
-    public static Bitmap convertStringToIcon(String st)
-    {
+    public static Bitmap convertStringToIcon(String st) {
         // OutputStream out;
         Bitmap bitmap = null;
-        try
-        {
+        try {
             // out = new FileOutputStream("/sdcard/aa.jpg");
             byte[] bitmapArray;
             bitmapArray = Base64.decode(st, Base64.DEFAULT);
-            bitmap =
-                    BitmapFactory.decodeByteArray(bitmapArray, 0,
+            bitmap =BitmapFactory.decodeByteArray(bitmapArray, 0,
                             bitmapArray.length);
             // bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             return bitmap;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
     }
 
     /**
      * 创建一个带文字的图片
+     *
      * @param src
      * @param title3
      * @param context
@@ -223,12 +218,13 @@ public class PictureUtil {
     }
 
     /**
-     *保存图片
+     * 保存图片
+     *
      * @param pBitmap
      * @param context
      * @return
      */
-    public static String saveFile(Bitmap pBitmap,Context context) {
+    public static String saveFile(Bitmap pBitmap, Context context) {
         String sdStatus = Environment.getExternalStorageState();
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
             Log.i("TestFile",

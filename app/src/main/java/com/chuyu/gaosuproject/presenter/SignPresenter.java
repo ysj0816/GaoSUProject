@@ -14,6 +14,16 @@ import java.io.File;
  */
 
 public class SignPresenter extends BasePresenter<ISignsView> {
+
+    private static SignPresenter presenter;
+
+    public static SignPresenter getInstace(){
+        if (presenter==null){
+            presenter=new SignPresenter();
+        }
+        return presenter;
+    }
+
     //提交
     public void submitData(String UserId,String DutyDate,String DutyType,String Location,String Lng,String lat,
         String Type,String rebark,File file){
@@ -24,7 +34,6 @@ public class SignPresenter extends BasePresenter<ISignsView> {
         }
         final ISignsView view = getView();
         //显示等待窗口
-        //view.showWaiting();
         SignsModel.getInstance().SignSubmit(UserId, DutyDate, DutyType, Location,Lng, lat,
                  Type, rebark, file,new ISignsModel.SignSubmitListener() {
             @Override
@@ -53,8 +62,14 @@ public class SignPresenter extends BasePresenter<ISignsView> {
         });
 
     }
-    //判断是否重复提交
-    public void isSign(String userid,String DutyDate,int DutyType){
+
+    /**
+     * 判断是否重复提交
+     * @param userid
+     * @param DutyDate
+     * @param Type
+     */
+    public void isSign(String userid,String DutyDate,int Type){
         if (isViewAttached()){
 
         }else {
@@ -63,11 +78,9 @@ public class SignPresenter extends BasePresenter<ISignsView> {
         final ISignsView view = getView();
         //显示等待窗口
         view.showWaiting();
-        SignsModel.getInstance().rePreSign(userid, DutyDate, DutyType, new ISignsModel.SignListener() {
+        SignsModel.getInstance().rePreSign(userid, DutyDate, Type, new ISignsModel.SignListener() {
             @Override
             public void Success(String meg) {
-               //view.closeWaitting();
-
                 view.isReprSign(true,"成功");
             }
 
@@ -75,16 +88,44 @@ public class SignPresenter extends BasePresenter<ISignsView> {
             public void Failed(String msg) {
                 view.closeWaitting();
                 view.isReprSign(false,msg);
-               // view.showSubmitFaile();
             }
 
             @Override
             public void NetWorKException(String msg) {
                 view.closeWaitting();
                 view.showSubmitFaile();
-                //view.showMesg(msg);
+                view.showMesg(msg);
             }
         });
 
     }
+
+    /**
+     * 接受到广播中网络状态变化后，判断是否重复提交
+     * 注意class 空指针
+     * @param userid
+     * @param DutyDate
+     * @param DutyType
+     */
+    /*public void receiverNetworkIsSign(String userid,String DutyDate,int DutyType){
+        SignsModel.getInstance().recevicerIsSign(userid, DutyDate, DutyType, new ISignsModel.ReceiverIsSignListener() {
+
+            @Override
+            public void Success() {
+
+            }
+
+            @Override
+            public void Failed() {
+
+            }
+
+            @Override
+            public void NetWorKException() {
+
+            }
+        });
+
+    }*/
+
 }

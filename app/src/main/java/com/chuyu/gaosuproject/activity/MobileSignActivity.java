@@ -196,6 +196,8 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                         Intent intent3 = new Intent(MobileSignActivity.this, SignNotActivity.class);
                         startActivity(intent3);
                         break;
+                    default:
+                        break;
                 }
             }
         });
@@ -266,6 +268,9 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
 
     }
 
+    /**
+     * 定位，获取当前位置信息
+     */
     private void getLocationData(){
         //定位
         LocationCityUtil.getInstance().getNowLocaiton(mlocationClient, mLocationOption, new LocationCityUtil.LocationListener() {
@@ -280,7 +285,15 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                 latlng = new LatLng(latitude, longitude);
                 aMap.moveCamera(CameraUpdateFactory.changeLatLng(latlng));
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+                /**
+                 * 地图上添加标记
+                 */
                 addMarkersToMap();
+                /**
+                 * 停止定位
+                 */
+                stopLoaction();
+
             }
 
             @Override
@@ -290,12 +303,38 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                     //询问
                     questOpenService();
                 }else {
-
+                    /**
+                     * 停止定位
+                     */
+                    stopLoaction();
                 }
             }
         });
     }
 
+    /**
+     * 停止定位服务
+     */
+    public void stopServer(){
+        /**
+         * 停止定位服务
+         */
+        LocationCityUtil.getInstance().stopServer();
+    }
+
+    /**
+     * 停止定位
+     */
+    public void stopLoaction(){
+        /**
+         * 停止定位
+         */
+        LocationCityUtil.getInstance().stopLcaction();
+    }
+
+    /**
+     * 询问打开定位服务
+     */
     private void questOpenService() {
         new AlertDialog(this).builder().setTitle("打开定位服务")
                 .setMsg("打开定位服务？")
@@ -311,6 +350,8 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
             }
         }).show();
     }
+
+
 
     /**
      * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
@@ -367,7 +408,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
         super.onDestroy();
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         mMapView.onDestroy();
-
+        stopServer();
         if (null != mlocationClient) {
             mlocationClient.onDestroy();
         }
@@ -515,6 +556,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                         aMap.moveCamera(CameraUpdateFactory.changeLatLng(latlng));
                         aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
                         addMarkersToMap();
+                        stopLoaction();
                     }
 
                     @Override
@@ -523,7 +565,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                     }
                 });
             }else {
-                ToastUtils.show(this,"请打开定位服务！");
+                ToastUtils.show(this,"定位服务未打开，不能获取位置！");
             }
 
         }

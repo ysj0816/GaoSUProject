@@ -91,7 +91,6 @@ public class SignsModel implements ISignsModel {
     public void rePreSign(String userid, String DutyDate, final int DutyType, final SignListener SignListener) {
         OkGo.post(UrlConstant.formatUrl(UrlConstant.IsSIgn))
                 .connTimeOut(30000)//设置30s超时
-
                 .params("UserId",userid)
                 .params("DutyDate",DutyDate)
                 .params("DutyType",DutyType)
@@ -118,4 +117,84 @@ public class SignsModel implements ISignsModel {
                     }
                 });
     }
+
+    /**
+     * 接收到网络状态改变时 请求服务器判断是否重复签到
+     * @param userid
+     * @param DutyDate
+     * @param DutyType
+     * @param onReceiverIsSignListener
+     */
+    @Override
+    public void recevicerIsSign(String userid, String DutyDate, int DutyType, final ReceiverIsSignListener onReceiverIsSignListener) {
+        OkGo.post(UrlConstant.formatUrl(UrlConstant.IsSIgn))
+                .connTimeOut(30000)//设置30s超时
+                .params("UserId",userid)
+                .params("DutyDate",DutyDate)
+                .params("DutyType",DutyType)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        //解析
+                        Log.i("receiver","广播中是否重复签到："+s.toString());
+                        IsSignBean isSign = gson.fromJson(s, IsSignBean.class);
+                        if (isSign.isSuccess()){
+                            //可以签到
+                            onReceiverIsSignListener.Success();
+                        }else {
+                            //重复签到不能提交
+                            onReceiverIsSignListener.Failed();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        //网络失败
+                        onReceiverIsSignListener.NetWorKException();
+                    }
+                });
+    }
+
+    @Override
+    public void SubmitOnReceive(String UserId, String DutyDate, String
+            DutyType, String Location, String Lng, String lat, String
+            Type, String rebark, File file, final OnReceiverSubmitSignListener onReceiverSubmitSignListener) {
+        OkGo.post(UrlConstant.formatUrl(UrlConstant.SIGNURL))
+                .params("UserId",UserId)
+                .params("DutyDate",DutyDate)
+                .params("DutyType",DutyType)
+                .params("Location",Location)
+                .params("Lng",Lng)
+                .params("file",file)
+                .params("Lat",lat)
+                .params("type",Type)
+                .params("Remark",rebark)
+
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            SignQIanBean signQIanBean = gson.fromJson(s, SignQIanBean.class);
+                            Log.i("test","广播wifi中签到:"+signQIanBean.toString());
+                            if (signQIanBean.isSuccess()){
+                                onReceiverSubmitSignListener.onSubmitSuccess();
+                            }else {
+                                onReceiverSubmitSignListener.onSubmitFailed();
+                            }
+                        }catch  (Exception e){
+                            onReceiverSubmitSignListener.NetWorKException();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        super.onError(call, response, e);
+                        onReceiverSubmitSignListener.onSubmitFailed();
+                    }
+                });
+    }
+
+
 }

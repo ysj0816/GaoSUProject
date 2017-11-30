@@ -19,7 +19,6 @@ import com.chuyu.gaosuproject.bean.LoginBean;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.presenter.LoginPresenter;
 import com.chuyu.gaosuproject.util.AppManager;
-import com.chuyu.gaosuproject.util.LocationCityUtil;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
 import com.chuyu.gaosuproject.view.ILoginView;
@@ -33,7 +32,8 @@ import butterknife.OnClick;
  * <p>
  * mvp 模式中的view
  */
-public class LoginActivity extends MVPBaseActivity<ILoginView, LoginPresenter> implements ILoginView {
+public class LoginActivity extends
+        MVPBaseActivity<ILoginView, LoginPresenter> implements ILoginView {
 
 
     @BindView(R.id.username)

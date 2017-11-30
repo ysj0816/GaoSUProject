@@ -72,11 +72,18 @@ public class LauncherActivity extends Activity {
                 String cityname=city.substring(0,city.length()-1);
                 //保存城市名字
                 SPUtils.put(LauncherActivity.this,SPConstant.CITYNAME,cityname);
+                /**
+                 * 停止定位
+                 */
+                LocationCityUtil.getInstance().stopLcaction();
             }
 
             @Override
             public void locationFaile(AMapLocation amapLocation) {
-
+                /**
+                 * 停止定位
+                 */
+                LocationCityUtil.getInstance().stopLcaction();
             }
         });
     }

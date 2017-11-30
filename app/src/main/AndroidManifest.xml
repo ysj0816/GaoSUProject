@@ -184,7 +184,14 @@
         <activity
             android:name=".activity.ServiceIPActivity"
             android:screenOrientation="portrait"></activity>
+        <!--测试的-->
         <activity android:name=".activity.TestActivity"/>
+        <!--监听网络状态广播  静态注册在7.0后失效  需要动态注册-->
+        <!--<receiver android:name=".recevier.NetCheckReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>-->
         <!-- 7.0读取文件权限  需要一个provFider -->
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -1,6 +1,6 @@
 *.iml
-.gradle
-/build
-*.log
-/gradle/wrapper
-/*.properties
+             .gradle
+             /build
+             *.log
+             /gradle/wrapper
+             /*.properties
