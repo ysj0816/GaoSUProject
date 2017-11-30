@@ -111,3 +111,15 @@
 
 #
 -dontwarn rx.internal.util.unsafe.*
+
+
+#greendao3.2.0,此是针对3.2.0，如果是之前的，可能需要更换下包名
+-dontwarn org.greenrobot.greendao.**
+-keep class org.greenrobot.greendao.**{*;}
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+#freemarker
+-dontwarn freemarker.**
+-keep class freemarker.**

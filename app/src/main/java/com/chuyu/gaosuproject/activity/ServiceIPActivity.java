@@ -99,6 +99,8 @@ public class ServiceIPActivity extends AppCompatActivity {
                 }
 
                 break;
+            default:
+                break;
         }
     }
 

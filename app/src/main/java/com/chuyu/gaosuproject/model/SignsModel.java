@@ -35,7 +35,19 @@ public class SignsModel implements ISignsModel {
         return signsModel;
     }
 
-
+    /**
+     * 正常提交
+     * @param UserId
+     * @param DutyDate
+     * @param DutyType
+     * @param Location
+     * @param Lng
+     * @param lat
+     * @param Type
+     * @param rebark
+     * @param file
+     * @param signSubmitListener
+     */
     @Override
     public void SignSubmit(String UserId, String DutyDate, String DutyType, String Location, String Lng, String lat,
                             String Type, String rebark, File file, final SignSubmitListener signSubmitListener) {
@@ -126,7 +138,8 @@ public class SignsModel implements ISignsModel {
      * @param onReceiverIsSignListener
      */
     @Override
-    public void recevicerIsSign(String userid, String DutyDate, int DutyType, final ReceiverIsSignListener onReceiverIsSignListener) {
+    public void recevicerIsSign(String userid, String DutyDate, int DutyType,
+                                final ReceiverIsSignListener onReceiverIsSignListener) {
         OkGo.post(UrlConstant.formatUrl(UrlConstant.IsSIgn))
                 .connTimeOut(30000)//设置30s超时
                 .params("UserId",userid)
@@ -156,10 +169,24 @@ public class SignsModel implements ISignsModel {
                 });
     }
 
+    /**
+     * 在接收到广播后提交数据
+     * @param UserId
+     * @param DutyDate
+     * @param DutyType
+     * @param Location
+     * @param Lng
+     * @param lat
+     * @param Type
+     * @param rebark
+     * @param file
+     * @param onReceiverSubmitSignListener
+     */
     @Override
-    public void SubmitOnReceive(String UserId, String DutyDate, String
-            DutyType, String Location, String Lng, String lat, String
-            Type, String rebark, File file, final OnReceiverSubmitSignListener onReceiverSubmitSignListener) {
+    public void SubmitOnReceive(String UserId, String DutyDate,
+                                String DutyType, String Location, String Lng,
+                                String lat, String Type, String rebark, File file,
+                                final OnReceiverSubmitSignListener onReceiverSubmitSignListener) {
         OkGo.post(UrlConstant.formatUrl(UrlConstant.SIGNURL))
                 .params("UserId",UserId)
                 .params("DutyDate",DutyDate)
@@ -170,7 +197,6 @@ public class SignsModel implements ISignsModel {
                 .params("Lat",lat)
                 .params("type",Type)
                 .params("Remark",rebark)
-
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
@@ -191,7 +217,7 @@ public class SignsModel implements ISignsModel {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        onReceiverSubmitSignListener.onSubmitFailed();
+                        onReceiverSubmitSignListener.NetWorKException();
                     }
                 });
     }

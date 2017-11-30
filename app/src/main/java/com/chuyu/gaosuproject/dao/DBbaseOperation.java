@@ -143,6 +143,12 @@ public class DBbaseOperation<T,K> {
         }
     }
 
+    public void queryBytiao(){
+
+    }
+
+
+
     /**
      * 查询所有
      * @return
