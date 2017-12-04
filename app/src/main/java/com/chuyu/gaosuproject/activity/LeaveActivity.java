@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,16 +25,26 @@ import com.airsaid.pickerviewlibrary.TimePickerView;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
+import com.chuyu.gaosuproject.bean.daobean.LeaveDataBean;
 import com.chuyu.gaosuproject.constant.SPConstant;
+import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.presenter.LeavePresenter;
+import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.util.DateUtils;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.SPUtils;
+import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
+import com.chuyu.gaosuproject.util.upload.OnWifiLoadLeave;
 import com.chuyu.gaosuproject.view.ILeaveView;
+import com.chuyu.gaosuproject.widget.AlertDialog;
+
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -71,6 +82,14 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
     private int leaveType = 1;//请假类型
     private InputMethodManager imm;
 
+    private NetChangeObserver mChangeObserver;//网络观察者
+    public NetworkUtils.NetworkType mNetType=NetworkUtils.getNetworkType();//网络连接类型
+    public boolean isAvailable=NetworkUtils.isConnected();//网络是否连接
+    private String userid;
+    private int dutyType = 3;//打卡类型
+    private String date;
+    private OnWifiLoadLeave onWifiLoadLeave;
+    private DBManager<LeaveDataBean> dbManager;
     @Override
     protected LeavePresenter initPresenter() {
         leavePresenter = new LeavePresenter();
@@ -99,14 +118,12 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                 edtLeaveReason.setCursorVisible(true);
                 break;
             case R.id.bt_leave_submit:
-                String userid = (String) SPUtils.get(this, SPConstant.USERID, "");
-                int dutyType = 3;//打卡类型
+                userid = (String) SPUtils.get(this, SPConstant.USERID, "");
                 String startDate = edtStarttime.getText().toString().trim();
                 String endData = edtEndtime.getText().toString().trim();
                 String reason = edtLeaveReason.getText().toString().trim();
-                int type = leaveType;
                 //现在的时间
-                String date = DateUtils.getNowDate();
+                date = DateUtils.getNowDate();
                 if (TextUtils.isEmpty(startDate)) {
                     svProgressHUD.showInfoWithStatus("开始时间不能为空");
                     return;
@@ -120,18 +137,70 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                     //先判断结束时间不能小于开始时间
                     boolean compareDate = DateUtils.compare_date(startDate, endData);
                     if (compareDate) {
-                        //Log.i("test", "请假：" + userid + "\n" + dutyType + "\n" + startDate + "\n" + endData + "\n" + reason + "\n" + type);
-                        //先判断是否重复 提交请假
-                        leavePresenter.JuGetLeave(userid, dutyType, date);
-                        //leavePresenter.submitLeave(userid,dutyType,startDate,endData,reason,type);
+                        /**
+                         * 提示缓存
+                         */
+                        if (isAvailable){
+                            if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
+                                //直接判断是否能够请假
+                                leavePresenter.JuGetLeave(userid, dutyType, date);
+                            }else{
+                                //网络连接
+                                new AlertDialog(this)
+                                        .builder()
+                                        .setMsg("当前网络不是wifi,将使用流量,确认提交吗?")
+                                        .setTitle("确认提交")
+                                        .setPositiveButton("确认", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                leavePresenter.JuGetLeave(userid, dutyType, date);
+                                            }
+                                        })
+                                        .setNegativeButton("取消", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                //缓存请假的数据
+                                                cacheLeaveData();
+                                                svProgressHUD.showInfoWithStatus("已缓存，将在WiFi状态下自动提交！");
+                                            }
+                                        })
+                                        .show();
+                            }
+
+                        }else{
+                            /**
+                             * 提示缓存
+                             */
+                            cacheLeaveData();
+                            svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
+                        }
                     } else {
                         svProgressHUD.showInfoWithStatus("开始时间不能大于结束时间，请重新选择时间！");
                     }
                 }
                 break;
+            default:
+                break;
         }
     }
 
+    /**
+     * 请假数据缓存
+     */
+    private void cacheLeaveData() {
+        String startDate = edtStarttime.getText().toString().trim();
+        String endData = edtEndtime.getText().toString().trim();
+        String reason = edtLeaveReason.getText().toString().trim();
+        int type = leaveType;
+        //缓存到数据库中
+        LeaveDataBean leaveDataBean = new LeaveDataBean(null, userid, startDate, endData, reason, date, dutyType, type);
+        dbManager.insertObj(leaveDataBean);
+    }
+
+    /**
+     * 判断开始时间和结束时间
+     * @param fag
+     */
     private void setTime(final int fag) {
         //时间
         String strTime;
@@ -214,11 +283,46 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                 reasonLenth.setText(length+"/100");
             }
         });
+
+
+
     }
 
     @Override
     protected void initData() {
+        /**
+         * 网络观察者
+         */
+       NetChangeObserver mNetObserver= new NetChangeObserver() {
+            @Override
+            public void onNetConnected(NetworkUtils.NetworkType type) {
 
+                isAvailable = true;
+                mNetType = type;
+                if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
+                    //自动提交
+                    Log.i("test","连接到wifi");
+                    onWifiLoadLeave.upLoadLeaveData();
+                }
+            }
+
+            @Override
+            public void onNetDisConnect() {
+                 isAvailable=false;
+                Log.i("test","网络没有连接");
+            }
+        };
+        /**
+         * 添加一个网络观察者
+         */
+        NetCheckReceiver.registerObserver(mNetObserver);
+         onWifiLoadLeave = OnWifiLoadLeave.getInstance();
+         dbManager = onWifiLoadLeave.getDbManager();
+        /**
+         * 查询所有请假的缓存
+         */
+        List<LeaveDataBean> leaveDataBeen = dbManager.queryAllList(dbManager.getQueryBuiler());
+        Log.i("test","leave:"+leaveDataBeen.toString());
     }
 
     @Override
@@ -260,7 +364,6 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
 
         if (isleave) {
             String userid = (String) SPUtils.get(this, SPConstant.USERID, "");
-            int dutyType = 3;//打卡类型
             String startDate = edtStarttime.getText().toString().trim();
             String endData = edtEndtime.getText().toString().trim();
             String reason = edtLeaveReason.getText().toString().trim();

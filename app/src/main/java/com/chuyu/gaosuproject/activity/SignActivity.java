@@ -265,6 +265,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                 //List<SignDataDao> daos = dbManager.queryAllList(dbManager.getQueryBuiler());
                 //Log.i("db","数据库中数据："+daos.toString());
                 if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
+                    Log.i("test","连接到wifi");
                     onWifiUpLoadSign.upLoadSignData();
                 }
             }

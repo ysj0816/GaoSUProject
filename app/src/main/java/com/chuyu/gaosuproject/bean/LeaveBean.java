@@ -27,7 +27,7 @@ public class LeaveBean {
 
     @Override
     public String toString() {
-        return "LeaveBean{" +
+        return "LeaveDataBean{" +
                 "success=" + success +
                 ", msg='" + msg + '\'' +
                 '}';

@@ -120,7 +120,7 @@ public class GaoSuApplication extends Application {
     public void onLowMemory() {
         super.onLowMemory();
         /**
-         * 内存回收时
+         * 内存回收时，反注册广播
          */
         NetCheckReceiver.unRegisterNetworkReceiver(this);
         /**

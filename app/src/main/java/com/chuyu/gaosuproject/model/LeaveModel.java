@@ -116,4 +116,89 @@ public class LeaveModel implements ILeaveModel {
                     }
                 });
     }
+
+    /**
+     * 广播中判断是否能够请假
+     * @param UserId
+     * @param DutyType
+     * @param DutyDate
+     * @param resLeaveListener
+     */
+    public void ableToleave(String UserId, int DutyType, String DutyDate, final ResLeaveListener resLeaveListener){
+        OkGo.post(UrlConstant.formatUrl(UrlConstant.IsSIgn))
+                .connTimeOut(30000)//设置30s超时
+                .params("UserId",UserId)
+                .params("DutyDate",DutyDate)
+                .params("DutyType",DutyType)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try{
+                            IsSignBean isSign = gson.fromJson(s, IsSignBean.class);
+                            if (isSign.isSuccess()){
+                                //可以请假
+                                resLeaveListener.isLeave();
+
+                            }else {
+                                //重复请假不能提交
+
+                                resLeaveListener.notLeave();
+                            }
+                        }catch (Exception e){
+                            resLeaveListener.shwoExpretion("");
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        resLeaveListener.shwoExpretion("");
+                    }
+                });
+    }
+
+    /**
+     * 在广播中提交请假
+     * @param UserId
+     * @param DutyType
+     * @param StartDate
+     * @param EndDate
+     * @param LeaveReason
+     * @param type
+     * @param leaveListener
+     */
+    public void onReceiverLeave(String UserId, int DutyType, String StartDate,
+                                String EndDate, String LeaveReason, int type, final LeaveListener leaveListener){
+        OkGo.post(UrlConstant.formatUrl(UrlConstant.LEAVEURL))
+                .params("UserId", UserId)
+                .params("DutyType", DutyType)
+                .params("StartDate", StartDate)
+                .params("EndDate", EndDate)
+                .params("LeaveReason", LeaveReason)
+                .params("type", type)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            //解析
+                            LeaveBean leaveBean = gson.fromJson(s, LeaveBean.class);
+                            Log.i("test","ben:"+leaveBean);
+                            if (leaveBean.isSuccess()){
+                                leaveListener.submitSuccess();
+                            }else {
+                                leaveListener.submitFaile();
+                            }
+                        }catch (Exception e){
+                            leaveListener.shwoExpretion("");
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        leaveListener.shwoExpretion("");
+                    }
+                });
+    }
 }

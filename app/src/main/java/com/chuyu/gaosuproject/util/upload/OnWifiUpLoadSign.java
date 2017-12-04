@@ -39,24 +39,24 @@ public class OnWifiUpLoadSign {
     /**
      * 是否继续执行
      */
-    public static boolean isContinueExecetue = true;
+    private static boolean isContinueExectue = true;
     /**
      * 上午的签到数据
      */
-    public List<SignDataDao> amSignData = new ArrayList<>();
+    private List<SignDataDao> amSignData = new ArrayList<>();
     /**
      * 下午的签到数据
      */
-    public List<SignDataDao> pmSignData = new ArrayList<>();
+    private List<SignDataDao> pmSignData = new ArrayList<>();
 
-    public Iterator<SignDataDao> iteratorAM;
+    private Iterator<SignDataDao> iteratorAM;
 
-    public Iterator<SignDataDao> iteratorPM;
+    private Iterator<SignDataDao> iteratorPM;
 
     /**
      * 代表上午签到的iteratorAM第几次迭代
      */
-    public static int TAG=0;
+    private static int TAG=0;
 
     public static OnWifiUpLoadSign getInstace() {
         if (null == onWifiSign) {
@@ -124,13 +124,13 @@ public class OnWifiUpLoadSign {
              *  执行上午的
              */
             iteratorSubmit(iteratorAM);
-            isContinueExecetue = false;
+            isContinueExectue = false;
             //调用第一次
             TAG=1;
         } else {
             //只有下午签到数据
             iteratorSubmit(iteratorPM);
-            isContinueExecetue = false;
+            isContinueExectue = false;
         }
     }
 
@@ -139,16 +139,16 @@ public class OnWifiUpLoadSign {
      *
      * @param iterSign
      */
-    public void iteratorSubmit(Iterator<SignDataDao> iterSign) {
+    private void iteratorSubmit(Iterator<SignDataDao> iterSign) {
         /**
          * 获取迭代器
          */
-        while (isContinueExecetue && iterSign.hasNext()) {
+        while (isContinueExectue && iterSign.hasNext()) {
             //
             SignDataDao signDataDao = iterSign.next();
             //判断能否提交
             receiverNetworkIsSign(signDataDao);
-            isContinueExecetue = false;
+            isContinueExectue = false;
         }
 
     }
@@ -288,13 +288,13 @@ public class OnWifiUpLoadSign {
         dbManager.deleteByID(id);
     }
 
-    public class MyHandler extends Handler {
+    private class MyHandler extends Handler {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             //继续发送
-            isContinueExecetue = true;
+            isContinueExectue = true;
             //继续迭代
             if (iteratorAM.hasNext()){
                 //有上午的签到数据
