@@ -80,8 +80,6 @@ public class AddManagerLogActivity extends AppCompatActivity implements View.OnC
 	private String userid;
 	private SVProgressHUD svProgressHUD;
 	private NetChangeObserver observer;//网络观察者
-	public NetworkUtils.NetworkType mNetType = NetworkUtils.getNetworkType();//网络连接类型
-	public boolean isAvailable = NetworkUtils.isConnected();//网络是否连接
 	private OnWifiUpLoadLog onWifiUpLoadLog;
 	private String edtManagementchecksituation;
 	private String edtCommonwealchecksituation;
@@ -157,9 +155,7 @@ public class AddManagerLogActivity extends AppCompatActivity implements View.OnC
 			@Override
 			public void onNetConnected(NetworkUtils.NetworkType type) {
 				Log.i("test", "有网");
-				isAvailable = true;
-				mNetType = type;
-				if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+				if ( type== NetworkUtils.NetworkType.NETWORK_WIFI) {
 					Log.i("test", "有网WIFI");
 					//有网情况下获取数据库存的离线日志
 					List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
@@ -174,7 +170,6 @@ public class AddManagerLogActivity extends AppCompatActivity implements View.OnC
 
 			@Override
 			public void onNetDisConnect() {
-				isAvailable = false;
 				Log.i("test", "网络没有连接");
 			}
 		};
@@ -222,8 +217,8 @@ public class AddManagerLogActivity extends AppCompatActivity implements View.OnC
 		}
 		Log.i("test", "进来了");
 		if (flag.equals("one")) {
-			if (isAvailable) {
-				if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+			if (NetworkUtils.isConnected()) {
+				if (NetworkUtils.getNetworkType() == NetworkUtils.NetworkType.NETWORK_WIFI) {
 					Log.i("test","当前wifi网络");
 					Log.i("test", "数据已提交");
 					submitLog();

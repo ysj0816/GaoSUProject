@@ -106,9 +106,6 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     private SVProgressHUD svProgressHUD;
     private DailyCheckListFillPresenter dailyCheckListFillPresenter;
     private List<String> pathList=new ArrayList<String>();
-
-    public NetworkUtils.NetworkType mNetType = NetworkUtils.getNetworkType();//网络连接类型
-    public boolean isAvailable = NetworkUtils.isConnected();//网络是否连接
     private OnWifiLoadDailyCheck onWifiLoadDailyCheck;
     private DBManager<DailyCheck> dbManager;
 
@@ -207,9 +204,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
             @Override
             public void onNetConnected(NetworkUtils.NetworkType type) {
                 Log.i("test", "日常检查有网");
-                isAvailable = true;
-                mNetType = type;
-                if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+                if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
                     Log.i("test", "日常检查有网WIFI");
                     try{
                         //有网情况下获取数据库存的离线日志
@@ -230,7 +225,6 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
 
             @Override
             public void onNetDisConnect() {
-                isAvailable = false;
                 Log.i("test", "网络连接没有连接");
             }
         };
@@ -276,9 +270,9 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                     return;
                 }
                 Log.i("test", checkId + "\n" + checkUnitId + "\n" + checkProjectId);
-                if (isAvailable){
+                if (NetworkUtils.isConnected()){
                     Log.i("test","当前有网");
-                    if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+                    if (NetworkUtils.getNetworkType() == NetworkUtils.NetworkType.NETWORK_WIFI) {
                         Log.i("test","当前wifi网络");
                         Log.i("test", "日常检查数据已提交");
                         submitdailycheck();

@@ -77,8 +77,6 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 	private String remark;
 	private String userid;
 	private SVProgressHUD svProgressHUD;
-	public NetworkUtils.NetworkType mNetType = NetworkUtils.getNetworkType();//网络连接类型
-	public boolean isAvailable = NetworkUtils.isConnected();//网络是否连接
 	private DBManager<ManageLog> dbManager;
 	private String edtWatersupplysituation;
 	private String edtPowersupplysituation;
@@ -148,9 +146,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 			@Override
 			public void onNetConnected(NetworkUtils.NetworkType type) {
 				Log.i("test", "水电工有网");
-				isAvailable = true;
-				mNetType = type;
-				if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+				if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
 					Log.i("test", "水电工有网WIFI");
 					//有网情况下获取数据库存的离线日志
 					List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
@@ -165,7 +161,6 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 
 			@Override
 			public void onNetDisConnect() {
-				isAvailable = false;
 				Log.i("con", "网络连接没有连接");
 			}
 		};
@@ -209,8 +204,8 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 			return;
 		}
 		if (tag.equals("one")) {
-			if (isAvailable) {
-				if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+			if (NetworkUtils.isConnected()) {
+				if (NetworkUtils.getNetworkType() == NetworkUtils.NetworkType.NETWORK_WIFI) {
 					Log.i("test", "水电工数据已提交");
 					submitwaterLog();
 				} else {
