@@ -29,15 +29,23 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.bumptech.glide.Glide;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
+import com.chuyu.gaosuproject.bean.dailycheck.DailyCheck;
+import com.chuyu.gaosuproject.bean.logmanagebean.ManageLog;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
+import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.presenter.DailyCheckListFillPresenter;
+import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.SystemBarTintManager;
 import com.chuyu.gaosuproject.util.SystemStatusBar;
 import com.chuyu.gaosuproject.util.ToastUtils;
+import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
+import com.chuyu.gaosuproject.util.upload.OnWifiLoadDailyCheck;
 import com.chuyu.gaosuproject.view.IDailyCheckListFillView;
+import com.chuyu.gaosuproject.widget.AlertDialog;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.request.BaseRequest;
@@ -51,6 +59,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,6 +106,13 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     private SVProgressHUD svProgressHUD;
     private DailyCheckListFillPresenter dailyCheckListFillPresenter;
     private List<String> pathList=new ArrayList<String>();
+
+    public NetworkUtils.NetworkType mNetType = NetworkUtils.getNetworkType();//网络连接类型
+    public boolean isAvailable = NetworkUtils.isConnected();//网络是否连接
+    private OnWifiLoadDailyCheck onWifiLoadDailyCheck;
+    private DBManager<DailyCheck> dbManager;
+
+
     @Override
     protected int initContent() {
         return R.layout.activity_daily_check_list_fill;
@@ -110,6 +126,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
         checkUnitName = getIntent().getStringExtra("checkUnitName");
         checkProjectName = getIntent().getStringExtra("checkProjectName");
         checkId = getIntent().getStringExtra("checkId");
+        Log.i("test","checkId:"+checkId);
         checkUnitId = getIntent().getStringExtra("checkUnitId");
         checkProjectId = getIntent().getStringExtra("checkProjectId");
         if (!"".equals(checkUnitName)) {
@@ -184,6 +201,43 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                 startActivity(intent);
             }
         });
+
+
+        NetChangeObserver observer=new NetChangeObserver() {
+            @Override
+            public void onNetConnected(NetworkUtils.NetworkType type) {
+                Log.i("test", "日常检查有网");
+                isAvailable = true;
+                mNetType = type;
+                if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+                    Log.i("test", "日常检查有网WIFI");
+                    try{
+                        //有网情况下获取数据库存的离线日志
+                        List<DailyCheck> dailyChecks = dbManager.queryAllList(dbManager.getQueryBuiler());
+                        Log.i("test", "dailyChecks:" + dailyChecks.toString());
+                        if (dailyChecks.size()>0) {
+                            Log.i("test","日常检查数据库有数据");
+                            onWifiLoadDailyCheck.upLoadLeaveData(dailyChecks);
+                        }
+                    }catch (Exception e){
+                        Log.i("test","异常抛出");
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onNetDisConnect() {
+                isAvailable = false;
+                Log.i("test", "网络连接没有连接");
+            }
+        };
+        NetCheckReceiver.registerObserver(observer);
+        onWifiLoadDailyCheck = OnWifiLoadDailyCheck.getInstance();
+        dbManager = onWifiLoadDailyCheck.getDbManager();
+
     }
 
     @Override
@@ -222,9 +276,45 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                     return;
                 }
                 Log.i("test", checkId + "\n" + checkUnitId + "\n" + checkProjectId);
-                dailyCheckListFillPresenter.sumbitFill(checkUnitId,checkProjectId,userid,tvDailycheckresult.getText().toString()
-                        ,tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),checkId
-                        ,listfile);
+                if (isAvailable){
+                    Log.i("test","当前有网");
+                    if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+                        Log.i("test","当前wifi网络");
+                        Log.i("test", "日常检查数据已提交");
+                        submitdailycheck();
+                    }else{
+                        new AlertDialog(this)
+                                .builder()
+                                .setMsg("当前网络不是wifi,将使用流量,确认提交吗?")
+                                .setTitle("确认提交")
+                                .setPositiveButton("确认", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        submitdailycheck();
+                                    }
+                                })
+                                .setNegativeButton("取消", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        /**
+                                         * 取消后，提示数据缓存
+                                         */
+                                        cacheSignData();
+                                        svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
+                                    }
+
+
+                                })
+                                .show();
+                    }
+                }else{
+                    Log.i("test","当前无网");
+                    svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
+                    cacheSignData();
+                }
+//                dailyCheckListFillPresenter.sumbitFill(checkUnitId,checkProjectId,userid,tvDailycheckresult.getText().toString()
+//                        ,tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),checkId
+//                        ,listfile);
                 break;
             case R.id.layout_dailyphoto:
                 ImgSelConfig config = new ImgSelConfig.Builder(DailyCheckListFillActivity.this, loader)
@@ -254,6 +344,21 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                 ImgSelActivity.startActivity(DailyCheckListFillActivity.this, config, REQUEST_CODE);
                 break;
         }
+    }
+
+    private void cacheSignData() {
+        String userId = (String) SPUtils.get(this, SPConstant.USERID, "");
+        DailyCheck check=new DailyCheck(null,checkUnitId,checkProjectId,userId,tvDailycheckresult.getText().toString(),
+                tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),
+                checkId,pathList);
+        dbManager.insertObj(check);
+
+    }
+
+    private void submitdailycheck() {
+        dailyCheckListFillPresenter.sumbitFill(checkUnitId,checkProjectId,userid,tvDailycheckresult.getText().toString()
+                ,tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),checkId
+                ,listfile);
     }
 
     private ImageLoader loader = new ImageLoader() {
@@ -348,7 +453,11 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
         svProgressHUD.showErrorWithStatus("提交失败！");
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ImgSelActivity.getInstance().destoryActivity();
+    }
 
     private class GridAdapter extends BaseAdapter {
         private List<String> pathList;

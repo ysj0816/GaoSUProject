@@ -45,4 +45,5 @@ public class DailyCheckListFillPresenter extends BasePresenter<IDailyCheckListFi
                     }
                 });
     }
+
 }

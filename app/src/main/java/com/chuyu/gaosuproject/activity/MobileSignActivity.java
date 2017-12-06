@@ -110,7 +110,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
         setContentView(R.layout.activity_moblie_sign);
         ButterKnife.bind(this);
         svProgressHUD = new SVProgressHUD(this);
-        svProgressHUD.showWithStatus("请稍等！");
+//        svProgressHUD.showWithStatus("请稍等！");
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mMapView.onCreate(savedInstanceState);
         //初始化地图控制器对象

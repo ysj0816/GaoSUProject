@@ -195,6 +195,12 @@
                     android:textColorHint="@color/edittext"
                     android:textColor="@color/textcolor"  />
             </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/view_distance_10"
+                android:layout_marginRight="@dimen/view_distance_10"
+                android:background="@color/colorhorizontalline" />
 
 
             <LinearLayout

@@ -485,6 +485,11 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
                     //首先判断权限
                     initPermission();
                     break;
+                case 5:
+                    //首先判断权限
+                    Intent intenttest = new Intent(MainActivity.this, TestActivity.class);
+                    startActivity(intenttest);
+                    break;
                 default:
                     ToastUtils.show(MainActivity.this,"暂未开放此功能！");
                     break;

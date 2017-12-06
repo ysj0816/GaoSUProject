@@ -24,6 +24,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
@@ -98,6 +99,9 @@ public class LogManageActivity extends AppCompatActivity implements View.OnClick
         logmanageWebview.setWebViewClient(new MyWebViewClient());
         logmanageWebview.loadUrl("file:///android_asset/html/log-detail.html");
         handler.sendEmptyMessageDelayed(0, 3000);
+        boolean availableByPing = NetworkUtils.isAvailableByPing("192.168.11.9");
+        Log.i("test","PINg:192.168.11.9**"+availableByPing);
+        Log.i("test","path:"+path);
     }
 
     Handler handler = new Handler() {

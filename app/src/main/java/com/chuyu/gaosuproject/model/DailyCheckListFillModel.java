@@ -1,5 +1,7 @@
 package com.chuyu.gaosuproject.model;
 
+import android.util.Log;
+
 import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.model.interfacemodel.IDailyCheckListFillModel;
 import com.google.gson.Gson;
@@ -34,6 +36,7 @@ public class DailyCheckListFillModel {
     }
     public void submitcheckfill(String checkunit, String checkproject, String userid, String checkresult, String content
             , String deductpoint, String checkid, List<File> file, final IDailyCheckListFillModel.FillListener fillListener){
+        Log.i("test","有网图片:"+file);
         OkGo.post(UrlConstant.formatUrl(UrlConstant.updateCheckInforURL))
                 .params("CheckUnit", checkunit)
                 .params("CheckProject", checkproject)

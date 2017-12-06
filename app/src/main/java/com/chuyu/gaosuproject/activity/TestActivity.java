@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.chuyu.gaosuproject.R;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 
@@ -46,7 +47,7 @@ public class TestActivity extends AppCompatActivity {
     String comit="http://192.168.3.84:8080/alpha/muiAuth/changePersonalInfo?";
 
     public void getUserinfo() {
-        OkGo.post(url)
+       /* OkGo.post(url)
                 .headers("t", token)
                 .execute(new StringCallback() {
                     @Override
@@ -58,7 +59,24 @@ public class TestActivity extends AppCompatActivity {
                     public void onError(Call call, Response response, Exception e) {
                         Log.i("test","登录后：失败");
                     }
+                });*/
+        OkGo.post("http://192.168.11.9:8088/GS/a/mobile/WorkDiary/MobileGetWorkDairy?")
+                .params("UserID", "2FBF91CE-C418-430A-A328-9B2EBDD2993E")
+                .params("SearchDate", "2017-12-05")
+                .params("Category", "1")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        Log.i("test","日志成功");
+                    }
+
+                    @Override
+                    public void onError(Call call, Response response, Exception e) {
+                        Log.i("test","日志失败");
+                    }
                 });
+        boolean availableByPing = NetworkUtils.isAvailableByPing("192.168.11.9");
+        Log.i("test","PINg:192.168.11.9**"+availableByPing);
     }
 
     @OnClick(R.id.bt)
