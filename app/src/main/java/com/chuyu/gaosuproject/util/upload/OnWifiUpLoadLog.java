@@ -110,16 +110,7 @@ public class OnWifiUpLoadLog {
 
 		String createTime = manageLog.getCreateTime();
 		String[] split = createTime.split(" ");
-//		Log.i("test", "split:" + split[0]);
-//		Log.i("test","Category:"+manageLog.getCategory());
-//		Log.i("test","UserId:"+manageLog.getUserId());
-//		Log.i("test","url:"+UrlConstant.formatUrl(UrlConstant.GetWorkDairyURL));
-//		boolean availableByPing = NetworkUtils.isAvailableByPing("219.139.79.56");
-//		Log.i("test","PINg:"+availableByPing);
-
-
-
-		OkGo.post("http://192.168.11.9:8088/GS/a/mobile/WorkDiary/MobileGetWorkDairy?")
+		OkGo.post(UrlConstant.formatUrl(UrlConstant.GetWorkDairyURL))
 				.params("UserID", manageLog.getUserId())
 				.params("SearchDate", split[0])
 				.params("Category", manageLog.getCategory())
@@ -231,9 +222,8 @@ public class OnWifiUpLoadLog {
 	 * @param category
 	 */
 	private void onReceiveUpLoad(final Long id, String userId, String createTime, String finishWork, String unFinishWork, String needAssistWork, String remark, String category) {
-		//UrlConstant.formatUrl(UrlConstant.AddmManagerLogUrL)
 		//上报管理员日志
-		OkGo.post("http://192.168.11.9:8088/GS/a/mobile/WorkDiary/MobileAddWorkDiary?")
+		OkGo.post(UrlConstant.formatUrl(UrlConstant.AddmManagerLogUrL))
 				.params("AuthorUserID", userId)
 				.params("CreateTime", createTime)
 				.params("FinishWork", finishWork)

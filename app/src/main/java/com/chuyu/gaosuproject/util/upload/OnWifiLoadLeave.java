@@ -5,9 +5,11 @@ import android.os.Message;
 import android.util.Log;
 
 import com.chuyu.gaosuproject.bean.daobean.LeaveDataBean;
+import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.model.LeaveModel;
 import com.chuyu.gaosuproject.model.interfacemodel.ILeaveModel;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 
 import java.util.Iterator;
 import java.util.List;
@@ -123,7 +125,7 @@ public class OnWifiLoadLeave {
      * @param leaveDataBean
      */
     private void isAbleToLeave(final LeaveDataBean leaveDataBean) {
-        LeaveModel.getInstance().ableToleave(leaveDataBean.getUserid(), leaveDataBean.getDutyType(),
+        LeaveModel.getInstance().ableToleave(leaveDataBean.getId(),leaveDataBean.getUserid(), leaveDataBean.getDutyType(),
                 leaveDataBean.getNowDate(),
                 new ILeaveModel.ResLeaveListener() {
                     @Override
@@ -138,6 +140,7 @@ public class OnWifiLoadLeave {
                         Log.i("test","不可以请假");
                         //不能请假
                         myHandler.sendEmptyMessage(0);
+                        cancal(leaveDataBean.getId());
                         //删除数据
                         deleteLeaveById(leaveDataBean.getId());
                     }
@@ -146,7 +149,8 @@ public class OnWifiLoadLeave {
                     public void shwoExpretion(String msg) {
                         Log.i("test","请假检查异常");
                         myHandler.sendEmptyMessage(0);
-                        deleteLeaveById(leaveDataBean.getId());
+                        cancal(leaveDataBean.getId());
+                        //deleteLeaveById(leaveDataBean.getId());
                     }
                 });
     }
@@ -157,32 +161,37 @@ public class OnWifiLoadLeave {
      *
      */
     private void commitLeave(final LeaveDataBean leaveDataBean) {
-        LeaveModel.getInstance().onReceiverLeave(leaveDataBean.getUserid(), leaveDataBean.getDutyType(), leaveDataBean.getStartDate(),
+        LeaveModel.getInstance().onReceiverLeave(leaveDataBean.getId(),leaveDataBean.getUserid(), leaveDataBean.getDutyType(), leaveDataBean.getStartDate(),
                 leaveDataBean.getEndData(), leaveDataBean.getReason(), leaveDataBean.getLeaveType(), new ILeaveModel.LeaveListener() {
                     @Override
                     public void submitSuccess() {
+                        cancal(leaveDataBean.getId());
                         //请假成功
                         myHandler.sendEmptyMessage(0);
                         //删除数据
                         deleteLeaveById(leaveDataBean.getId());
                         Log.i("test","请假成功");
+
                     }
 
                     @Override
                     public void submitFaile() {
+                        cancal(leaveDataBean.getId());
                         //请假失败
                         myHandler.sendEmptyMessage(0);
                         //删除数据
                         deleteLeaveById(leaveDataBean.getId());
                         Log.i("test","请假失败");
+
                     }
 
                     @Override
                     public void shwoExpretion(String msg) {
+                        cancal(leaveDataBean.getId());
                         //请假异常
                         myHandler.sendEmptyMessage(0);
                         //删除数据
-                        deleteLeaveById(leaveDataBean.getId());
+                        //deleteLeaveById(leaveDataBean.getId());
                         Log.i("test","请假异常");
                     }
                 });
@@ -204,5 +213,9 @@ public class OnWifiLoadLeave {
     private void deleteLeaveById(Long id){
         Log.i("test", "删除请假：" + id);
         dbManager.deleteByID(id);
+    }
+
+    private void cancal(Object tag){
+        LeaveModel.getInstance().cancelOKGO(tag);
     }
 }

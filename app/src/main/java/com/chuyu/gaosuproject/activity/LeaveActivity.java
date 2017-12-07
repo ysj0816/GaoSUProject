@@ -28,6 +28,7 @@ import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.daobean.LeaveDataBean;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
+import com.chuyu.gaosuproject.model.LeaveModel;
 import com.chuyu.gaosuproject.presenter.LeavePresenter;
 import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.util.DateUtils;
@@ -82,9 +83,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
     private int leaveType = 1;//请假类型
     private InputMethodManager imm;
 
-    private NetChangeObserver mChangeObserver;//网络观察者
-    public NetworkUtils.NetworkType mNetType=NetworkUtils.getNetworkType();//网络连接类型
-    public boolean isAvailable=NetworkUtils.isConnected();//网络是否连接
+
     private String userid;
     private int dutyType = 3;//打卡类型
     private String date;
@@ -140,10 +139,11 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                         /**
                          * 提示缓存
                          */
-                        if (isAvailable){
-                            if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
+                        if (NetworkUtils.isConnected()){
+                            if (NetworkUtils.getNetworkType()== NetworkUtils.NetworkType.NETWORK_WIFI){
+
                                 //直接判断是否能够请假
-                                leavePresenter.JuGetLeave(userid, dutyType, date);
+                                leavePresenter.JuGetLeave(this,userid, dutyType, date);
                             }else{
                                 //网络连接
                                 new AlertDialog(this)
@@ -153,7 +153,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                                         .setPositiveButton("确认", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                leavePresenter.JuGetLeave(userid, dutyType, date);
+                                                leavePresenter.JuGetLeave(LeaveActivity.this,userid, dutyType, date);
                                             }
                                         })
                                         .setNegativeButton("取消", new View.OnClickListener() {
@@ -296,19 +296,15 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
        NetChangeObserver mNetObserver= new NetChangeObserver() {
             @Override
             public void onNetConnected(NetworkUtils.NetworkType type) {
-
-                isAvailable = true;
-                mNetType = type;
-                if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
+                if (type== NetworkUtils.NetworkType.NETWORK_WIFI){
                     //自动提交
-                    Log.i("test","连接到wifi");
                     onWifiLoadLeave.upLoadLeaveData();
                 }
             }
 
             @Override
             public void onNetDisConnect() {
-                 isAvailable=false;
+
                 Log.i("test","网络没有连接");
             }
         };
@@ -338,6 +334,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
     @Override
     public void shwoExpretion(String msg) {
         svProgressHUD.showInfoWithStatus(msg);
+        cancelHTTP();
     }
 
     @Override
@@ -357,6 +354,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
     @Override
     public void leaveFaile() {
         svProgressHUD.showErrorWithStatus("提交失败！");
+        cancelHTTP();
     }
 
     @Override
@@ -370,14 +368,22 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
             int type = leaveType;
             // ToastUtils.show(this,"可以提交请假！");
             //可以提交请假
-            leavePresenter.submitLeave(userid, dutyType, startDate, endData, reason, type);
+            leavePresenter.submitLeave(this,userid, dutyType, startDate, endData, reason, type);
         } else {
             //ToastUtils.show(this,"你已提交过一次！");
             svProgressHUD.showErrorWithStatus("网络错误！");
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelHTTP();
+    }
 
+    private void cancelHTTP(){
+        LeaveModel.getInstance().cancelOKGO(this);
+    }
     /**
      * 分发事件
      *

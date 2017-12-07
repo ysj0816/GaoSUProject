@@ -3,6 +3,7 @@ package com.chuyu.gaosuproject.model;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.chuyu.gaosuproject.activity.LeaveActivity;
 import com.chuyu.gaosuproject.bean.IsSignBean;
 import com.chuyu.gaosuproject.bean.LeaveBean;
 import com.chuyu.gaosuproject.constant.UrlConstant;
@@ -45,10 +46,11 @@ public class LeaveModel implements ILeaveModel {
      * @param leaveListener
      */
     @Override
-    public void submitLeave(String UserId, int DutyType, String StartDate,
+    public void submitLeave(LeaveActivity activity, String UserId, int DutyType, String StartDate,
                             String EndDate, String LeaveReason, int type, final LeaveListener leaveListener) {
         //Log.i("test","1231请假："+UserId+"\n"+DutyType+"\n"+StartDate+"\n"+EndDate+"\n"+LeaveReason+"\n"+type);
         OkGo.post(UrlConstant.formatUrl(UrlConstant.LEAVEURL))
+                .tag(activity)
                 .params("UserId", UserId)
                 .params("DutyType", DutyType)
                 .params("StartDate", StartDate)
@@ -72,6 +74,7 @@ public class LeaveModel implements ILeaveModel {
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
                         leaveListener.submitFaile();
+                        Log.i("test","请假提交失败：");
                     }
                 });
 
@@ -85,8 +88,9 @@ public class LeaveModel implements ILeaveModel {
      * @param resLeaveListener
      */
     @Override
-    public void judgeLeave(String UserId, int DutyType, String DutyDate, final ResLeaveListener resLeaveListener) {
+    public void judgeLeave(LeaveActivity activity,String UserId, int DutyType, String DutyDate, final ResLeaveListener resLeaveListener) {
         OkGo.post(UrlConstant.formatUrl(UrlConstant.IsSIgn))
+                .tag(activity)
                 .connTimeOut(30000)//设置30s超时
                 .params("UserId",UserId)
                 .params("DutyDate",DutyDate)
@@ -110,9 +114,10 @@ public class LeaveModel implements ILeaveModel {
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
-                        super.onError(call, response, e);
                         //网络失败
                         resLeaveListener.notLeave();
+                        e.printStackTrace();
+                        Log.i("test","请假检查失败：");
                     }
                 });
     }
@@ -124,9 +129,10 @@ public class LeaveModel implements ILeaveModel {
      * @param DutyDate
      * @param resLeaveListener
      */
-    public void ableToleave(String UserId, int DutyType, String DutyDate, final ResLeaveListener resLeaveListener){
+    public void ableToleave(Long tag,  String UserId, int DutyType, String DutyDate, final ResLeaveListener resLeaveListener){
         OkGo.post(UrlConstant.formatUrl(UrlConstant.IsSIgn))
                 .connTimeOut(30000)//设置30s超时
+                .tag(tag)
                 .params("UserId",UserId)
                 .params("DutyDate",DutyDate)
                 .params("DutyType",DutyType)
@@ -147,13 +153,15 @@ public class LeaveModel implements ILeaveModel {
                         }catch (Exception e){
                             resLeaveListener.shwoExpretion("");
                         }
-
+                        Log.i("test","可以请假："+s);
 
                     }
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         resLeaveListener.shwoExpretion("");
+                        e.printStackTrace();
+                        Log.i("test","请假检查网络异常：");
                     }
                 });
     }
@@ -168,9 +176,10 @@ public class LeaveModel implements ILeaveModel {
      * @param type
      * @param leaveListener
      */
-    public void onReceiverLeave(String UserId, int DutyType, String StartDate,
+    public void onReceiverLeave(Long tag,String UserId, int DutyType, String StartDate,
                                 String EndDate, String LeaveReason, int type, final LeaveListener leaveListener){
         OkGo.post(UrlConstant.formatUrl(UrlConstant.LEAVEURL))
+                .tag(tag)
                 .params("UserId", UserId)
                 .params("DutyType", DutyType)
                 .params("StartDate", StartDate)
@@ -197,8 +206,18 @@ public class LeaveModel implements ILeaveModel {
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
+                        e.printStackTrace();
                         leaveListener.shwoExpretion("");
+                        Log.i("test","请假提交网络异常：");
                     }
                 });
+    }
+
+    /**
+     * 取消tag
+     * @param tag
+     */
+    public void cancelOKGO(Object tag){
+        OkGo.getInstance().cancelTag(tag);
     }
 }

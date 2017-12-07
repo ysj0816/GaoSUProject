@@ -80,7 +80,7 @@ public class GaoSuApplication extends Application {
         try {
             OkGo.getInstance()
                     .debug("OkGo")
-                    .setConnectTimeout(OkGo.DEFAULT_MILLISECONDS)  //全局的连接超时时间
+                    .setConnectTimeout(30000)  //全局的连接超时时间
                     .setReadTimeOut(OkGo.DEFAULT_MILLISECONDS)     //全局的读取超时时间
                     .setWriteTimeOut(OkGo.DEFAULT_MILLISECONDS)    //全局的写入超时时间
                     .setCacheMode(CacheMode.NO_CACHE)              //全局统一设置缓存模式,默认是不使用缓存

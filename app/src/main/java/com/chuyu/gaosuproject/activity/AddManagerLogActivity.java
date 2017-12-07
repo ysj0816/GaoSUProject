@@ -177,8 +177,13 @@ public class AddManagerLogActivity extends AppCompatActivity implements View.OnC
 		onWifiUpLoadLog = OnWifiUpLoadLog.getInstace();
 
 		dbManager = onWifiUpLoadLog.getDbManager();
-//		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-//		Log.i("test", "manageLogs:" + manageLogs.toString());
+		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
+		if (manageLogs!=null){
+			Log.i("test", "日志:" + manageLogs.toString());
+
+		}else {
+			Log.i("test", "日志:为空" );
+		}
 	}
 
 	@Override
@@ -317,25 +322,28 @@ public class AddManagerLogActivity extends AppCompatActivity implements View.OnC
 		 * 数据库插入一条数据
 		 */
 		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-		for (int i = 0; i < manageLogs.size(); i++) {
-			String createTime = manageLogs.get(i).getCreateTime();
-			String currenttime = OtherUtils.GetcurrentTime();
-			Log.i("test", "createTime:" + createTime + "\n" + "currenttime:" + currenttime);
-			Log.i("test", "水电工数据库大小:" + manageLogs.size());
-			String[] splitcreateTime = createTime.split(" ");
-			String[] splitcurrenttime = currenttime.split(" ");
-			if (splitcreateTime[0].equals(splitcurrenttime[0])) {
-				if (manageLogs.get(i).getCategory().equals("1")) {
-					isfirst = false;
-					return;
+		if (null!=manageLogs){
+			for (int i = 0; i < manageLogs.size(); i++) {
+				String createTime = manageLogs.get(i).getCreateTime();
+				String currenttime = OtherUtils.GetcurrentTime();
+				Log.i("test", "createTime:" + createTime + "\n" + "currenttime:" + currenttime);
+				Log.i("test", "水电工数据库大小:" + manageLogs.size());
+				String[] splitcreateTime = createTime.split(" ");
+				String[] splitcurrenttime = currenttime.split(" ");
+				if (splitcreateTime[0].equals(splitcurrenttime[0])) {
+					if (manageLogs.get(i).getCategory().equals("1")) {
+						isfirst = false;
+						return;
+					}
 				}
-			}
 
+			}
+			if (isfirst){
+				dbManager.insertObj(lognamage);
+			}
+			Log.i("test","isfirst插入数据："+isfirst);
 		}
-		if (isfirst){
-			dbManager.insertObj(lognamage);
-		}
-		Log.i("test", "lognamage:" + lognamage.toString());
+
 	}
 
 	private void submitLog() {

@@ -5,9 +5,11 @@ import android.os.Message;
 import android.util.Log;
 
 import com.chuyu.gaosuproject.bean.daobean.SignDataDao;
+import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.model.SignsModel;
 import com.chuyu.gaosuproject.model.interfacemodel.ISignsModel;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -85,10 +87,12 @@ public class OnWifiUpLoadSign {
      * 广播中调用上传签到数据
      */
     public void upLoadSignData() {
-        if (queryData() != null) {
+        List<SignDataDao> signDataDaos = queryData();
+        Log.i("test","签到缓存:"+signDataDaos.size());
+        if ( signDataDaos!= null&&!signDataDaos.isEmpty()) {
             //数据不为空
             //首先判断是上午的否能够签到
-            amSingDataCheck(queryData());
+            amSingDataCheck(signDataDaos);
         }
     }
 
@@ -133,7 +137,6 @@ public class OnWifiUpLoadSign {
             isContinueExectue = false;
         }
     }
-
     /**
      * 迭代执行
      *
@@ -171,7 +174,7 @@ public class OnWifiUpLoadSign {
      * 注意class 空指针
      */
     private synchronized void receiverNetworkIsSign(final SignDataDao signDataDao) {
-        SignsModel.getInstance().recevicerIsSign(signDataDao.getUserId(), signDataDao.getDutyDate(),
+        SignsModel.getInstance().recevicerIsSign(signDataDao.getUserId(), signDataDao.getDate(),
                 signDataDao.getDutyType(), new ISignsModel.ReceiverIsSignListener() {
 
                     @Override

@@ -75,7 +75,7 @@ public class LauncherActivity extends Activity {
                 /**
                  * 停止定位
                  */
-                LocationCityUtil.getInstance().stopLcaction();
+                LocationCityUtil.getInstance().stopServer();
             }
 
             @Override
@@ -83,7 +83,7 @@ public class LauncherActivity extends Activity {
                 /**
                  * 停止定位
                  */
-                LocationCityUtil.getInstance().stopLcaction();
+                LocationCityUtil.getInstance().stopServer();
             }
         });
     }

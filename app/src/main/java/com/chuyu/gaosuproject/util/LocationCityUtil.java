@@ -37,6 +37,7 @@ public class LocationCityUtil {
     public  void getNowLocaiton(AMapLocationClient mLocationClient,AMapLocationClientOption mLocationOption,LocationListener locationListener){
 
         this.locationListener=locationListener;
+        this.mLocationClient=mLocationClient;
         //初始化定位
         //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);
@@ -87,9 +88,12 @@ public class LocationCityUtil {
      * 刷新当前位置
      */
     public void reFreshLocation(){
+        Log.i("test","刷新定位1");
         //刷新定位
         if (mLocationClient!=null){
             mLocationClient.startLocation();
+            //
+            Log.i("test","刷新定位2");
         }
     }
 

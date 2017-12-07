@@ -229,6 +229,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                                 addMarkersToMap();
                                 svProgressHUD.dismissImmediately();
                                 showMarker=1;
+                                stopServer();
                             }
 
                         }catch (Exception e){
@@ -275,8 +276,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                 /**
                  * 停止定位
                  */
-                stopLoaction();
-
+                stopServer();
             }
 
             @Override
@@ -289,7 +289,7 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                     /**
                      * 停止定位
                      */
-                    stopLoaction();
+                    stopServer();
                 }
             }
         });
@@ -514,6 +514,8 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
                 break;
             case R.id.ll_back:
                 finish();
+                break;
+            default:
                 break;
         }
     }

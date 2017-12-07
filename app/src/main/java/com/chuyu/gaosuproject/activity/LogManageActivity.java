@@ -99,8 +99,7 @@ public class LogManageActivity extends AppCompatActivity implements View.OnClick
         logmanageWebview.setWebViewClient(new MyWebViewClient());
         logmanageWebview.loadUrl("file:///android_asset/html/log-detail.html");
         handler.sendEmptyMessageDelayed(0, 3000);
-        boolean availableByPing = NetworkUtils.isAvailableByPing("192.168.11.9");
-        Log.i("test","PINg:192.168.11.9**"+availableByPing);
+
         Log.i("test","path:"+path);
     }
 

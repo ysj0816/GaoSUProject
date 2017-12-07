@@ -1,5 +1,7 @@
 package com.chuyu.gaosuproject.model.interfacemodel;
 
+import com.chuyu.gaosuproject.activity.LeaveActivity;
+
 /**
  * Created by wo on 2017/7/14.
  */
@@ -15,8 +17,8 @@ public interface ILeaveModel {
      * @param type
      * @param leaveListener
      */
-    void submitLeave(String UserId,int DutyType,String StartDate,
-                     String EndDate,String LeaveReason, int type,LeaveListener leaveListener);
+    void submitLeave(LeaveActivity activity, String UserId, int DutyType, String StartDate,
+                     String EndDate, String LeaveReason, int type, LeaveListener leaveListener);
 
     interface LeaveListener{
         void submitSuccess();
@@ -37,5 +39,5 @@ public interface ILeaveModel {
      * @param DutyDate
      * @param resLeaveListener
      */
-    void judgeLeave(String UserId,int DutyType,String DutyDate,ResLeaveListener resLeaveListener);
+    void judgeLeave(LeaveActivity activity,String UserId,int DutyType,String DutyDate,ResLeaveListener resLeaveListener);
 }

@@ -39,6 +39,7 @@ import com.chuyu.gaosuproject.adapter.SignAdapter;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.daobean.SignDataDao;
 import com.chuyu.gaosuproject.constant.SPConstant;
+import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.presenter.SignPresenter;
 import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
@@ -129,9 +130,6 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     private SignAdapter signAdapter;
     private boolean isLocationSuccess = false;//定位是否成功
     private SVProgressHUD svProgressHUD;
-    private NetChangeObserver mChangeObserver;//网络观察者
-    public NetworkUtils.NetworkType mNetType=NetworkUtils.getNetworkType();//网络连接类型
-    public boolean isAvailable=NetworkUtils.isConnected();//网络是否连接
     private DBManager<SignDataDao> dbManager;//数据库操作
     public OnWifiUpLoadSign onWifiUpLoadSign;
     @Override
@@ -251,39 +249,37 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                 remarkLenth.setText(length + "/255");
             }
         });
-
+        onWifiUpLoadSign = OnWifiUpLoadSign.getInstace();
         /**
          * 网络观察者
          */
-        mChangeObserver = new NetChangeObserver() {
+        NetChangeObserver  mChangeObserver = new NetChangeObserver() {
             @Override
             public void onNetConnected(NetworkUtils.NetworkType type) {
-                isAvailable = true;
-                mNetType = type;
 
-                //查询
-                //List<SignDataDao> daos = dbManager.queryAllList(dbManager.getQueryBuiler());
-                //Log.i("db","数据库中数据："+daos.toString());
-                if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
-                    Log.i("test","连接到wifi");
+                if (type== NetworkUtils.NetworkType.NETWORK_WIFI){
+                    Log.i("con","连接到wifi");
                     onWifiUpLoadSign.upLoadSignData();
                 }
             }
 
             @Override
             public void onNetDisConnect() {
-                isAvailable = false;
+
                 Log.i("con", "网络连接没有连接");
+
             }
         };
-
+        String url = UrlConstant.getIP();
+        boolean availableByPing = NetworkUtils.isAvailableByPing(UrlConstant.getIP());
+        Log.i("test","ping:"+url+"**availableByPing:"+availableByPing);
         //添加一个网络观察者
         NetCheckReceiver.registerObserver(mChangeObserver);
-        onWifiUpLoadSign = OnWifiUpLoadSign.getInstace();
         //数据库操作
-        dbManager = onWifiUpLoadSign.getDbManager();
+         dbManager = onWifiUpLoadSign.getDbManager();
         List<SignDataDao> daos = dbManager.queryAllList(dbManager.getQueryBuiler());
         Log.i("db","初始化查询数据库中数据："+daos.toString());
+
     }
     /**
      * 检查是否重复提交
@@ -296,6 +292,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.refres_bt:
+                isLocationSuccess=false;
                 //刷新定位
                 LocationCityUtil.getInstance().reFreshLocation();
                 signLocation.setText("获取当前定位中...");
@@ -318,11 +315,9 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                 date = DateUtils.getNowDate();
                 dutyType = DutyType;
                 userId = (String) SPUtils.get(this, SPConstant.USERID, "");
-                //判断是是否重复签到
-                // Log.i("test","是否重复签到："+userId+"DutyDate:"+date+"dutyType:"+dutyType);
                 //判断是否有网 以及是否是wifi
-                if (isAvailable) {
-                    if (mNetType == NetworkUtils.NetworkType.NETWORK_WIFI) {
+                if (NetworkUtils.isConnected()) {
+                    if (NetworkUtils.getNetworkType() == NetworkUtils.NetworkType.NETWORK_WIFI) {
                         /**
                          * 检差判断是否重复提交
                          */
@@ -348,14 +343,14 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                                          * 取消后，提示数据缓存
                                          */
                                         cacheSignData();
-                                        svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
+                                        svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
                                     }
                                 })
                                 .show();
 
                     }
                 } else {
-                    svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
+                    svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
                     cacheSignData();
                 }
 

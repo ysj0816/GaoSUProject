@@ -85,12 +85,7 @@ public class NetCheckReceiver extends BroadcastReceiver {
                 isNetAvailable = true;
                 //获取网络连接类型
                 mNetType = NetworkUtils.getNetworkType();
-                /**
-                 * wifi状态下上传数据
-                 */
-                if (mNetType== NetworkUtils.NetworkType.NETWORK_WIFI){
-                    upLoadData();
-                }
+
             }
             /**
              * 防止收到两次广播
@@ -98,13 +93,6 @@ public class NetCheckReceiver extends BroadcastReceiver {
              */
             notifyObserver();
         }
-    }
-
-    /**
-     * 上传数据
-     */
-    public void upLoadData() {
-
     }
 
     /**
@@ -159,7 +147,6 @@ public class NetCheckReceiver extends BroadcastReceiver {
      * 通知观察者网络改变
      */
     public void notifyObserver(){
-        Log.i("test","广播通知");
         if (!mNetChangeObservers.isEmpty()){
             int size =mNetChangeObservers.size();
             for (int i = 0; i < size; i++) {

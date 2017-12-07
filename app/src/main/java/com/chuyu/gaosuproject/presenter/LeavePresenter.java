@@ -2,6 +2,7 @@ package com.chuyu.gaosuproject.presenter;
 
 import android.util.Log;
 
+import com.chuyu.gaosuproject.activity.LeaveActivity;
 import com.chuyu.gaosuproject.base.BasePresenter;
 import com.chuyu.gaosuproject.model.LeaveModel;
 import com.chuyu.gaosuproject.model.interfacemodel.ILeaveModel;
@@ -13,7 +14,7 @@ import com.chuyu.gaosuproject.view.ILeaveView;
 
 public class LeavePresenter extends BasePresenter<ILeaveView> {
 
-    public void submitLeave(String UserId, int DutyType, String StartDate,
+    public void submitLeave(LeaveActivity activity ,String UserId, int DutyType, String StartDate,
                             String EndDate, String LeaveReason,int type){
         if(isViewAttached()){
 
@@ -22,7 +23,7 @@ public class LeavePresenter extends BasePresenter<ILeaveView> {
         }
         final ILeaveView view = getView();
         //view.showWaiting();
-        LeaveModel.getInstance().submitLeave(UserId, DutyType, StartDate, EndDate, LeaveReason, type, new ILeaveModel.LeaveListener() {
+        LeaveModel.getInstance().submitLeave( activity ,UserId, DutyType, StartDate, EndDate, LeaveReason, type, new ILeaveModel.LeaveListener() {
             @Override
             public void submitSuccess() {
                 view.colseWaiting();
@@ -50,7 +51,7 @@ public class LeavePresenter extends BasePresenter<ILeaveView> {
      * @param dutyType
      * @param dutyDate
      */
-    public void JuGetLeave(String userid,int dutyType,String dutyDate){
+    public void JuGetLeave(LeaveActivity activity , String userid, int dutyType, String dutyDate){
         if(isViewAttached()){
 
         }else {
@@ -58,7 +59,7 @@ public class LeavePresenter extends BasePresenter<ILeaveView> {
         }
         final ILeaveView view = getView();
         view.showWaiting();
-        LeaveModel.getInstance().judgeLeave(userid, dutyType, dutyDate, new ILeaveModel.ResLeaveListener() {
+        LeaveModel.getInstance().judgeLeave(activity,userid, dutyType, dutyDate, new ILeaveModel.ResLeaveListener() {
             @Override
             public void isLeave() {
                 view.isLeaved(true);
