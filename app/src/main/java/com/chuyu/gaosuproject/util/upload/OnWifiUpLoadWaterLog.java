@@ -121,6 +121,8 @@ public class OnWifiUpLoadWaterLog {
 					public void onError(Call call, Response response, Exception e) {
 						super.onError(call, response, e);
 						Log.i("test", "水电工查询错误:");
+						allmanageLogs.remove(0);
+						CheckLogData(allmanageLogs);
 					}
 				});
 
@@ -168,7 +170,7 @@ public class OnWifiUpLoadWaterLog {
 						super.onError(call, response, e);
 						Log.i("test", "水电工提交失败");
 						//请求失败删除当前数据库的内容和集合中内容
-						deleteSingData(id);
+//						deleteSingData(id);
 						allmanageLogs.remove(0);
 						CheckLogData(allmanageLogs);
 					}

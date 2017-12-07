@@ -161,7 +161,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 
 			@Override
 			public void onNetDisConnect() {
-				Log.i("con", "网络连接没有连接");
+				Log.i("test", "网络连接没有连接");
 			}
 		};
 		NetCheckReceiver.registerObserver(observer);
@@ -310,23 +310,25 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 		 * 数据库插入一条数据
 		 */
 		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-		for (int i = 0; i < manageLogs.size(); i++) {
-			String createTime = manageLogs.get(i).getCreateTime();
-			String currenttime = OtherUtils.GetcurrentTime();
-			Log.i("test", "createTime:" + createTime + "\n" + "currenttime:" + currenttime);
-			Log.i("test", "数据库大小:" + manageLogs.size());
-			String[] splitcreateTime = createTime.split(" ");
-			String[] splitcurrenttime = currenttime.split(" ");
-			if (splitcreateTime[0].equals(splitcurrenttime[0])) {
-				if (manageLogs.get(i).getCategory().equals("2")) {
-					iscommit = false;
-					return;
+		if (manageLogs != null) {
+			for (int i = 0; i < manageLogs.size(); i++) {
+				String createTime = manageLogs.get(i).getCreateTime();
+				String currenttime = OtherUtils.GetcurrentTime();
+				Log.i("test", "createTime:" + createTime + "\n" + "currenttime:" + currenttime);
+				Log.i("test", "数据库大小:" + manageLogs.size());
+				String[] splitcreateTime = createTime.split(" ");
+				String[] splitcurrenttime = currenttime.split(" ");
+				if (splitcreateTime[0].equals(splitcurrenttime[0])) {
+					if (manageLogs.get(i).getCategory().equals("2")) {
+						iscommit = false;
+						return;
+					}
 				}
-			}
 
-		}
-		if (iscommit) {
-			dbManager.insertObj(manageLog);
+			}
+			if (iscommit) {
+				dbManager.insertObj(manageLog);
+			}
 		}
 
 	}

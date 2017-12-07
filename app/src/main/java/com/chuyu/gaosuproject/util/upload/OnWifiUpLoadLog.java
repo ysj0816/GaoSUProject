@@ -166,8 +166,8 @@ public class OnWifiUpLoadLog {
 						super.onError(call, response, e);
 						Log.i("test", "查询错误:");
 //						deleteSingData(manageLog.getId());
-//						allmanageLogs.remove(0);
-//						CheckLogData(allmanageLogs);
+						allmanageLogs.remove(0);
+						CheckLogData(allmanageLogs);
 					}
 				});
 	}

@@ -153,7 +153,7 @@ public class OnWifiLoadDailyCheck {
 						super.onError(call, response, e);
 						Log.i("test","上报失败...");
 						OkGo.getInstance().cancelTag(dailyCheck.getId());
-						deleteSingData(dailyCheck.getId());
+//						deleteSingData(dailyCheck.getId());
 						tolist.remove(0);
 						upLoadailycheck(tolist);
 					}

@@ -159,16 +159,20 @@ public class NetCheckReceiver extends BroadcastReceiver {
      * 通知观察者网络改变
      */
     public void notifyObserver(){
+        Log.i("test","广播通知");
         if (!mNetChangeObservers.isEmpty()){
             int size =mNetChangeObservers.size();
             for (int i = 0; i < size; i++) {
                 NetChangeObserver observer = mNetChangeObservers.get(i);
+
                 if (observer!=null){
                     if (isNetworkAvailable()){
-                        if (mNetType!=fristNetType){
+                       // if (mNetType!=fristNetType){
                             observer.onNetConnected(mNetType);
-                        }
-                        fristNetType=mNetType;
+                            Log.i("test","observer:"+i);
+                       // }
+                        //fristNetType=mNetType;
+
                     }else {
                         observer.onNetDisConnect();
                         fristNetType=null;
