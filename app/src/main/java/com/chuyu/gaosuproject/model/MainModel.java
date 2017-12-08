@@ -45,8 +45,13 @@ public class MainModel implements IMainModel {
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(String s, Call call, Response response) {
-                            WeatherInfo weatherInfo = gson.fromJson(s, WeatherInfo.class);
-                            getWeatherDataListener.Success(weatherInfo);
+                            try{
+                                WeatherInfo weatherInfo = gson.fromJson(s, WeatherInfo.class);
+                                getWeatherDataListener.Success(weatherInfo);
+                            }catch (Exception e){
+
+                            }
+
 
                         }
                     });
