@@ -37,6 +37,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.adapter.SignAdapter;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
+import com.chuyu.gaosuproject.bean.daobean.SignAndLeaveData;
 import com.chuyu.gaosuproject.bean.daobean.SignDataDao;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
@@ -259,7 +260,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
 
                 if (type== NetworkUtils.NetworkType.NETWORK_WIFI){
                     Log.i("con","连接到wifi");
-                    onWifiUpLoadSign.upLoadSignData();
+                    //onWifiUpLoadSign.upLoadSignData();
                 }
             }
 
@@ -403,7 +404,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         //提交
         String nowdate = DateUtils.getNowDate();
         int dutyType = DutyType;
-        String dutyTime = signTime.getText().toString();
+        String dutyDate = signTime.getText().toString();
         String location = "";
         double lng = 0.0;
         double lat = 0.0;
@@ -418,7 +419,11 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         String remark = editRemark.getText().toString().trim();
         String filpath = listImg.get(0);
 
-        SignDataDao signDataDao = new SignDataDao(null,userId,dutyTime,nowdate,teType+""
+        new SignAndLeaveData(null,userId,dutyDate,
+                teType+"",dutyType,location,lng+"",lat+"","","",remark,"");
+
+
+        SignDataDao signDataDao = new SignDataDao(null,userId,dutyDate,nowdate,teType+""
                 ,dutyType,location,lng+"",lat+"",remark,filpath);
         /**
          * 数据库插入一条数据

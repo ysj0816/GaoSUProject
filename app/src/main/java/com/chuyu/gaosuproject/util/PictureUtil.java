@@ -116,14 +116,13 @@ public class PictureUtil {
 
 
     /**
-     * 图片转成string
+     * 图片转成base64
      *
      * @param
      * @return
      */
-    public static String convertIconToString(String filePath) {
+    public static String bitmapToBase64(String filePath) {
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-        Log.d("test", "bitmap width: " + bitmap.getWidth() + " height: " + bitmap.getHeight());
         //convert to byte array
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);

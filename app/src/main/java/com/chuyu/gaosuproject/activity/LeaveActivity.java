@@ -26,6 +26,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.daobean.LeaveDataBean;
+import com.chuyu.gaosuproject.bean.daobean.SignDataDao;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.model.LeaveModel;
@@ -192,9 +193,12 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
         String endData = edtEndtime.getText().toString().trim();
         String reason = edtLeaveReason.getText().toString().trim();
         int type = leaveType;
+
+
+
         //缓存到数据库中
-        LeaveDataBean leaveDataBean = new LeaveDataBean(null, userid, startDate, endData, reason, date, dutyType, type);
-        dbManager.insertObj(leaveDataBean);
+      //  LeaveDataBean leaveDataBean = new LeaveDataBean(null, userid, startDate, endData, reason, date, dutyType, type);
+        //dbManager.insertObj(leaveDataBean);
     }
 
     /**
@@ -298,7 +302,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
             public void onNetConnected(NetworkUtils.NetworkType type) {
                 if (type== NetworkUtils.NetworkType.NETWORK_WIFI){
                     //自动提交
-                    onWifiLoadLeave.upLoadLeaveData();
+                   // onWifiLoadLeave.upLoadLeaveData();
                 }
             }
 
