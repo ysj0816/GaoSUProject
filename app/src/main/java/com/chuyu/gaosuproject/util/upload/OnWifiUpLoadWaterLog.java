@@ -121,8 +121,11 @@ public class OnWifiUpLoadWaterLog {
 					public void onError(Call call, Response response, Exception e) {
 						super.onError(call, response, e);
 						Log.i("test", "水电工查询错误:");
-						allmanageLogs.remove(0);
+						if (allmanageLogs.size()>0){
+							allmanageLogs.remove(0);
+						}
 						CheckLogData(allmanageLogs);
+
 					}
 				});
 
@@ -158,9 +161,24 @@ public class OnWifiUpLoadWaterLog {
 					public void onSuccess(String s, Call call, Response response) {
 						Log.i("test", "水电工ttttttttttttt" + s.toString());
 						//请求成功删除当前数据库的内容和集合中内容
-						deleteSingData(id);
-						allmanageLogs.remove(0);
-						CheckLogData(allmanageLogs);
+
+						try {
+							JSONObject object = new JSONObject(s);
+							boolean success = object.getBoolean("success");
+							if (success){
+								deleteSingData(id);
+								allmanageLogs.remove(0);
+								CheckLogData(allmanageLogs);
+							}else{
+								allmanageLogs.remove(0);
+								CheckLogData(allmanageLogs);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+							allmanageLogs.remove(0);
+							CheckLogData(allmanageLogs);
+						}
+
 
 					}
 

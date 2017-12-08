@@ -208,12 +208,12 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                     Log.i("test", "日常检查有网WIFI");
                     try{
                         //有网情况下获取数据库存的离线日志
-                        List<DailyCheck> dailyChecks = dbManager.queryAllList(dbManager.getQueryBuiler());
-                        Log.i("test", "dailyChecks:" + dailyChecks.toString());
-                        if (dailyChecks.size()>0) {
-                            Log.i("test","日常检查数据库有数据");
-                            onWifiLoadDailyCheck.upLoadLeaveData(dailyChecks);
-                        }
+//                        List<DailyCheck> dailyChecks = dbManager.queryAllList(dbManager.getQueryBuiler());
+//                        Log.i("test", "dailyChecks:" + dailyChecks.toString());
+//                        if (dailyChecks.size()>0) {
+//                            Log.i("test","日常检查数据库有数据");
+//                            onWifiLoadDailyCheck.upLoadLeaveData(dailyChecks);
+//                        }
                     }catch (Exception e){
                         Log.i("test","异常抛出");
                         e.printStackTrace();
@@ -274,7 +274,6 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                     Log.i("test","当前有网");
                     if (NetworkUtils.getNetworkType() == NetworkUtils.NetworkType.NETWORK_WIFI) {
                         Log.i("test","当前wifi网络");
-                        Log.i("test", "日常检查数据已提交");
                         submitdailycheck();
                     }else{
                         new AlertDialog(this)
@@ -293,7 +292,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                                         /**
                                          * 取消后，提示数据缓存
                                          */
-                                        cacheSignData();
+//                                        cacheSignData();
                                         svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
                                     }
 
@@ -304,11 +303,8 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                 }else{
                     Log.i("test","当前无网");
                     svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
-                    cacheSignData();
+//                    cacheSignData();
                 }
-//                dailyCheckListFillPresenter.sumbitFill(checkUnitId,checkProjectId,userid,tvDailycheckresult.getText().toString()
-//                        ,tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),checkId
-//                        ,listfile);
                 break;
             case R.id.layout_dailyphoto:
                 ImgSelConfig config = new ImgSelConfig.Builder(DailyCheckListFillActivity.this, loader)

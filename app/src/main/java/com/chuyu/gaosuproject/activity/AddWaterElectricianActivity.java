@@ -149,12 +149,12 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 				if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
 					Log.i("test", "水电工有网WIFI");
 					//有网情况下获取数据库存的离线日志
-					List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-					Log.i("test", "manageLogs:" + manageLogs.toString());
-					if (manageLogs.size() > 0) {
-						Log.i("test", "水电工数据库有数据");
-						upLoadWaterLog.upLoadLog(manageLogs);
-					}
+//					List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
+//					Log.i("test", "manageLogs:" + manageLogs.toString());
+//					if (manageLogs.size() > 0) {
+//						Log.i("test", "水电工数据库有数据");
+//						upLoadWaterLog.upLoadLog(manageLogs);
+//					}
 
 				}
 			}
@@ -225,12 +225,12 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 									/**
 									 * 取消后，提示数据缓存
 									 */
-									cacheSignData();
-									if (iscommit) {
-										svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
-									} else {
-										svProgressHUD.showInfoWithStatus("内存中已有缓存");
-									}
+//									cacheSignData();
+//									if (iscommit) {
+//										svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
+//									} else {
+//										svProgressHUD.showInfoWithStatus("内存中已有缓存");
+//									}
 
 								}
 
@@ -239,13 +239,12 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 							.show();
 				}
 			} else {
-				cacheSignData();
-				if (iscommit) {
-					svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
-				} else {
-					svProgressHUD.showInfoWithStatus("内存中已有缓存");
-				}
-
+//				cacheSignData();
+//				if (iscommit) {
+//					svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
+//				} else {
+//					svProgressHUD.showInfoWithStatus("内存中已有缓存");
+//				}
 
 			}
 
@@ -310,7 +309,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 		 * 数据库插入一条数据
 		 */
 		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-		if (manageLogs != null) {
+		if (null!=manageLogs) {
 			for (int i = 0; i < manageLogs.size(); i++) {
 				String createTime = manageLogs.get(i).getCreateTime();
 				String currenttime = OtherUtils.GetcurrentTime();
