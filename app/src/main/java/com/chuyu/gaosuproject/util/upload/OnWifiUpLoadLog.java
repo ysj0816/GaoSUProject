@@ -92,14 +92,6 @@ public class OnWifiUpLoadLog {
 	 * @param manageLog 查询对象信息
 	 */
 	private void querymanagelog(ManageLog manageLog) {
-		Long id = manageLog.getId();
-		String userId = manageLog.getUserId();
-		String createTime = manageLog.getCreateTime();
-		String finishWork = manageLog.getFinishWork();
-		String unFinishWork = manageLog.getUnFinishWork();
-		String needAssistWork = manageLog.getNeedAssistWork();
-		String remark = manageLog.getRemark();
-		String category = manageLog.getCategory();
 		//查找有无提交的日志
 		queryisLog(manageLog);
 		Log.i("test", "广播提交时:" + manageLog.toString());
@@ -110,15 +102,15 @@ public class OnWifiUpLoadLog {
 	 */
 	private void queryisLog(final ManageLog manageLog) {
 
-		String createTime = manageLog.getCreateTime();
+		String createTime = manageLog.getCreatetime();
 		String[] split = createTime.split(" ");
 		String time = split[0].toString();
-		LogManageModel.getInstance().isLogData(manageLog.getUserId(), time, manageLog.getCategory(), new ILogManageModel.ReceiveLogManageListener() {
+		LogManageModel.getInstance().isLogData(manageLog.getAuthoruserid(), time, manageLog.getCategory(), new ILogManageModel.ReceiveLogManageListener() {
 			@Override
 			public void receiveSuccess(int total) {
 				if (total == 0) {
-					onReceiveUpLoad(manageLog.getId(), manageLog.getUserId(), manageLog.getCreateTime(), manageLog.getFinishWork(),
-							manageLog.getUnFinishWork(), manageLog.getNeedAssistWork(), manageLog.getRemark(), manageLog.getCategory());
+					onReceiveUpLoad(manageLog.getId(), manageLog.getAuthoruserid(), manageLog.getCreatetime(), manageLog.getFinishwork(),
+							manageLog.getUnfinishwork(), manageLog.getNeedassistwork(), manageLog.getRemark(), manageLog.getCategory());
 				} else {
 					Log.i("test", "有数据");
 					deleteSingData(manageLog.getId());

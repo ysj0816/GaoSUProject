@@ -342,7 +342,7 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
 		if (null != manageLogs) {
 			for (int i = 0; i < manageLogs.size(); i++) {
-				String createTime = manageLogs.get(i).getCreateTime();
+				String createTime = manageLogs.get(i).getCreatetime();
 				String currenttime = OtherUtils.GetcurrentTime();
 				Log.i("test", "createTime:" + createTime + "\n" + "currenttime:" + currenttime);
 				Log.i("test", "水电工数据库大小:" + manageLogs.size());

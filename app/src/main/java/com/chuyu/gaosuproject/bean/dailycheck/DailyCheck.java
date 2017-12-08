@@ -15,6 +15,19 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class DailyCheck {
 
+	public String toString() {
+		return "DailyCheck{" +
+				"id=" + id +
+				", userid='" + userid + '\'' +
+				", checkunit='" + checkunit + '\'' +
+				", checkproject='" + checkproject + '\'' +
+				", checkresult='" + checkresult + '\'' +
+				", content='" + content + '\'' +
+				", deductpoint='" + deductpoint + '\'' +
+				", checkid='" + checkid + '\'' +
+				", images='" + images + '\'' +
+				'}';
+	}
 
 	public Long getId() {
 		return id;
@@ -24,28 +37,28 @@ public class DailyCheck {
 		this.id = id;
 	}
 
-	public String getCheckUnitId() {
-		return checkUnitId;
-	}
-
-	public void setCheckUnitId(String checkUnitId) {
-		this.checkUnitId = checkUnitId;
-	}
-
-	public String getCheckProjectId() {
-		return checkProjectId;
-	}
-
-	public void setCheckProjectId(String checkProjectId) {
-		this.checkProjectId = checkProjectId;
-	}
-
 	public String getUserid() {
 		return userid;
 	}
 
 	public void setUserid(String userid) {
 		this.userid = userid;
+	}
+
+	public String getCheckunit() {
+		return checkunit;
+	}
+
+	public void setCheckunit(String checkunit) {
+		this.checkunit = checkunit;
+	}
+
+	public String getCheckproject() {
+		return checkproject;
+	}
+
+	public void setCheckproject(String checkproject) {
+		this.checkproject = checkproject;
 	}
 
 	public String getCheckresult() {
@@ -80,55 +93,37 @@ public class DailyCheck {
 		this.checkid = checkid;
 	}
 
-	public List<String> getPath() {
-		return path;
+	public String getImages() {
+		return images;
 	}
 
-	public void setPath(List<String> path) {
-		this.path = path;
+	public void setImages(String images) {
+		this.images = images;
 	}
 
 	@Id(autoincrement = true)
 	Long id;
-	private String checkUnitId;
-
-	@Override
-	public String toString() {
-		return "DailyCheck{" +
-				"id=" + id +
-				", checkUnitId='" + checkUnitId + '\'' +
-				", checkProjectId='" + checkProjectId + '\'' +
-				", userid='" + userid + '\'' +
-				", checkresult='" + checkresult + '\'' +
-				", content='" + content + '\'' +
-				", deductpoint='" + deductpoint + '\'' +
-				", checkid='" + checkid + '\'' +
-				", path=" + path +
-				'}';
-	}
-
-	private String checkProjectId;
 	private String userid;
+	private String checkunit;
+	private String checkproject;
 	private String checkresult;
 	private String content;
 	private String deductpoint;
 	private String checkid;
-	@Convert(columnType = String.class, converter = StringConverter.class)
-	private List<String> path;
-
-	@Generated(hash = 36573168)
-	public DailyCheck(Long id, String checkUnitId, String checkProjectId,
-									String userid, String checkresult, String content, String deductpoint,
-									String checkid, List<String> path) {
+	private String images;
+	@Generated(hash = 1847138487)
+	public DailyCheck(Long id, String userid, String checkunit, String checkproject,
+									String checkresult, String content, String deductpoint, String checkid,
+									String images) {
 					this.id = id;
-					this.checkUnitId = checkUnitId;
-					this.checkProjectId = checkProjectId;
 					this.userid = userid;
+					this.checkunit = checkunit;
+					this.checkproject = checkproject;
 					this.checkresult = checkresult;
 					this.content = content;
 					this.deductpoint = deductpoint;
 					this.checkid = checkid;
-					this.path = path;
+					this.images = images;
 	}
 
 	@Generated(hash = 234058891)

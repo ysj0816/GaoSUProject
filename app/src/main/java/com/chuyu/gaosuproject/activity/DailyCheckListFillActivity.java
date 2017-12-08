@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -38,6 +39,7 @@ import com.chuyu.gaosuproject.presenter.DailyCheckListFillPresenter;
 import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
+import com.chuyu.gaosuproject.util.PictureUtil;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.SystemBarTintManager;
 import com.chuyu.gaosuproject.util.SystemStatusBar;
@@ -337,10 +339,12 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     }
 
     private void cacheSignData() {
+        String path = PictureUtil.bitmapToBase64(pathList.toString());
         String userId = (String) SPUtils.get(this, SPConstant.USERID, "");
-        DailyCheck check=new DailyCheck(null,checkUnitId,checkProjectId,userId,tvDailycheckresult.getText().toString(),
+        DailyCheck check=new DailyCheck(null,userId,checkUnitId,checkProjectId,tvDailycheckresult.getText().toString(),
                 tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),
-                checkId,pathList);
+                checkId,path);
+
         dbManager.insertObj(check);
 
     }

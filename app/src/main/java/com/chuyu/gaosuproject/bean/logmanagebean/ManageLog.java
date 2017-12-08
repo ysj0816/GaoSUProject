@@ -11,29 +11,29 @@ import org.greenrobot.greendao.annotation.Id;
 public class ManageLog {
 	@Id(autoincrement = true)
 	Long id;
-	private String UserId;
+
+
+
+
+	private String authoruserid;
 	//时间
-	private String CreateTime;
+	private String createtime;
+	private String finishwork;
 
 	@Override
 	public String toString() {
 		return "ManageLog{" +
 				"id=" + id +
-				", UserId='" + UserId + '\'' +
-				", CreateTime='" + CreateTime + '\'' +
-				", FinishWork='" + FinishWork + '\'' +
-				", UnFinishWork='" + UnFinishWork + '\'' +
-				", NeedAssistWork='" + NeedAssistWork + '\'' +
-				", Remark='" + Remark + '\'' +
-				", Category='" + Category + '\'' +
+				", authoruserid='" + authoruserid + '\'' +
+				", createtime='" + createtime + '\'' +
+				", finishwork='" + finishwork + '\'' +
+				", unfinishwork='" + unfinishwork + '\'' +
+				", needassistwork='" + needassistwork + '\'' +
+				", remark='" + remark + '\'' +
+				", category='" + category + '\'' +
 				'}';
 	}
 
-	private String FinishWork;
-	private String UnFinishWork;
-	private String NeedAssistWork;
-	private String Remark;
-	private String Category;
 	public Long getId() {
 		return id;
 	}
@@ -42,81 +42,85 @@ public class ManageLog {
 		this.id = id;
 	}
 
-	public String getUserId() {
-		return UserId;
+	public String getAuthoruserid() {
+		return authoruserid;
 	}
 
-	public void setUserId(String userId) {
-		UserId = userId;
+	public void setAuthoruserid(String authoruserid) {
+		this.authoruserid = authoruserid;
 	}
 
-	public String getCreateTime() {
-		return CreateTime;
+	public String getCreatetime() {
+		return createtime;
 	}
 
-	public void setCreateTime(String createTime) {
-		CreateTime = createTime;
+	public void setCreatetime(String createtime) {
+		this.createtime = createtime;
 	}
 
-	public String getFinishWork() {
-		return FinishWork;
+	public String getFinishwork() {
+		return finishwork;
 	}
 
-	public void setFinishWork(String finishWork) {
-		FinishWork = finishWork;
+	public void setFinishwork(String finishwork) {
+		this.finishwork = finishwork;
 	}
 
-	public String getUnFinishWork() {
-		return UnFinishWork;
+	public String getUnfinishwork() {
+		return unfinishwork;
 	}
 
-	public void setUnFinishWork(String unFinishWork) {
-		UnFinishWork = unFinishWork;
+	public void setUnfinishwork(String unfinishwork) {
+		this.unfinishwork = unfinishwork;
 	}
 
-	public String getNeedAssistWork() {
-		return NeedAssistWork;
+	public String getNeedassistwork() {
+		return needassistwork;
 	}
 
-	public void setNeedAssistWork(String needAssistWork) {
-		NeedAssistWork = needAssistWork;
+	public void setNeedassistwork(String needassistwork) {
+		this.needassistwork = needassistwork;
 	}
 
 	public String getRemark() {
-		return Remark;
+		return remark;
 	}
 
 	public void setRemark(String remark) {
-		Remark = remark;
+		this.remark = remark;
 	}
 
 	public String getCategory() {
-		return Category;
+		return category;
 	}
 
 	public void setCategory(String category) {
-		Category = category;
+		this.category = category;
 	}
 
+	private String unfinishwork;
+	private String needassistwork;
+	private String remark;
+	private String category;
 
-
-	@Generated(hash = 788985006)
-	public ManageLog(Long id, String UserId, String CreateTime, String FinishWork,
-									String UnFinishWork, String NeedAssistWork, String Remark,
-									String Category) {
+	@Generated(hash = 253943459)
+	public ManageLog(Long id, String authoruserid, String createtime,
+									String finishwork, String unfinishwork, String needassistwork,
+									String remark, String category) {
 					this.id = id;
-					this.UserId = UserId;
-					this.CreateTime = CreateTime;
-					this.FinishWork = FinishWork;
-					this.UnFinishWork = UnFinishWork;
-					this.NeedAssistWork = NeedAssistWork;
-					this.Remark = Remark;
-					this.Category = Category;
+					this.authoruserid = authoruserid;
+					this.createtime = createtime;
+					this.finishwork = finishwork;
+					this.unfinishwork = unfinishwork;
+					this.needassistwork = needassistwork;
+					this.remark = remark;
+					this.category = category;
 	}
 
 	@Generated(hash = 1059474224)
 	public ManageLog() {
 	}
+
 
 
 

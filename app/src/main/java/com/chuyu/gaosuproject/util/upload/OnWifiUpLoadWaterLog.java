@@ -77,13 +77,13 @@ public class OnWifiUpLoadWaterLog {
 	}
 
 	private void querymanagelog(final ManageLog manageLog) {
-		String createTime = manageLog.getCreateTime();
+		String createTime = manageLog.getCreatetime();
 		String[] split = createTime.split(" ");
 		Log.i("test", "水电工广播提交时:" + manageLog.toString());
 		boolean availableByPing = NetworkUtils.isAvailableByPing("192.168.11.9");
 		Log.i("test", "PINg:" + availableByPing);
 		OkGo.post("http://192.168.11.9:8088/GS/a/mobile/WorkDiary/MobileGetWorkDairy?")
-				.params("UserID", manageLog.getUserId())
+				.params("UserID", manageLog.getAuthoruserid())
 				.params("SearchDate", split[0])
 				.params("Category", manageLog.getCategory())
 				.execute(new StringCallback() {
@@ -97,8 +97,8 @@ public class OnWifiUpLoadWaterLog {
 							if (total == 0) {
 								Log.i("test", "total:" + total);
 								Log.i("test", "当前category:" + manageLog.getCategory());
-								onReceivewaterlog(manageLog.getId(), manageLog.getUserId(), manageLog.getCreateTime(),
-										manageLog.getFinishWork(), manageLog.getUnFinishWork(), manageLog.getNeedAssistWork(),
+								onReceivewaterlog(manageLog.getId(), manageLog.getAuthoruserid(), manageLog.getCreatetime(),
+										manageLog.getFinishwork(), manageLog.getUnfinishwork(), manageLog.getNeedassistwork(),
 										manageLog.getRemark(), manageLog.getCategory());
 
 							}

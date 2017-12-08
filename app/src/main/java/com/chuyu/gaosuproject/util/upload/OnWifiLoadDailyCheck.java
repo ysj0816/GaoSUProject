@@ -108,22 +108,22 @@ public class OnWifiLoadDailyCheck {
 	}
 
 	private void startUpload(final DailyCheck dailyCheck) {
-		List<String> path = dailyCheck.getPath();
+		String images = dailyCheck.getImages();
 		if (!listfile.isEmpty()) {
 			listfile.clear();
 		}
-		for (int i = 0; i < path.size(); i++) {
-			listfile.add(new File(path.get(i)));
-			Log.i("test", "无网listfile:" + listfile);
-		}
-		Log.i("test","CheckUnit:"+dailyCheck.getCheckUnitId());
+//		for (int i = 0; i < path.size(); i++) {
+//			listfile.add(new File(path.get(i)));
+//			Log.i("test", "无网listfile:" + listfile);
+//		}
+		Log.i("test","CheckUnit:"+dailyCheck.getCheckunit());
 		Log.i("test","Userid():"+dailyCheck.getUserid());
 		//http://192.168.11.9:8088/GS/a/mobile/check/AddCheckInfor /GS/a/mobile/check/AddCheckInfor
 		OkGo.post("http://192.168.11.9:8088/GS/a/mobile/check/AddCheckInfor")
 				.connTimeOut(10000)
 				.tag(dailyCheck.getId())
-				.params("CheckUnit", dailyCheck.getCheckUnitId())
-				.params("CheckProject", dailyCheck.getCheckProjectId())
+				.params("CheckUnit", dailyCheck.getCheckunit())
+				.params("CheckProject", dailyCheck.getCheckproject())
 				.params("UserId", dailyCheck.getUserid())
 				.params("CheckResult", dailyCheck.getCheckresult())
 				.params("Content", dailyCheck.getContent())
