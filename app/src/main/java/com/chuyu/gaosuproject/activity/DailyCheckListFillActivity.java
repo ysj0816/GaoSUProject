@@ -110,8 +110,6 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     private SVProgressHUD svProgressHUD;
     private DailyCheckListFillPresenter dailyCheckListFillPresenter;
     private List<String> pathList = new ArrayList<String>();
-    /*private MyHandle myHandle;
-    private MyThread myThread;*/
     private String reslut;
     private String strContent;
     private String fen;
@@ -479,33 +477,4 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
         }
     }
 
-   /* public class MyHandle extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            Log.i("test","img64list:"+img64list.size());
-            cacheSignData();
-
-        }
-    }
-
-    private List<String> img64list = new ArrayList<>();
-
-    public class MyThread extends Thread {
-        @Override
-        public void run() {
-            int size = pathList.size();
-            img64list.clear();
-            try {
-                for (int i = 0; i < size; i++) {
-                    String base64 = PictureUtil.bitmapToBase64(pathList.get(i));
-                    img64list.add(base64);
-                }
-                myHandle.sendEmptyMessage(0);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }
-    }*/
 }

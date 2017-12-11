@@ -21,9 +21,7 @@ import com.chuyu.gaosuproject.util.upload.SignLeaveDao;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import com.yanzhenjie.nohttp.ByteArrayBinary;
-import com.yanzhenjie.nohttp.RequestMethod;
-import com.yanzhenjie.nohttp.rest.StringRequest;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;

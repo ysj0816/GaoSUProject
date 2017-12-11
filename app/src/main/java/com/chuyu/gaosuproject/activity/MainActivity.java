@@ -176,7 +176,7 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
         String city = getLocationCity();
         Log.i("test","city:"+city);
         //获取天气
-        mainPresenter.getWeather(city, "json", UrlConstant.WEATHERkey);
+        mainPresenter.getWeather(city, "json", "94Tmshjhp03oul7xy95Gu3wwHkjGZvkk");
         rotate = AnimationUtils.loadAnimation(this, R.anim.roate_refresh);
         LinearInterpolator lin = new LinearInterpolator();
         rotate.setInterpolator(lin);
@@ -252,6 +252,7 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
     @Override
     public void setWeather(WeatherInfo weatherInfo) {
         Weather_data weather_data = weatherInfo.getResults().get(0).getWeather_data().get(0);
+        Log.i("test","weather_data:"+weather_data.toString());
         //天气图片
         Glide.with(this).load(weather_data.getDayPictureUrl()).into(wetherIcon);
         //实时温度

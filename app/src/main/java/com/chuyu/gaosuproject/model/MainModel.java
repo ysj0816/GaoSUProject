@@ -41,7 +41,7 @@ public class MainModel implements IMainModel {
             getWeatherDataListener.querayException("参数为空");
         }else {
 
-            OkGo.get(UrlConstant.WEATHERURL+"location="+city+"&output="+ouput+"&ak="+ak)
+            OkGo.get(UrlConstant.WEATHERURL+"location="+city+"&output="+ouput+"&ak="+ak+"&mcode="+"EE:0C:C8:50:54:53:96:5A:55:8C:23:2F:93:7E:EB:AE:D8:C8:1B:F1;com.example.tangdekun.androidannotationsdemo")
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(String s, Call call, Response response) {

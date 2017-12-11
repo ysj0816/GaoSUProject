@@ -1,16 +1,11 @@
 package com.chuyu.gaosuproject.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,16 +16,11 @@ import com.chuyu.gaosuproject.bean.logmanagebean.ManageLog;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
-import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
 import com.chuyu.gaosuproject.util.SPUtils;
-import com.chuyu.gaosuproject.util.SystemBarTintManager;
-import com.chuyu.gaosuproject.util.SystemStatusBar;
 import com.chuyu.gaosuproject.util.ToastUtils;
-import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
 import com.chuyu.gaosuproject.util.upload.OnWifiUpLoadLog;
-import com.chuyu.gaosuproject.util.upload.OnWifiUpLoadWaterLog;
 import com.chuyu.gaosuproject.widget.AlertDialog;
 import com.chuyu.gaosuproject.widget.MyEditText;
 import com.lzy.okgo.OkGo;
@@ -39,8 +29,6 @@ import com.lzy.okgo.request.BaseRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,8 +70,6 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 	private String edtPowersupplysituation;
 	private String edtRepairsituation;
 	private String edtOther;
-	private OnWifiUpLoadWaterLog upLoadWaterLog;
-	private boolean iscommit = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -202,11 +188,6 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 									 * 取消后，提示数据缓存
 									 */
 									cacheSignData();
-//									if (iscommit) {
-//										svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
-//									} else {
-//										svProgressHUD.showInfoWithStatus("内存中已有缓存");
-//									}
 
 								}
 
@@ -215,13 +196,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 							.show();
 				}
 			} else {
-//				cacheSignData();
-//				if (iscommit) {
-//					svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
-//				} else {
-//					svProgressHUD.showInfoWithStatus("内存中已有缓存");
-//				}
-
+				cacheSignData();
 			}
 
 		} else if (tag.equals("two")) {

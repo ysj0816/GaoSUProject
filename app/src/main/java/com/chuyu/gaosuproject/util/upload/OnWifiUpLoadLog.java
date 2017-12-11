@@ -34,7 +34,6 @@ import okhttp3.Response;
 
 public class OnWifiUpLoadLog {
 	private static OnWifiUpLoadLog onWifiUpLoadLog;
-	public int tag = 0;
 	/**
 	 * 日志数据库操作类
 	 */
@@ -66,205 +65,10 @@ public class OnWifiUpLoadLog {
 	}
 
 	/**
-	 * 广播中上传日志
-	 */
-	public void upLoadLog(List<ManageLog> list) {
-		allmanageLogs = new ArrayList<>();
-		List<ManageLog> manageLogs = list;
-		allmanageLogs = manageLogs;
-		Log.i("test", "allmanageLogs大小:" + allmanageLogs.size());
-		CheckLogData(allmanageLogs);
-
-	}
-
-	public List<ManageLog> allmanageLogs;
-
-	public void CheckLogData(List<ManageLog> manageLogs) {
-		if (manageLogs.size() > 0) {
-			++tag;
-			Log.i("test", "tag:" + tag);
-			ManageLog manageLog = manageLogs.get(0);
-			querymanagelog(manageLog);
-		}
-	}
-
-	/**
-	 * @param manageLog 查询对象信息
-	 */
-	private void querymanagelog(ManageLog manageLog) {
-		//查找有无提交的日志
-		queryisLog(manageLog);
-		Log.i("test", "广播提交时:" + manageLog.toString());
-	}
-	/**
 	 * 删除所有数据
 	 */
-	public void deleteALL(){
+	public void deleteALL() {
 		dbmanageLog.deleteAll();
-	}
-	/**
-	 * @param manageLog 广播中查询有无日志信息
-	 */
-	private void queryisLog(final ManageLog manageLog) {
-
-		String createTime = manageLog.getCreatetime();
-		String[] split = createTime.split(" ");
-		String time = split[0].toString();
-		LogManageModel.getInstance().isLogData(manageLog.getAuthoruserid(), time, manageLog.getCategory(), new ILogManageModel.ReceiveLogManageListener() {
-			@Override
-			public void receiveSuccess(int total) {
-				if (total == 0) {
-					onReceiveUpLoad(manageLog.getId(), manageLog.getAuthoruserid(), manageLog.getCreatetime(), manageLog.getFinishwork(),
-							manageLog.getUnfinishwork(), manageLog.getNeedassistwork(), manageLog.getRemark(), manageLog.getCategory());
-				} else {
-					Log.i("test", "有数据");
-					deleteSingData(manageLog.getId());
-					allmanageLogs.remove(0);
-					CheckLogData(allmanageLogs);
-				}
-			}
-
-			@Override
-			public void receiveFailed() {
-				Log.i("test", "查询错误:");
-				if (allmanageLogs.size() > 0) {
-					allmanageLogs.remove(0);
-				}
-				CheckLogData(allmanageLogs);
-			}
-		});
-//		OkGo.post(UrlConstant.formatUrl(UrlConstant.GetWorkDairyURL))
-//				.params("UserID", manageLog.getUserId())
-//				.params("SearchDate", split[0])
-//				.params("Category", manageLog.getCategory())
-//				.execute(new StringCallback() {
-//					@Override
-//					public void onSuccess(String s, Call call, Response response) {
-//						Log.i("test", "是否有日志" + s.toString());
-//						try {
-//							Log.i("test", "yyyyyyyyyyyyyy");
-//							JSONObject object = new JSONObject(s.toString());
-//							String total = object.getString("total");
-//							int total1 = object.getInt("total");
-//							//可以提交日志
-//							if (total1 == 0) {
-//								Log.i("test", "total1:" + total1);
-//								Long id = manageLog.getId();
-//								String userId = manageLog.getUserId();
-//								String createTime = manageLog.getCreateTime();
-//								String finishWork = manageLog.getFinishWork();
-//								String unFinishWork = manageLog.getUnFinishWork();
-//								String needAssistWork = manageLog.getNeedAssistWork();
-//								String remark = manageLog.getRemark();
-//								String category = manageLog.getCategory();
-//								Log.i("test","当前category:"+category);
-//								onReceiveUpLoad(id, userId, createTime, finishWork, unFinishWork, needAssistWork, remark, category);
-//							}
-//							//有当天记录删除这条记录
-//							else {
-//								Log.i("test", "有数据");
-//								deleteSingData(manageLog.getId());
-//								allmanageLogs.remove(0);
-//								CheckLogData(allmanageLogs);
-//
-//							}
-//						} catch (JSONException e) {
-//							e.printStackTrace();
-//						}
-//
-//					}
-//
-//
-//					@Override
-//					public void onError(Call call, Response response, Exception e) {
-//						super.onError(call, response, e);
-//						Log.i("test", "查询错误:");
-//						if (allmanageLogs.size()>0){
-//							allmanageLogs.remove(0);
-//						}
-//						CheckLogData(allmanageLogs);
-//					}
-//				});
-	}
-
-
-	/**
-	 * 广播中提交管理员日志
-	 * @param id
-	 * @param userId
-	 * @param createTime
-	 * @param finishWork
-	 * @param unFinishWork
-	 * @param needAssistWork
-	 * @param remark
-	 * @param category
-	 */
-	private void onReceiveUpLoad(final Long id, String userId, String createTime, String finishWork, String unFinishWork, String needAssistWork, String remark, String category) {
-		LogManageModel.getInstance().onreceivesubmitlog(id, userId, createTime, finishWork, unFinishWork,
-				needAssistWork, remark, category, new ILogManageModel.OnReceiveSubmitLog() {
-					@Override
-					public void LoadLogSuccess(boolean success) {
-						if (success) {
-							deleteSingData(id);
-							allmanageLogs.remove(0);
-							CheckLogData(allmanageLogs);
-						} else {
-							allmanageLogs.remove(0);
-							CheckLogData(allmanageLogs);
-						}
-					}
-
-					@Override
-					public void LoadLodFailed() {
-						Log.i("test", "提交失败");
-						//请求失败删除当前数据库的内容和集合中内容
-						allmanageLogs.remove(0);
-						CheckLogData(allmanageLogs);
-					}
-				});
-//		//上报管理员日志
-//		OkGo.post(UrlConstant.formatUrl(UrlConstant.AddmManagerLogUrL))
-//				.params("AuthorUserID", userId)
-//				.params("CreateTime", createTime)
-//				.params("FinishWork", finishWork)
-//				.params("UnFinishWork", unFinishWork)
-//				.params("NeedAssistWork", needAssistWork)
-//				.params("Remark", remark)
-//				.params("Category", category)
-//				.execute(new StringCallback() {
-//					@Override
-//					public void onSuccess(String s, Call call, Response response) {
-//						Log.i("test", "ttttttttttttt" + s.toString());
-//						//请求成功删除当前数据库的内容和集合中内容
-//						try {
-//							JSONObject object = new JSONObject(s);
-//							boolean success = object.getBoolean("success");
-//							if (success){
-//								deleteSingData(id);
-//								allmanageLogs.remove(0);
-//								CheckLogData(allmanageLogs);
-//							}else{
-//								allmanageLogs.remove(0);
-//								CheckLogData(allmanageLogs);
-//							}
-//						} catch (JSONException e) {
-//							e.printStackTrace();
-//							allmanageLogs.remove(0);
-//							CheckLogData(allmanageLogs);
-//						}
-//
-//					}
-//
-//
-//					@Override
-//					public void onError(Call call, Response response, Exception e) {
-//						super.onError(call, response, e);
-//						Log.i("test", "提交失败");
-//						//请求失败删除当前数据库的内容和集合中内容
-//						allmanageLogs.remove(0);
-//						CheckLogData(allmanageLogs);
-//					}
-//				});
 	}
 
 	/**
@@ -278,13 +82,5 @@ public class OnWifiUpLoadLog {
 		return null;
 	}
 
-	/**
-	 * 通过主键删除数据
-	 *
-	 * @param id
-	 */
-	private void deleteSingData(Long id) {
 
-		dbmanageLog.deleteByID(id);
-	}
 }

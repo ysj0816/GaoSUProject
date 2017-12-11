@@ -215,7 +215,6 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 							.setPositiveButton("确认", new View.OnClickListener() {
 								@Override
 								public void onClick(View v) {
-//									submitLog();
 									logManagePresenter.submitLog(userid,tvTime.getText().toString(),edtManagementchecksituation
 											,edtCommonwealchecksituation,edtOndutyrecord,edtRemarks,"1");
 								}
@@ -256,7 +255,6 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 								boolean success = json.getBoolean("success");
 								String msg = json.getString("msg");
 								if (success) {
-//									ToastUtils.show(getApplicationContext(), msg);
 									svProgressHUD.showSuccessWithStatus(msg);
 									Intent intent = new Intent(AddManagerLogActivity.this, LogManageActivity.class);
 									intent.putExtra("tempflag", "1");
