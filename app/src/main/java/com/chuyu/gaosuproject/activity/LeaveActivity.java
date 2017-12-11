@@ -26,6 +26,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.daobean.LeaveDataBean;
+import com.chuyu.gaosuproject.bean.daobean.SignAndLeaveData;
 import com.chuyu.gaosuproject.bean.daobean.SignDataDao;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
@@ -37,6 +38,7 @@ import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
 import com.chuyu.gaosuproject.util.upload.OnWifiLoadLeave;
+import com.chuyu.gaosuproject.util.upload.SignLeaveDao;
 import com.chuyu.gaosuproject.view.ILeaveView;
 import com.chuyu.gaosuproject.widget.AlertDialog;
 
@@ -89,7 +91,8 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
     private int dutyType = 3;//打卡类型
     private String date;
     private OnWifiLoadLeave onWifiLoadLeave;
-    private DBManager<LeaveDataBean> dbManager;
+    private DBManager<SignAndLeaveData> dbManager;
+
     @Override
     protected LeavePresenter initPresenter() {
         leavePresenter = new LeavePresenter();
@@ -140,12 +143,12 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                         /**
                          * 提示缓存
                          */
-                        if (NetworkUtils.isConnected()){
-                            if (NetworkUtils.getNetworkType()== NetworkUtils.NetworkType.NETWORK_WIFI){
+                        if (NetworkUtils.isConnected()) {
+                            if (NetworkUtils.getNetworkType() == NetworkUtils.NetworkType.NETWORK_WIFI) {
 
                                 //直接判断是否能够请假
-                                leavePresenter.JuGetLeave(this,userid, dutyType, date);
-                            }else{
+                                leavePresenter.JuGetLeave(this, userid, dutyType, date);
+                            } else {
                                 //网络连接
                                 new AlertDialog(this)
                                         .builder()
@@ -154,7 +157,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                                         .setPositiveButton("确认", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                leavePresenter.JuGetLeave(LeaveActivity.this,userid, dutyType, date);
+                                                leavePresenter.JuGetLeave(LeaveActivity.this, userid, dutyType, date);
                                             }
                                         })
                                         .setNegativeButton("取消", new View.OnClickListener() {
@@ -168,7 +171,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                                         .show();
                             }
 
-                        }else{
+                        } else {
                             /**
                              * 提示缓存
                              */
@@ -193,16 +196,19 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
         String endData = edtEndtime.getText().toString().trim();
         String reason = edtLeaveReason.getText().toString().trim();
         int type = leaveType;
+        String dutyDate=DateUtils.getNowTime();
+        SignAndLeaveData signAndLeaveData = new SignAndLeaveData(null, userid, dutyDate,
+                type + "", dutyType, "", "", "", startDate, endData, reason, "");
 
-
-
+        dbManager.insertObj(signAndLeaveData);
         //缓存到数据库中
-      //  LeaveDataBean leaveDataBean = new LeaveDataBean(null, userid, startDate, endData, reason, date, dutyType, type);
+        //  LeaveDataBean leaveDataBean = new LeaveDataBean(null, userid, startDate, endData, reason, date, dutyType, type);
         //dbManager.insertObj(leaveDataBean);
     }
 
     /**
      * 判断开始时间和结束时间
+     *
      * @param fag
      */
     private void setTime(final int fag) {
@@ -284,45 +290,38 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                reasonLenth.setText(length+"/100");
+                reasonLenth.setText(length + "/100");
             }
         });
-
 
 
     }
 
     @Override
     protected void initData() {
+        dbManager = SignLeaveDao.getInstace().getDbManager();
         /**
          * 网络观察者
          */
-       NetChangeObserver mNetObserver= new NetChangeObserver() {
+        NetChangeObserver mNetObserver = new NetChangeObserver() {
             @Override
             public void onNetConnected(NetworkUtils.NetworkType type) {
-                if (type== NetworkUtils.NetworkType.NETWORK_WIFI){
+                if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
                     //自动提交
-                   // onWifiLoadLeave.upLoadLeaveData();
+                    // onWifiLoadLeave.upLoadLeaveData();
                 }
             }
 
             @Override
             public void onNetDisConnect() {
 
-                Log.i("test","网络没有连接");
+                Log.i("test", "网络没有连接");
             }
         };
         /**
          * 添加一个网络观察者
          */
         NetCheckReceiver.registerObserver(mNetObserver);
-         onWifiLoadLeave = OnWifiLoadLeave.getInstance();
-         dbManager = onWifiLoadLeave.getDbManager();
-        /**
-         * 查询所有请假的缓存
-         */
-        List<LeaveDataBean> leaveDataBeen = dbManager.queryAllList(dbManager.getQueryBuiler());
-        Log.i("test","leave:"+leaveDataBeen.toString());
     }
 
     @Override
@@ -352,7 +351,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                 startActivity(intent);
                 finish();
             }
-        },800);
+        }, 800);
     }
 
     @Override
@@ -372,7 +371,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
             int type = leaveType;
             // ToastUtils.show(this,"可以提交请假！");
             //可以提交请假
-            leavePresenter.submitLeave(this,userid, dutyType, startDate, endData, reason, type);
+            leavePresenter.submitLeave(this, userid, dutyType, startDate, endData, reason, type);
         } else {
             //ToastUtils.show(this,"你已提交过一次！");
             svProgressHUD.showErrorWithStatus("网络错误！");
@@ -385,9 +384,10 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
         cancelHTTP();
     }
 
-    private void cancelHTTP(){
+    private void cancelHTTP() {
         LeaveModel.getInstance().cancelOKGO(this);
     }
+
     /**
      * 分发事件
      *

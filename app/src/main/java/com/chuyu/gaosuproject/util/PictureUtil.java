@@ -45,6 +45,24 @@ public class PictureUtil {
 
     }
 
+    /**
+     * 图片转成base64
+     *
+     * @param
+     * @return
+     */
+    public static String bitmapToBase64(String filePath) {
+        Bitmap bitmap = getSmallBitmap(filePath, 480, 800);
+        //convert to byte array
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        //base64 encode
+        String encodeString = Base64.encodeToString(bytes, Base64.DEFAULT);
+        return encodeString;
+
+    }
+
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
 
         final int height = options.outHeight;
@@ -77,7 +95,6 @@ public class PictureUtil {
         BitmapFactory.decodeFile(filePath, options);
 
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        Log.i("test", "imgsiz:" + options.inSampleSize);
         options.inJustDecodeBounds = false;
 
         return BitmapFactory.decodeFile(filePath, options);
@@ -115,24 +132,7 @@ public class PictureUtil {
     }
 
 
-    /**
-     * 图片转成base64
-     *
-     * @param
-     * @return
-     */
-    public static String bitmapToBase64(String filePath) {
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-        //convert to byte array
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] bytes = baos.toByteArray();
-        //base64 encode
-        byte[] encode = Base64.encode(bytes, Base64.DEFAULT);
-        String encodeString = new String(encode);
-        return encodeString;
 
-    }
 
     private static Bitmap getDiskBitmap(String pathString) {
         Bitmap bitmap = null;
@@ -159,8 +159,8 @@ public class PictureUtil {
             // out = new FileOutputStream("/sdcard/aa.jpg");
             byte[] bitmapArray;
             bitmapArray = Base64.decode(st, Base64.DEFAULT);
-            bitmap =BitmapFactory.decodeByteArray(bitmapArray, 0,
-                            bitmapArray.length);
+            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0,
+                    bitmapArray.length);
             // bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             return bitmap;
         } catch (Exception e) {
@@ -264,9 +264,10 @@ public class PictureUtil {
 
     /**
      * 压缩图片 增加水印
+     *
      * @return
      */
-    public static Bitmap zoomCompressImg(String cacheImg,Context context) {
+    public static Bitmap zoomCompressImg(String cacheImg, Context context) {
         Bitmap bitmap = PictureUtil.getSmallBitmap(cacheImg, 720, 1080);
         Bitmap bitmapcanvs = PictureUtil.createBitmap(bitmap, DateUtils.getNowTime(), context);
         return bitmapcanvs;
@@ -274,10 +275,11 @@ public class PictureUtil {
 
     /**
      * 删除文件
+     *
      * @param filePath
      * @return
      */
-    public static boolean deleteFile(String filePath){
+    public static boolean deleteFile(String filePath) {
         return true;
     }
 }

@@ -117,6 +117,19 @@ public class ManageLog {
 					this.category = category;
 	}
 
+	public ManageLog(String authoruserid, String createtime,
+					 String finishwork, String unfinishwork, String needassistwork,
+					 String remark, String category) {
+
+		this.authoruserid = authoruserid;
+		this.createtime = createtime;
+		this.finishwork = finishwork;
+		this.unfinishwork = unfinishwork;
+		this.needassistwork = needassistwork;
+		this.remark = remark;
+		this.category = category;
+	}
+
 	@Generated(hash = 1059474224)
 	public ManageLog() {
 	}

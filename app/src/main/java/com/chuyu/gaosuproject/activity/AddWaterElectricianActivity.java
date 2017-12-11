@@ -142,31 +142,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 		btSubmit.setOnClickListener(this);
 
 
-		NetChangeObserver observer = new NetChangeObserver() {
-			@Override
-			public void onNetConnected(NetworkUtils.NetworkType type) {
-				Log.i("test", "水电工有网");
-				if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
-					Log.i("test", "水电工有网WIFI");
-					//有网情况下获取数据库存的离线日志
-//					List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-//					Log.i("test", "manageLogs:" + manageLogs.toString());
-//					if (manageLogs.size() > 0) {
-//						Log.i("test", "水电工数据库有数据");
-//						upLoadWaterLog.upLoadLog(manageLogs);
-//					}
 
-				}
-			}
-
-			@Override
-			public void onNetDisConnect() {
-				Log.i("test", "网络连接没有连接");
-			}
-		};
-		NetCheckReceiver.registerObserver(observer);
-		upLoadWaterLog = OnWifiUpLoadWaterLog.getInstace();
-		dbManager = upLoadWaterLog.getDbManager();
 	}
 
 	@Override
@@ -225,7 +201,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 									/**
 									 * 取消后，提示数据缓存
 									 */
-//									cacheSignData();
+									cacheSignData();
 //									if (iscommit) {
 //										svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
 //									} else {
@@ -305,30 +281,8 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 				tvPowersupplysituation.getText().toString(),
 				tvRepairsituation.getText().toString(),
 				tvOther.getText().toString(), "2");
-		/**
-		 * 数据库插入一条数据
-		 */
-		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-		if (null!=manageLogs) {
-			for (int i = 0; i < manageLogs.size(); i++) {
-				String createTime = manageLogs.get(i).getCreatetime();
-				String currenttime = OtherUtils.GetcurrentTime();
-				Log.i("test", "createTime:" + createTime + "\n" + "currenttime:" + currenttime);
-				Log.i("test", "数据库大小:" + manageLogs.size());
-				String[] splitcreateTime = createTime.split(" ");
-				String[] splitcurrenttime = currenttime.split(" ");
-				if (splitcreateTime[0].equals(splitcurrenttime[0])) {
-					if (manageLogs.get(i).getCategory().equals("2")) {
-						iscommit = false;
-						return;
-					}
-				}
 
-			}
-			if (iscommit) {
-				dbManager.insertObj(manageLog);
-			}
-		}
+        OnWifiUpLoadLog.getInstace().getDbManager().insertObj(manageLog);
 
 	}
 

@@ -83,12 +83,10 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 	private String userid;
 	private SVProgressHUD svProgressHUD;
 	private NetChangeObserver observer;//网络观察者
-	private OnWifiUpLoadLog onWifiUpLoadLog;
 	private String edtManagementchecksituation;
 	private String edtCommonwealchecksituation;
 	private String edtOndutyrecord;
 	private String edtRemarks;
-	private DBManager<ManageLog> dbManager;
 	private boolean isfirst = true;
 	private LogManagePresenter logManagePresenter;
 
@@ -105,40 +103,7 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 //		flag = getIntent().getStringExtra("flag");
 		layoutBack.setOnClickListener(this);
 		btSubmit.setOnClickListener(this);
-		//添加一个网络观察者
-		observer = new NetChangeObserver() {
-			@Override
-			public void onNetConnected(NetworkUtils.NetworkType type) {
-				Log.i("test", "有网");
-				if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
-					Log.i("test", "有网WIFI");
-					//有网情况下获取数据库存的离线日志
-//					List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-//					Log.i("test", "manageLogs:" + manageLogs.toString());
-//					if (manageLogs.size() > 0) {
-//						Log.i("test", "数据库有数据");
-//						onWifiUpLoadLog.upLoadLog(manageLogs);
-//					}
 
-				}
-			}
-
-			@Override
-			public void onNetDisConnect() {
-				Log.i("test", "网络没有连接");
-			}
-		};
-		NetCheckReceiver.registerObserver(observer);
-		onWifiUpLoadLog = OnWifiUpLoadLog.getInstace();
-
-		dbManager = onWifiUpLoadLog.getDbManager();
-//		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-//		if (manageLogs != null) {
-//			Log.i("test", "日志:" + manageLogs.toString());
-//
-//		} else {
-//			Log.i("test", "日志:为空");
-//		}
 	}
 
 	@Override
@@ -261,12 +226,7 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 									/**
 									 * 取消后，提示数据缓存
 									 */
-//									cacheSignData();
-//									if (isfirst) {
-//										svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
-//									} else {
-//										svProgressHUD.showInfoWithStatus("内存中已有缓存");
-//									}
+									cacheSignData();
 
 								}
 							})
@@ -274,12 +234,7 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 				}
 			} else {
 				Log.i("test", "当前无网");
-//				cacheSignData();
-//				if (isfirst) {
-//					svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
-//				} else {
-//					svProgressHUD.showInfoWithStatus("内存中已有缓存");
-//				}
+				cacheSignData();
 			}
 
 		} else if (flag.equals("two")) {
@@ -336,81 +291,10 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 		ManageLog lognamage = new ManageLog(null, userId, nowtime, tvManagementchecksituation.getText().toString(),
 				tvCommonwealchecksituation.getText().toString(), tvOndutyrecord.getText().toString(),
 				tvRemarks.getText().toString(), "1");
-		/**
-		 * 数据库插入一条数据
-		 */
-		List<ManageLog> manageLogs = dbManager.queryAllList(dbManager.getQueryBuiler());
-		if (null != manageLogs) {
-			for (int i = 0; i < manageLogs.size(); i++) {
-				String createTime = manageLogs.get(i).getCreatetime();
-				String currenttime = OtherUtils.GetcurrentTime();
-				Log.i("test", "createTime:" + createTime + "\n" + "currenttime:" + currenttime);
-				Log.i("test", "水电工数据库大小:" + manageLogs.size());
-				String[] splitcreateTime = createTime.split(" ");
-				String[] splitcurrenttime = currenttime.split(" ");
-				if (splitcreateTime[0].equals(splitcurrenttime[0])) {
-					if (manageLogs.get(i).getCategory().equals("1")) {
-						isfirst = false;
-						return;
-					}
-				}
-
-			}
-			if (isfirst) {
-				dbManager.insertObj(lognamage);
-			}
-			Log.i("test", "isfirst插入数据：" + isfirst);
-		}
+		OnWifiUpLoadLog.getInstace().getDbManager().insertObj(lognamage);
 
 	}
 
-//	private void submitLog() {
-//		//上报管理员日志
-//		OkGo.post(UrlConstant.formatUrl(UrlConstant.AddmManagerLogUrL))
-//				.params("AuthorUserID", userid)
-//				.params("CreateTime", tvTime.getText().toString())
-//				.params("FinishWork", edtManagementchecksituation)
-//				.params("UnFinishWork", edtCommonwealchecksituation)
-//				.params("NeedAssistWork", edtOndutyrecord)
-//				.params("Remark", edtRemarks)
-//				.params("Category", "1")
-//				.execute(new StringCallback() {
-//					@Override
-//					public void onSuccess(String s, Call call, Response response) {
-//						Log.i("test", s.toString());
-//						svProgressHUD.dismissImmediately();
-//						try {
-//							JSONObject json = new JSONObject(s);
-//							boolean success = json.getBoolean("success");
-//							String msg = json.getString("msg");
-//							if (success) {
-//								ToastUtils.show(getApplicationContext(), msg);
-//								Intent intent = new Intent(AddManagerLogActivity.this, LogManageActivity.class);
-//								intent.putExtra("tempflag", "1");
-//								startActivity(intent);
-//								finish();
-//							} else {
-//								ToastUtils.show(getApplicationContext(), msg);
-//							}
-//						} catch (JSONException e) {
-//
-//						}
-//					}
-//
-//					@Override
-//					public void onBefore(BaseRequest request) {
-//						super.onBefore(request);
-//						svProgressHUD.showWithStatus("正在提交...");
-//					}
-//
-//					@Override
-//					public void onError(Call call, Response response, Exception e) {
-//						super.onError(call, response, e);
-//						svProgressHUD.dismissImmediately();
-//						svProgressHUD.showErrorWithStatus("提交失败");
-//					}
-//				});
-//	}
 
 	@Override
 	public void showWaiting() {

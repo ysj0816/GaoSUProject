@@ -16,9 +16,9 @@ import java.util.ArrayList;
  * @author 杨仕俊
  * @class com.chuyu.gaosuproject.recevier.NetCheckReceiver
  * @description 注册网络状态改变接收广播
- * @date  2017/11/28 09:31:22
- * @email  yangshijun156@foxmail.com
- *
+ * @date 2017/11/28 09:31:22
+ * @email yangshijun156@foxmail.com
+ * <p>
  * Created by ysj on 2017/11/28.
  */
 
@@ -55,7 +55,8 @@ public class NetCheckReceiver extends BroadcastReceiver {
 
     /**
      * 单例模式
-     * @return  BroadcastReceiver
+     *
+     * @return BroadcastReceiver
      */
     private static BroadcastReceiver getReceiver() {
         if (null == mBroadcastReceiver) {
@@ -67,8 +68,10 @@ public class NetCheckReceiver extends BroadcastReceiver {
         }
         return mBroadcastReceiver;
     }
+
     /**
      * 收到广播
+     *
      * @param context
      * @param intent
      */
@@ -97,20 +100,22 @@ public class NetCheckReceiver extends BroadcastReceiver {
 
     /**
      * 动态注册广播
+     *
      * @param mContext
      */
-    public static void registerNetworkReceiver(Context mContext){
+    public static void registerNetworkReceiver(Context mContext) {
         IntentFilter filter = new IntentFilter();
         filter.addAction(CUSTOM_ANDROID_NET_CHANGE_ACTION);
         filter.addAction(ANDROID_NET_CHANGE_ACTION);
-        mContext.getApplicationContext().registerReceiver(getReceiver(),filter);
+        mContext.getApplicationContext().registerReceiver(getReceiver(), filter);
     }
 
     /**
      * 清除
+     *
      * @param mContext
      */
-    public static void checkNetwork(Context mContext){
+    public static void checkNetwork(Context mContext) {
         Intent intent = new Intent();
         intent.setAction(CUSTOM_ANDROID_NET_CHANGE_ACTION);
         mContext.sendBroadcast(intent);
@@ -118,14 +123,15 @@ public class NetCheckReceiver extends BroadcastReceiver {
 
     /**
      * 反注册广播
+     *
      * @param mContext
      */
-    public static void unRegisterNetworkReceiver(Context mContext){
-        if (mBroadcastReceiver!=null){
+    public static void unRegisterNetworkReceiver(Context mContext) {
+        if (mBroadcastReceiver != null) {
             try {
                 mContext.getApplicationContext().unregisterReceiver(mBroadcastReceiver);
-            }catch (Exception e){
-                Log.e("receiver","注销广播错误！");
+            } catch (Exception e) {
+                Log.e("receiver", "注销广播错误！");
             }
 
         }
@@ -133,7 +139,8 @@ public class NetCheckReceiver extends BroadcastReceiver {
 
     /**
      * 网络是否可用
-     * @return  true 可用;  false 不可用
+     *
+     * @return true 可用;  false 不可用
      */
     public static boolean isNetworkAvailable() {
         return isNetAvailable;
@@ -142,27 +149,26 @@ public class NetCheckReceiver extends BroadcastReceiver {
     /**
      * 防止接收到两次广播
      */
-    public NetworkUtils.NetworkType fristNetType=null;
+    public NetworkUtils.NetworkType fristNetType = null;
+
     /**
      * 通知观察者网络改变
      */
-    public void notifyObserver(){
-        if (!mNetChangeObservers.isEmpty()){
-            int size =mNetChangeObservers.size();
+    public void notifyObserver() {
+        if (!mNetChangeObservers.isEmpty()) {
+            int size = mNetChangeObservers.size();
             for (int i = 0; i < size; i++) {
                 NetChangeObserver observer = mNetChangeObservers.get(i);
-
-                if (observer!=null){
-                    if (isNetworkAvailable()){
-                       // if (mNetType!=fristNetType){
+                if (observer != null) {
+                    if (isNetworkAvailable()) {
+                        if (mNetType != fristNetType) {
                             observer.onNetConnected(mNetType);
-                            Log.i("test","observer:"+i);
-                       // }
-                        //fristNetType=mNetType;
+                        }
+                        fristNetType = mNetType;
 
-                    }else {
+                    } else {
                         observer.onNetDisConnect();
-                        fristNetType=null;
+                        fristNetType = null;
                     }
                 }
             }
@@ -171,9 +177,10 @@ public class NetCheckReceiver extends BroadcastReceiver {
 
     /**
      * 注册一个网络变化观察者
+     *
      * @param observer 网络变化观察者
      */
-    public static void registerObserver(NetChangeObserver observer){
+    public static void registerObserver(NetChangeObserver observer) {
         if (mNetChangeObservers == null) {
             mNetChangeObservers = new ArrayList<NetChangeObserver>();
         }
@@ -182,11 +189,12 @@ public class NetCheckReceiver extends BroadcastReceiver {
 
     /**
      * 移除网络观察者
+     *
      * @param observer
      */
-    public static void removerRegisterObserver(NetChangeObserver observer){
-        if (mNetChangeObservers!=null){
-            if (mNetChangeObservers.contains(observer)){
+    public static void removerRegisterObserver(NetChangeObserver observer) {
+        if (mNetChangeObservers != null) {
+            if (mNetChangeObservers.contains(observer)) {
                 mNetChangeObservers.remove(observer);
             }
         }

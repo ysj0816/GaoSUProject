@@ -31,11 +31,15 @@ import com.chuyu.gaosuproject.bean.weather.Weather_data;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.presenter.MainPresenter;
+import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
+import com.chuyu.gaosuproject.service.UpLoadSercvice;
 import com.chuyu.gaosuproject.util.AppManager;
+import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
 import com.chuyu.gaosuproject.util.PermissionsChecker;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
+import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
 import com.chuyu.gaosuproject.view.IMainView;
 import com.dalong.marqueeview.MarqueeView;
 import com.google.gson.Gson;
@@ -129,7 +133,7 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
     private static final int REQUEST_CODE_WRITE_SETTINGS = 1;//写入设置
     String category;
     private String usertype;
-
+    private Intent intent;
     @Override
     protected int initContent() {
         return R.layout.activity_main;
@@ -162,6 +166,8 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
 
     @Override
     protected void initData() {
+
+
         //添加app
         AppManager.getAppManager().addActivity(this);
         //注销登录  删除数据
@@ -174,6 +180,26 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
         rotate = AnimationUtils.loadAnimation(this, R.anim.roate_refresh);
         LinearInterpolator lin = new LinearInterpolator();
         rotate.setInterpolator(lin);
+
+        //网络状态观察者
+       NetChangeObserver netChangeObserver= new NetChangeObserver() {
+            @Override
+            public void onNetConnected(NetworkUtils.NetworkType type) {
+                Log.i("test","主界面启动");
+                Intent intent = new Intent(MainActivity.this, UpLoadSercvice.class);
+                startService(intent);
+            }
+
+            @Override
+            public void onNetDisConnect() {
+                Intent intent = new Intent(MainActivity.this, UpLoadSercvice.class);
+                stopService(intent);
+            }
+        };
+        //注册一个广播状态接收者
+        NetCheckReceiver.registerObserver(netChangeObserver);
+
+
 
     }
 

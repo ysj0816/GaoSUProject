@@ -96,7 +96,12 @@ public class OnWifiUpLoadLog {
 		queryisLog(manageLog);
 		Log.i("test", "广播提交时:" + manageLog.toString());
 	}
-
+	/**
+	 * 删除所有数据
+	 */
+	public void deleteALL(){
+		dbmanageLog.deleteAll();
+	}
 	/**
 	 * @param manageLog 广播中查询有无日志信息
 	 */

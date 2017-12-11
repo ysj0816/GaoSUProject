@@ -6,6 +6,7 @@ import android.util.Log;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.bean.dailycheck.DailyCheck;
 import com.chuyu.gaosuproject.bean.daobean.LeaveDataBean;
+import com.chuyu.gaosuproject.bean.logmanagebean.ManageLog;
 import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.model.DailyCheckListFillModel;
@@ -75,8 +76,9 @@ public class OnWifiLoadDailyCheck {
 	 *
 	 * @return
 	 */
-	private List<DailyCheck> queryLeaveData() {
+	public List<DailyCheck> queryData() {
 		List<DailyCheck> dailycheckBean = dailyCheckDBManager.queryAllList(dailyCheckDBManager.getQueryBuiler());
+		Log.i("test","查询检查数据1："+dailycheckBean.size());
 		if (dailycheckBean != null) {
 			return dailycheckBean;
 		}
@@ -102,20 +104,22 @@ public class OnWifiLoadDailyCheck {
 			startUpload(dailyCheck);
 		}
 	}
+	/**
+	 * 删除所有数据
+	 */
+	public void deleteALL(){
+		dailyCheckDBManager.deleteAll();
+	}
+
 
 	private void deleteSingData(Long id) {
 		dailyCheckDBManager.deleteByID(id);
 	}
 
 	private void startUpload(final DailyCheck dailyCheck) {
-		String images = dailyCheck.getImages();
 		if (!listfile.isEmpty()) {
 			listfile.clear();
 		}
-//		for (int i = 0; i < path.size(); i++) {
-//			listfile.add(new File(path.get(i)));
-//			Log.i("test", "无网listfile:" + listfile);
-//		}
 		Log.i("test","CheckUnit:"+dailyCheck.getCheckunit());
 		Log.i("test","Userid():"+dailyCheck.getUserid());
 		//http://192.168.11.9:8088/GS/a/mobile/check/AddCheckInfor /GS/a/mobile/check/AddCheckInfor

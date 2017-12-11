@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -107,10 +109,12 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     private String userid;
     private SVProgressHUD svProgressHUD;
     private DailyCheckListFillPresenter dailyCheckListFillPresenter;
-    private List<String> pathList=new ArrayList<String>();
-    private OnWifiLoadDailyCheck onWifiLoadDailyCheck;
-    private DBManager<DailyCheck> dbManager;
-
+    private List<String> pathList = new ArrayList<String>();
+    /*private MyHandle myHandle;
+    private MyThread myThread;*/
+    private String reslut;
+    private String strContent;
+    private String fen;
 
     @Override
     protected int initContent() {
@@ -125,7 +129,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
         checkUnitName = getIntent().getStringExtra("checkUnitName");
         checkProjectName = getIntent().getStringExtra("checkProjectName");
         checkId = getIntent().getStringExtra("checkId");
-        Log.i("test","checkId:"+checkId);
+        Log.i("test", "checkId:" + checkId);
         checkUnitId = getIntent().getStringExtra("checkUnitId");
         checkProjectId = getIntent().getStringExtra("checkProjectId");
         if (!"".equals(checkUnitName)) {
@@ -186,7 +190,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                             tvDailycheckresult.setText("差");
                         }
                     }
-                }else{
+                } else {
                     tvDailycheckresult.setText("");
                 }
             }
@@ -201,38 +205,6 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
             }
         });
 
-
-        NetChangeObserver observer=new NetChangeObserver() {
-            @Override
-            public void onNetConnected(NetworkUtils.NetworkType type) {
-                Log.i("test", "日常检查有网");
-                if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
-                    Log.i("test", "日常检查有网WIFI");
-                    try{
-                        //有网情况下获取数据库存的离线日志
-//                        List<DailyCheck> dailyChecks = dbManager.queryAllList(dbManager.getQueryBuiler());
-//                        Log.i("test", "dailyChecks:" + dailyChecks.toString());
-//                        if (dailyChecks.size()>0) {
-//                            Log.i("test","日常检查数据库有数据");
-//                            onWifiLoadDailyCheck.upLoadLeaveData(dailyChecks);
-//                        }
-                    }catch (Exception e){
-                        Log.i("test","异常抛出");
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onNetDisConnect() {
-                Log.i("test", "网络连接没有连接");
-            }
-        };
-        NetCheckReceiver.registerObserver(observer);
-        onWifiLoadDailyCheck = OnWifiLoadDailyCheck.getInstance();
-        dbManager = onWifiLoadDailyCheck.getDbManager();
 
     }
 
@@ -262,22 +234,20 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                 } else if (tvDailycheckresult.getText().toString().equals("")) {
                     ToastUtils.show(getApplicationContext(), "检查结果不能为空");
                     return;
-                }
-                else if(tvDailyspecificsituation.getText().toString().length()>100){
-                    ToastUtils.show(getApplicationContext(),"文字长度不能大于100");
+                } else if (tvDailyspecificsituation.getText().toString().length() > 100) {
+                    ToastUtils.show(getApplicationContext(), "文字长度不能大于100");
                     return;
-                }
-                else if (listfile.size() == 0) {
+                } else if (listfile.size() == 0) {
                     ToastUtils.show(getApplicationContext(), "图片不能为空");
                     return;
                 }
                 Log.i("test", checkId + "\n" + checkUnitId + "\n" + checkProjectId);
-                if (NetworkUtils.isConnected()){
-                    Log.i("test","当前有网");
+                if (NetworkUtils.isConnected()) {
+                    Log.i("test", "当前有网");
                     if (NetworkUtils.getNetworkType() == NetworkUtils.NetworkType.NETWORK_WIFI) {
-                        Log.i("test","当前wifi网络");
+                        Log.i("test", "当前wifi网络");
                         submitdailycheck();
-                    }else{
+                    } else {
                         new AlertDialog(this)
                                 .builder()
                                 .setMsg("当前网络不是wifi,将使用流量,确认提交吗?")
@@ -294,7 +264,8 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                                         /**
                                          * 取消后，提示数据缓存
                                          */
-//                                        cacheSignData();
+                                        getEditTextString();
+                                        cacheSignData();
                                         svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
                                     }
 
@@ -302,10 +273,11 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                                 })
                                 .show();
                     }
-                }else{
-                    Log.i("test","当前无网");
+                } else {
+                    Log.i("test", "当前无网");
                     svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
-//                    cacheSignData();
+                    getEditTextString();
+                    cacheSignData();
                 }
                 break;
             case R.id.layout_dailyphoto:
@@ -335,24 +307,27 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
 
                 ImgSelActivity.startActivity(DailyCheckListFillActivity.this, config, REQUEST_CODE);
                 break;
+            default:
+                break;
         }
     }
 
+    /**
+     * 保存数据到数据库
+     */
     private void cacheSignData() {
-        String path = PictureUtil.bitmapToBase64(pathList.toString());
         String userId = (String) SPUtils.get(this, SPConstant.USERID, "");
-        DailyCheck check=new DailyCheck(null,userId,checkUnitId,checkProjectId,tvDailycheckresult.getText().toString(),
-                tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),
-                checkId,path);
-
+        DailyCheck check = new DailyCheck(null, userId, checkUnitId, checkProjectId, reslut, strContent
+                , fen,checkId, pathList);
+        DBManager<DailyCheck> dbManager = OnWifiLoadDailyCheck.getInstance().getDbManager();
         dbManager.insertObj(check);
-
     }
 
+
     private void submitdailycheck() {
-        dailyCheckListFillPresenter.sumbitFill(checkUnitId,checkProjectId,userid,tvDailycheckresult.getText().toString()
-                ,tvDailyspecificsituation.getText().toString(),tvDailycheckpoints.getText().toString(),checkId
-                ,listfile);
+        dailyCheckListFillPresenter.sumbitFill(checkUnitId, checkProjectId, userid, tvDailycheckresult.getText().toString()
+                , tvDailyspecificsituation.getText().toString(), tvDailycheckpoints.getText().toString(), checkId
+                , listfile);
     }
 
     private ImageLoader loader = new ImageLoader() {
@@ -365,24 +340,24 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("test","onResume");
+        Log.i("test", "onResume");
         for (int i = 0; i < pathList.size(); i++) {
             String s = pathList.get(i);
             File file = new File(s);
-            if (file.exists()){
+            if (file.exists()) {
 
-            }else {
+            } else {
                 pathList.remove(s);
             }
         }
-            showResult(pathList);
+        showResult(pathList);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            pathList= data.getStringArrayListExtra(ImgSelActivity.INTENT_RESULT);
+            pathList = data.getStringArrayListExtra(ImgSelActivity.INTENT_RESULT);
             Log.i("test", "路径:" + pathList.toString());
 //            showResult(pathList);
             //每次添加图片之前清空集合中的数据，确保list中无重复的图片
@@ -435,7 +410,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     @Override
     public void fillSuccess() {
         Toast toast = Toast.makeText(getApplicationContext(), "提交成功", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
         svProgressHUD.showSuccessWithStatus("提交成功！");
         ImgSelActivity.getInstance().destoryActivity();
@@ -451,6 +426,12 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     public void onBackPressed() {
         super.onBackPressed();
         ImgSelActivity.getInstance().destoryActivity();
+    }
+
+    public void getEditTextString() {
+        reslut = tvDailycheckresult.getText().toString().trim();
+        strContent = tvDailyspecificsituation.getText().toString().trim();
+        fen = tvDailycheckpoints.getText().toString().trim();
     }
 
     private class GridAdapter extends BaseAdapter {
@@ -497,4 +478,34 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
 
         }
     }
+
+   /* public class MyHandle extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.i("test","img64list:"+img64list.size());
+            cacheSignData();
+
+        }
+    }
+
+    private List<String> img64list = new ArrayList<>();
+
+    public class MyThread extends Thread {
+        @Override
+        public void run() {
+            int size = pathList.size();
+            img64list.clear();
+            try {
+                for (int i = 0; i < size; i++) {
+                    String base64 = PictureUtil.bitmapToBase64(pathList.get(i));
+                    img64list.add(base64);
+                }
+                myHandle.sendEmptyMessage(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }*/
 }

@@ -53,6 +53,7 @@ import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
 import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
 import com.chuyu.gaosuproject.util.upload.OnWifiUpLoadSign;
+import com.chuyu.gaosuproject.util.upload.SignLeaveDao;
 import com.chuyu.gaosuproject.view.ISignsView;
 import com.chuyu.gaosuproject.widget.AlertDialog;
 import com.chuyu.gaosuproject.widget.RadioButtonDialog;
@@ -131,7 +132,8 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     private SignAdapter signAdapter;
     private boolean isLocationSuccess = false;//定位是否成功
     private SVProgressHUD svProgressHUD;
-    private DBManager<SignDataDao> dbManager;//数据库操作
+   // private DBManager<SignDataDao> dbManager;//数据库操作
+    private DBManager<SignAndLeaveData> dbManager;
     public OnWifiUpLoadSign onWifiUpLoadSign;
     @Override
     protected SignPresenter initPresenter() {
@@ -216,6 +218,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
 
     @Override
     protected void initData() {
+        dbManager = SignLeaveDao.getInstace().getDbManager();
         listImg = new ArrayList<>();
         String time = DateUtils.getNowTime();
         signTime.setText(time);
@@ -271,15 +274,10 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
 
             }
         };
-        String url = UrlConstant.getIP();
-        boolean availableByPing = NetworkUtils.isAvailableByPing(UrlConstant.getIP());
-        Log.i("test","ping:"+url+"**availableByPing:"+availableByPing);
-        //添加一个网络观察者
-        NetCheckReceiver.registerObserver(mChangeObserver);
-        //数据库操作
-         dbManager = onWifiUpLoadSign.getDbManager();
-        List<SignDataDao> daos = dbManager.queryAllList(dbManager.getQueryBuiler());
-        Log.i("db","初始化查询数据库中数据："+daos.toString());
+
+
+
+
 
     }
     /**
@@ -419,16 +417,16 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         String remark = editRemark.getText().toString().trim();
         String filpath = listImg.get(0);
 
-        new SignAndLeaveData(null,userId,dutyDate,
-                teType+"",dutyType,location,lng+"",lat+"","","",remark,"");
+        String img64=PictureUtil.bitmapToBase64(filpath);
 
+        SignAndLeaveData signAndLeaveData = new SignAndLeaveData(null, userId, dutyDate,
+                teType + "", dutyType, location, lng + "", lat + "", "", "", remark, img64);
 
-        SignDataDao signDataDao = new SignDataDao(null,userId,dutyDate,nowdate,teType+""
-                ,dutyType,location,lng+"",lat+"",remark,filpath);
         /**
          * 数据库插入一条数据
          */
-        dbManager.insertObj(signDataDao);
+        boolean b = dbManager.insertObj(signAndLeaveData);
+        Log.i("test","签到数据插入:"+b);
     }
     
     /**

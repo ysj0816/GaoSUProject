@@ -53,6 +53,7 @@ public class DBbaseOperation<T,K> {
         boolean isinsert=true;
         try {
             dao.insert(entity);
+            isinsert=true;
         }catch (Exception e){
             e.printStackTrace();
             isinsert=false;
@@ -100,6 +101,7 @@ public class DBbaseOperation<T,K> {
         boolean iskeyDele=true;
         try {
             dao.deleteByKey(id);
+            iskeyDele=true;
         }catch (Exception e){
             e.printStackTrace();
             iskeyDele=false;
@@ -147,6 +149,9 @@ public class DBbaseOperation<T,K> {
 
     }
 
+    public void delelteAll(){
+        getDao().deleteAll();
+    }
 
 
     /**

@@ -17,38 +17,54 @@ public class SignAndLeaveData {
      */
     @Id(autoincrement = true)
     Long id;
-    private String UserId;
+    private String userid;
     //打卡时间
-    private String DutyDate;
+    private String dutydate;
     //签到特请  请假类型（请假 休假）
-    private String Type;
+    private String type;
     //签到类型  上下班 请假
-    private int DutyType;
-    private String Location;
-    private String Lng;
+    private int dutytype;
+    private String location;
+    private String lng;
     private String lat;
-    private String StartDate;
-    private String EndDate;
+    private String startdate;
+    private String enddate;
     private String rebark;
     @NotNull
-    private String Imgage;
+    private String image;
 
-    @Generated(hash = 1741178523)
-    public SignAndLeaveData(Long id, String UserId, String DutyDate, String Type,
-            int DutyType, String Location, String Lng, String lat, String StartDate,
-            String EndDate, String rebark, @NotNull String Imgage) {
+    @Generated(hash = 1459645009)
+    public SignAndLeaveData(Long id, String userid, String dutydate, String type,
+            int dutytype, String location, String lng, String lat, String startdate,
+            String enddate, String rebark, @NotNull String image) {
         this.id = id;
-        this.UserId = UserId;
-        this.DutyDate = DutyDate;
-        this.Type = Type;
-        this.DutyType = DutyType;
-        this.Location = Location;
-        this.Lng = Lng;
+        this.userid = userid;
+        this.dutydate = dutydate;
+        this.type = type;
+        this.dutytype = dutytype;
+        this.location = location;
+        this.lng = lng;
         this.lat = lat;
-        this.StartDate = StartDate;
-        this.EndDate = EndDate;
+        this.startdate = startdate;
+        this.enddate = enddate;
         this.rebark = rebark;
-        this.Imgage = Imgage;
+        this.image = image;
+    }
+
+    public SignAndLeaveData( String userid, String dutydate, String type,
+                            int dutytype, String location, String lng, String lat, String startdate,
+                            String enddate, String rebark, @NotNull String image) {
+        this.userid = userid;
+        this.dutydate = dutydate;
+        this.type = type;
+        this.dutytype = dutytype;
+        this.location = location;
+        this.lng = lng;
+        this.lat = lat;
+        this.startdate = startdate;
+        this.enddate = enddate;
+        this.rebark = rebark;
+        this.image = image;
     }
 
     @Generated(hash = 838493861)
@@ -63,52 +79,52 @@ public class SignAndLeaveData {
         this.id = id;
     }
 
-    public String getUserId() {
-        return UserId;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUserId(String userId) {
-        UserId = userId;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public String getDutyDate() {
-        return DutyDate;
+    public String getDutydate() {
+        return dutydate;
     }
 
-    public void setDutyDate(String dutyDate) {
-        DutyDate = dutyDate;
+    public void setDutydate(String dutydate) {
+        this.dutydate = dutydate;
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
-    public int getDutyType() {
-        return DutyType;
+    public int getDutytype() {
+        return dutytype;
     }
 
-    public void setDutyType(int dutyType) {
-        DutyType = dutyType;
+    public void setDutytype(int dutytype) {
+        this.dutytype = dutytype;
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        this.location = location;
     }
 
     public String getLng() {
-        return Lng;
+        return lng;
     }
 
     public void setLng(String lng) {
-        Lng = lng;
+        this.lng = lng;
     }
 
     public String getLat() {
@@ -119,20 +135,20 @@ public class SignAndLeaveData {
         this.lat = lat;
     }
 
-    public String getStartDate() {
-        return StartDate;
+    public String getStartdate() {
+        return startdate;
     }
 
-    public void setStartDate(String startDate) {
-        StartDate = startDate;
+    public void setStartdate(String startdate) {
+        this.startdate = startdate;
     }
 
-    public String getEndDate() {
-        return EndDate;
+    public String getEnddate() {
+        return enddate;
     }
 
-    public void setEndDate(String endDate) {
-        EndDate = endDate;
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
 
     public String getRebark() {
@@ -143,29 +159,11 @@ public class SignAndLeaveData {
         this.rebark = rebark;
     }
 
-    public String getImgage() {
-        return Imgage;
+    public String getImage() {
+        return image;
     }
 
-    public void setImgage(String imgage) {
-        Imgage = imgage;
-    }
-
-    @Override
-    public String toString() {
-        return "SignAndLeaveData{" +
-                "id=" + id +
-                ", UserId='" + UserId + '\'' +
-                ", DutyDate='" + DutyDate + '\'' +
-                ", Type='" + Type + '\'' +
-                ", DutyType=" + DutyType +
-                ", Location='" + Location + '\'' +
-                ", Lng='" + Lng + '\'' +
-                ", lat='" + lat + '\'' +
-                ", StartDate='" + StartDate + '\'' +
-                ", EndDate='" + EndDate + '\'' +
-                ", rebark='" + rebark + '\'' +
-                ", Imgage='" + Imgage + '\'' +
-                '}';
+    public void setImage(String image) {
+        this.image = image;
     }
 }

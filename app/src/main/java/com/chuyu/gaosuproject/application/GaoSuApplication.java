@@ -8,7 +8,6 @@ import com.chuyu.gaosuproject.dao.DBManagerUtils;
 import com.chuyu.gaosuproject.greendao.DaoMaster;
 import com.chuyu.gaosuproject.greendao.DaoSession;
 import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
-import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.Utils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
@@ -53,6 +52,7 @@ public class GaoSuApplication extends Application {
          * 数据库初始化
          */
         DBbaseInit();
+
 
     }
     /**

@@ -15,18 +15,48 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class DailyCheck {
 
-	public String toString() {
-		return "DailyCheck{" +
-				"id=" + id +
-				", userid='" + userid + '\'' +
-				", checkunit='" + checkunit + '\'' +
-				", checkproject='" + checkproject + '\'' +
-				", checkresult='" + checkresult + '\'' +
-				", content='" + content + '\'' +
-				", deductpoint='" + deductpoint + '\'' +
-				", checkid='" + checkid + '\'' +
-				", images='" + images + '\'' +
-				'}';
+	@Id(autoincrement = true)
+	Long id;
+	private String userid;
+	private String checkunit;
+	private String checkproject;
+	private String checkresult;
+	private String content;
+	private String deductpoint;
+	private String checkid;
+	@Convert(columnType = String.class, converter = StringConverter.class)
+	private List<String> images;
+
+	@Generated(hash = 1779440453)
+	public DailyCheck(Long id, String userid, String checkunit, String checkproject,
+									String checkresult, String content, String deductpoint, String checkid,
+									List<String> images) {
+					this.id = id;
+					this.userid = userid;
+					this.checkunit = checkunit;
+					this.checkproject = checkproject;
+					this.checkresult = checkresult;
+					this.content = content;
+					this.deductpoint = deductpoint;
+					this.checkid = checkid;
+					this.images = images;
+	}
+
+	public DailyCheck( String userid, String checkunit, String checkproject,
+					  String checkresult, String content, String deductpoint, String checkid,
+					  List<String> images) {
+		this.userid = userid;
+		this.checkunit = checkunit;
+		this.checkproject = checkproject;
+		this.checkresult = checkresult;
+		this.content = content;
+		this.deductpoint = deductpoint;
+		this.checkid = checkid;
+		this.images = images;
+	}
+
+	@Generated(hash = 234058891)
+	public DailyCheck() {
 	}
 
 	public Long getId() {
@@ -93,42 +123,11 @@ public class DailyCheck {
 		this.checkid = checkid;
 	}
 
-	public String getImages() {
+	public List<String> getImages() {
 		return images;
 	}
 
-	public void setImages(String images) {
+	public void setImages(List<String> images) {
 		this.images = images;
 	}
-
-	@Id(autoincrement = true)
-	Long id;
-	private String userid;
-	private String checkunit;
-	private String checkproject;
-	private String checkresult;
-	private String content;
-	private String deductpoint;
-	private String checkid;
-	private String images;
-	@Generated(hash = 1847138487)
-	public DailyCheck(Long id, String userid, String checkunit, String checkproject,
-									String checkresult, String content, String deductpoint, String checkid,
-									String images) {
-					this.id = id;
-					this.userid = userid;
-					this.checkunit = checkunit;
-					this.checkproject = checkproject;
-					this.checkresult = checkresult;
-					this.content = content;
-					this.deductpoint = deductpoint;
-					this.checkid = checkid;
-					this.images = images;
-	}
-
-	@Generated(hash = 234058891)
-	public DailyCheck() {
-	}
-
-
 }

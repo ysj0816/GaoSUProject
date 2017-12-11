@@ -194,4 +194,17 @@ public class OnWifiUpLoadWaterLog {
 					}
 				});
 	}
+
+	/**
+	 * @return 查询当天写是否写过日志
+	 */
+	public List<ManageLog> queryData() {
+		List<ManageLog> manageLoglist = dbmanageLog.queryAllList(dbmanageLog.getQueryBuiler());
+		if (manageLoglist != null) {
+			return manageLoglist;
+		}
+		return null;
+	}
+
+
 }
