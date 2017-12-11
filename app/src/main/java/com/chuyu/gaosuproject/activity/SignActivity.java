@@ -132,9 +132,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     private SignAdapter signAdapter;
     private boolean isLocationSuccess = false;//定位是否成功
     private SVProgressHUD svProgressHUD;
-   // private DBManager<SignDataDao> dbManager;//数据库操作
     private DBManager<SignAndLeaveData> dbManager;
-    public OnWifiUpLoadSign onWifiUpLoadSign;
     @Override
     protected SignPresenter initPresenter() {
         signPresenter = new SignPresenter();
@@ -253,31 +251,6 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                 remarkLenth.setText(length + "/255");
             }
         });
-        onWifiUpLoadSign = OnWifiUpLoadSign.getInstace();
-        /**
-         * 网络观察者
-         */
-        NetChangeObserver  mChangeObserver = new NetChangeObserver() {
-            @Override
-            public void onNetConnected(NetworkUtils.NetworkType type) {
-
-                if (type== NetworkUtils.NetworkType.NETWORK_WIFI){
-                    Log.i("con","连接到wifi");
-                    //onWifiUpLoadSign.upLoadSignData();
-                }
-            }
-
-            @Override
-            public void onNetDisConnect() {
-
-                Log.i("con", "网络连接没有连接");
-
-            }
-        };
-
-
-
-
 
     }
     /**
@@ -400,7 +373,6 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     public void cacheSignData(){
         String s = signLocation.getText().toString();
         //提交
-        String nowdate = DateUtils.getNowDate();
         int dutyType = DutyType;
         String dutyDate = signTime.getText().toString();
         String location = "";
@@ -425,8 +397,8 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         /**
          * 数据库插入一条数据
          */
-        boolean b = dbManager.insertObj(signAndLeaveData);
-        Log.i("test","签到数据插入:"+b);
+         dbManager.insertObj(signAndLeaveData);
+
     }
     
     /**

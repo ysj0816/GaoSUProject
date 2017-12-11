@@ -85,12 +85,9 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
     private SVProgressHUD svProgressHUD;
     private int leaveType = 1;//请假类型
     private InputMethodManager imm;
-
-
     private String userid;
     private int dutyType = 3;//打卡类型
     private String date;
-    private OnWifiLoadLeave onWifiLoadLeave;
     private DBManager<SignAndLeaveData> dbManager;
 
     @Override
@@ -202,8 +199,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
 
         dbManager.insertObj(signAndLeaveData);
         //缓存到数据库中
-        //  LeaveDataBean leaveDataBean = new LeaveDataBean(null, userid, startDate, endData, reason, date, dutyType, type);
-        //dbManager.insertObj(leaveDataBean);
+
     }
 
     /**
@@ -300,28 +296,6 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
     @Override
     protected void initData() {
         dbManager = SignLeaveDao.getInstace().getDbManager();
-        /**
-         * 网络观察者
-         */
-        NetChangeObserver mNetObserver = new NetChangeObserver() {
-            @Override
-            public void onNetConnected(NetworkUtils.NetworkType type) {
-                if (type == NetworkUtils.NetworkType.NETWORK_WIFI) {
-                    //自动提交
-                    // onWifiLoadLeave.upLoadLeaveData();
-                }
-            }
-
-            @Override
-            public void onNetDisConnect() {
-
-                Log.i("test", "网络没有连接");
-            }
-        };
-        /**
-         * 添加一个网络观察者
-         */
-        NetCheckReceiver.registerObserver(mNetObserver);
     }
 
     @Override

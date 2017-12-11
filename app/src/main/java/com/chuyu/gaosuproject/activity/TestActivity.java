@@ -35,7 +35,7 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         ButterKnife.bind(this);
-        getUserinfo();
+       // getUserinfo();
 
     }
 

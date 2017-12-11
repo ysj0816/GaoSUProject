@@ -70,7 +70,8 @@ import okhttp3.Response;
 /**
  * 主页面
  */
-public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> implements IMainView {
+public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter>
+        implements IMainView {
 
 
     @BindView(R.id.view_page)
@@ -115,12 +116,13 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
     //用来记录当前滚动的位置
     PicsAdapter picsAdapter;
     private Animation rotate;
-    //private Parcelable parcelable;
     //图标
-    private int imgSrc[] = new int[]{R.mipmap.main_1, R.mipmap.main_2, R.mipmap.main_3, R.mipmap.main_4,
+    private int imgSrc[] = new int[]{R.mipmap.main_1, R.mipmap.main_2, R.mipmap.main_3,
+            R.mipmap.main_4,
             R.mipmap.main_5, R.mipmap.main_6, R.mipmap.main_7, R.mipmap.main_8};
 
-    private String itemStr[] = new String[]{"日常检查", "移动考勤", "应急管理", "工作日志", "扫码检查", "出行导航",
+    private String itemStr[] = new String[]{"日常检查", "移动考勤", "应急管理",
+            "工作日志", "扫码检查", "出行导航",
             "设施查询", "路况提醒"};
 
     private ScheduledExecutorService scheduledExecutorService;
@@ -168,10 +170,8 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
     protected void initData() {
 
 
-        //添加app
+        //添加activity
         AppManager.getAppManager().addActivity(this);
-        //注销登录  删除数据
-        //SPUtils.remove(this, SPConstant.IS_LOGIN);
         //获取定位城市
         String city = getLocationCity();
         Log.i("test","city:"+city);
@@ -185,9 +185,11 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
        NetChangeObserver netChangeObserver= new NetChangeObserver() {
             @Override
             public void onNetConnected(NetworkUtils.NetworkType type) {
-                Log.i("test","主界面启动");
-                Intent intent = new Intent(MainActivity.this, UpLoadSercvice.class);
-                startService(intent);
+                if (type== NetworkUtils.NetworkType.NETWORK_WIFI){
+                    Intent intent = new Intent(MainActivity.this, UpLoadSercvice.class);
+                    startService(intent);
+                }
+
             }
 
             @Override
@@ -316,6 +318,8 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
                     imgrefresh.clearAnimation();
                     ToastUtils.show(MainActivity.this, "天气已刷新");
                     break;
+                default:
+                    break;
             }
         }
     };
@@ -335,6 +339,8 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
                     imgrefresh.startAnimation(rotate);
                     handler.sendEmptyMessageDelayed(0, 2000);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -483,7 +489,6 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter> impl
             switch (position) {
                 //日常管理
                 case 0:
-                    Log.i("test","leixing:"+usertype);
                     if ("3".equals(usertype)) {
                         Intent dailyintent = new Intent(MainActivity.this, DailyCheckActivity.class);
                         dailyintent.putExtra("isadmin","1");

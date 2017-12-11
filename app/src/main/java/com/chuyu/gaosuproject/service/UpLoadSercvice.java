@@ -7,9 +7,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.util.Xml;
 
-import com.alibaba.fastjson.JSON;
 import com.chuyu.gaosuproject.bean.dailycheck.DailyCheck;
 import com.chuyu.gaosuproject.bean.daobean.SignAndLeaveData;
 import com.chuyu.gaosuproject.bean.logmanagebean.ManageLog;
@@ -26,9 +24,7 @@ import com.lzy.okgo.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
