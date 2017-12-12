@@ -188,6 +188,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 									 * 取消后，提示数据缓存
 									 */
 									cacheSignData();
+									svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
 
 								}
 
@@ -197,6 +198,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
 				}
 			} else {
 				cacheSignData();
+				svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
 			}
 
 		} else if (tag.equals("two")) {

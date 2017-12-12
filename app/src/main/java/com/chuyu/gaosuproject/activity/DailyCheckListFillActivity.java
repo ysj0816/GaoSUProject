@@ -264,7 +264,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                                          */
                                         getEditTextString();
                                         cacheSignData();
-                                        svProgressHUD.showInfoWithStatus("签到数据已缓存，将在WiFi状态下自动提交！");
+                                        svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
                                     }
 
 
@@ -273,7 +273,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                     }
                 } else {
                     Log.i("test", "当前无网");
-                    svProgressHUD.showInfoWithStatus("无网络，签到数据已缓存，将在WiFi状态下自动提交！");
+                    svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
                     getEditTextString();
                     cacheSignData();
                 }
