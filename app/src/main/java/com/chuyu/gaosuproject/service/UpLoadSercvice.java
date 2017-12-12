@@ -121,9 +121,11 @@ public class UpLoadSercvice extends Service {
                         try {
                             JSONObject object = new JSONObject(s);
                             boolean success = object.getBoolean("success");
+                            Log.i("test","后台上传成功！");
                             if (success){
                                 //后台上传成功
                                 delete();
+
                             }else{
 
                             }
@@ -137,7 +139,7 @@ public class UpLoadSercvice extends Service {
                     public void onError(Call call, Response response, Exception e) {
                         e.printStackTrace();
                         Log.e("test","失败了");
-                        delete();
+                        //delete();
                     }
                 });
 
