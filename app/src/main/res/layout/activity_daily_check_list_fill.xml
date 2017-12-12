@@ -33,6 +33,7 @@
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWihte">
@@ -60,8 +61,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:gravity="center_vertical"
-                    android:textColor="@color/textcolor"
                     android:paddingLeft="@dimen/view_distance_30"
+                    android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
 
@@ -90,8 +91,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:gravity="center_vertical"
-                    android:textColor="@color/textcolor"
                     android:paddingLeft="@dimen/view_distance_30"
+                    android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
 
@@ -123,8 +124,8 @@
                     android:gravity="center_vertical"
                     android:hint="请输入0-10的数字"
                     android:inputType="number"
-                    android:textColor="@color/edittext"
                     android:paddingLeft="@dimen/view_distance_55"
+                    android:textColor="@color/edittext"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
 
@@ -153,12 +154,12 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:background="@null"
+                    android:focusable="false"
                     android:gravity="center_vertical"
                     android:hint="无需填写,系统自动判断"
-                    android:focusable="false"
                     android:inputType="number"
-                    android:textColor="@color/edittext"
                     android:paddingLeft="@dimen/view_distance_25"
+                    android:textColor="@color/edittext"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
 
@@ -180,23 +181,40 @@
                     android:layout_centerVertical="true"
                     android:paddingLeft="@dimen/view_distance_10"
                     android:paddingTop="@dimen/view_distance_10"
-                    android:textColor="@color/textcolor"
                     android:text="具体情况:"
+                    android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <EditText
-                    android:id="@+id/tv_dailyspecificsituation"
-                    android:layout_width="fill_parent"
-                    android:layout_height="90dp"
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="6dp"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入简单的文字说明"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_6"
-                    android:textSize="@dimen/text_size_15" />
+                    android:layout_marginBottom="@dimen/view_distance_10">
+
+                    <EditText
+                        android:id="@+id/tv_dailyspecificsituation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入简单的文字说明"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_6"
+                        android:textSize="@dimen/text_size_15" />
+                    <TextView
+                        android:id="@+id/remarkLenth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/t999"
+                        android:text="0/100"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View

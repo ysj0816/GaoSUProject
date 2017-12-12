@@ -20,8 +20,7 @@
             android:id="@+id/layout_back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -31,14 +30,14 @@
                 android:src="@mipmap/left_back" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_waterlog"
                 android:layout_width="wrap_content"
                 android:layout_height="52dp"
                 android:gravity="center"
                 android:text="日志管理"
                 android:textColor="@color/colorWihte"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_16"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -80,8 +79,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/view_distance_2"
-                    android:textColor="@color/textcolor"
                     android:text="2017"
+                    android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
             </LinearLayout>
 
@@ -107,20 +106,36 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_watersupplysituation"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/view_distance_4"
-                    android:textColorHint="@color/edittext"
-                    android:textColor="@color/textcolor"
-                    android:textSize="@dimen/view_distance_14"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5"
-                    />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_watersupplysituation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/view_distance_4"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
@@ -145,19 +160,36 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_powersupplysituation"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/view_distance_4"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5"
-                    android:textColor="@color/textcolor"
-                    android:textColorHint="@color/edittext"
-                    android:textSize="@dimen/view_distance_14"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_powersupplysituation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/view_distance_4"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
@@ -182,19 +214,36 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_repairsituation"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/view_distance_4"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5"
-                    android:textColorHint="@color/edittext"
-                    android:textColor="@color/textcolor"
-                    android:textSize="@dimen/view_distance_14" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_repairsituation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/view_distance_4"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
@@ -219,19 +268,36 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_other"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/view_distance_4"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:textColorHint="@color/edittext"
-                    android:textColor="@color/textcolor"
-                    android:textSize="@dimen/view_distance_14"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_other"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/view_distance_4"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View

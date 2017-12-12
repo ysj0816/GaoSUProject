@@ -1,23 +1,17 @@
 package com.chuyu.gaosuproject.activity;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -25,6 +19,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,49 +28,34 @@ import com.bumptech.glide.Glide;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.dailycheck.DailyCheck;
-import com.chuyu.gaosuproject.bean.logmanagebean.ManageLog;
 import com.chuyu.gaosuproject.constant.SPConstant;
-import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.presenter.DailyCheckListFillPresenter;
-import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
-import com.chuyu.gaosuproject.util.PictureUtil;
 import com.chuyu.gaosuproject.util.SPUtils;
-import com.chuyu.gaosuproject.util.SystemBarTintManager;
-import com.chuyu.gaosuproject.util.SystemStatusBar;
 import com.chuyu.gaosuproject.util.ToastUtils;
-import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
 import com.chuyu.gaosuproject.util.upload.OnWifiLoadDailyCheck;
 import com.chuyu.gaosuproject.view.IDailyCheckListFillView;
 import com.chuyu.gaosuproject.widget.AlertDialog;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.request.BaseRequest;
 import com.yuyh.library.imgsel.ImageLoader;
 import com.yuyh.library.imgsel.ImgSelActivity;
 import com.yuyh.library.imgsel.ImgSelConfig;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * 日常检查表填报
  */
-public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListFillView, DailyCheckListFillPresenter> implements IDailyCheckListFillView, View.OnClickListener {
+public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListFillView,
+        DailyCheckListFillPresenter> implements IDailyCheckListFillView, View.OnClickListener {
 
 
     @BindView(R.id.iv_back)
@@ -96,6 +76,10 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     GridView gdDailyimg;
     @BindView(R.id.bt_dailysubmit)
     Button btDailysubmit;
+    @BindView(R.id.remarkLenth)
+    TextView remarkLenth;
+    @BindView(R.id.scrollview)
+    ScrollView scrollview;
     private int mColumnWidth;
     private static final int REQUEST_CODE = 0;
     private List<String> mResults;
@@ -208,7 +192,37 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
 
     @Override
     protected void initData() {
+        tvDailyspecificsituation.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
+        //输入框触摸事件拦截
+        tvDailyspecificsituation.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    scrollview.requestDisallowInterceptTouchEvent(false);//父控件吃掉点击事件
+                } else {
+                    scrollview.requestDisallowInterceptTouchEvent(true);//屏蔽父控件的拦截事件
+                }
+                return false;
+            }
+        });
+        //输入长度监听
+        tvDailyspecificsituation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                remarkLenth.setText(length + "/100");
+            }
+        });
     }
 
     @Override
@@ -231,9 +245,6 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                     return;
                 } else if (tvDailycheckresult.getText().toString().equals("")) {
                     ToastUtils.show(getApplicationContext(), "检查结果不能为空");
-                    return;
-                } else if (tvDailyspecificsituation.getText().toString().length() > 100) {
-                    ToastUtils.show(getApplicationContext(), "文字长度不能大于100");
                     return;
                 } else if (listfile.size() == 0) {
                     ToastUtils.show(getApplicationContext(), "图片不能为空");
@@ -316,7 +327,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
     private void cacheSignData() {
         String userId = (String) SPUtils.get(this, SPConstant.USERID, "");
         DailyCheck check = new DailyCheck(null, userId, checkUnitId, checkProjectId, reslut, strContent
-                , fen,checkId, pathList);
+                , fen, checkId, pathList);
         DBManager<DailyCheck> dbManager = OnWifiLoadDailyCheck.getInstance().getDbManager();
         dbManager.insertObj(check);
     }
@@ -431,6 +442,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
         strContent = tvDailyspecificsituation.getText().toString().trim();
         fen = tvDailycheckpoints.getText().toString().trim();
     }
+
 
     private class GridAdapter extends BaseAdapter {
         private List<String> pathList;

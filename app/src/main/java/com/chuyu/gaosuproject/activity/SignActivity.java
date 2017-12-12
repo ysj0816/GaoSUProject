@@ -220,7 +220,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         listImg = new ArrayList<>();
         String time = DateUtils.getNowTime();
         signTime.setText(time);
-        editRemark.setFilters(new InputFilter[]{new InputFilter.LengthFilter(255)});
+        editRemark.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
         //输入框触摸事件拦截
         editRemark.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -248,7 +248,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                remarkLenth.setText(length + "/255");
+                remarkLenth.setText(length + "/100");
             }
         });
 

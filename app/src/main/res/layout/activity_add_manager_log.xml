@@ -107,19 +107,36 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_managementchecksituation"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5"
-                    android:textColorHint="@color/edittext"
-                    android:textSize="@dimen/view_distance_14"
-                    android:textColor="@color/textcolor" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_managementchecksituation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
@@ -144,19 +161,36 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_commonwealchecksituation"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/view_distance_4"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5"
-                    android:textSize="@dimen/view_distance_14"
-                    android:textColorHint="@color/edittext"
-                    android:textColor="@color/textcolor" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_commonwealchecksituation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/view_distance_4"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
@@ -181,20 +215,38 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_ondutyrecord"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/view_distance_4"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5"
-                    android:textSize="@dimen/view_distance_14"
-                    android:textColorHint="@color/edittext"
-                    android:textColor="@color/textcolor"  />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_ondutyrecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/view_distance_4"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
@@ -218,19 +270,36 @@
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_size_14" />
 
-                <com.chuyu.gaosuproject.widget.MyEditText
-                    android:id="@+id/tv_remarks"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="@dimen/view_distance_4"
-                    android:background="@drawable/solid_edittext_stork"
-                    android:gravity="left"
-                    android:hint="请输入文字"
-                    android:textSize="@dimen/view_distance_14"
-                    android:paddingLeft="@dimen/view_distance_10"
-                    android:paddingTop="@dimen/view_distance_5"
-                    android:textColorHint="@color/edittext"
-                    android:textColor="@color/textcolor"  />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+
+                    <com.chuyu.gaosuproject.widget.MyEditText
+                        android:id="@+id/tv_remarks"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/view_distance_4"
+                        android:background="@drawable/solid_edittext_stork"
+                        android:gravity="left"
+                        android:hint="请输入文字"
+                        android:paddingLeft="@dimen/view_distance_10"
+                        android:paddingTop="@dimen/view_distance_5"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="@color/edittext"
+                        android:textSize="@dimen/view_distance_14" />
+
+                    <TextView
+                        android:id="@+id/remarkLenth4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="@dimen/view_distance_3"
+                        android:layout_marginRight="@dimen/view_distance_10"
+                        android:text="0/100"
+                        android:textColor="@color/t999"
+                        android:textSize="@dimen/text_size_11" />
+                </RelativeLayout>
             </LinearLayout>
 
             <View
