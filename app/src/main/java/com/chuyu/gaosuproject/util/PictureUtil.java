@@ -15,6 +15,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.text.TextPaint;
 import android.util.Base64;
@@ -53,9 +54,11 @@ public class PictureUtil {
      */
     public static String bitmapToBase64(String filePath) {
         Bitmap bitmap = getSmallBitmap(filePath, 480, 800);
+        int bitmapSize = getBitmapSize(bitmap);
+        Log.i("test","获取bitmap大小："+bitmapSize);
         //convert to byte array
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
         byte[] bytes = baos.toByteArray();
         //base64 encode
         String encodeString = Base64.encodeToString(bytes, Base64.DEFAULT);
@@ -68,7 +71,7 @@ public class PictureUtil {
         final int height = options.outHeight;
 
         final int width = options.outWidth;
-        Log.i("test", "w:" + width + "**he:" + height);
+        Log.i("test", "选择的原大小w:" + width + "**he:" + height);
         int inSampleSize = 1;
         if (height > reqHeight || width > reqWidth) {
             final int heightRatio = Math.round((float) height
@@ -79,7 +82,19 @@ public class PictureUtil {
 
         return inSampleSize;
     }
-
+    /**
+     * 得到bitmap的大小
+     */
+    public static int getBitmapSize(Bitmap bitmap) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {    //API 19
+            return bitmap.getAllocationByteCount();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {//API 12
+            return bitmap.getByteCount();
+        }
+        // 在低版本中用一行的字节x高度
+        return bitmap.getRowBytes() * bitmap.getHeight();                //earlier version
+    }
 
     /**
      * 根据路径获得突破并压缩返回bitmap用于显示

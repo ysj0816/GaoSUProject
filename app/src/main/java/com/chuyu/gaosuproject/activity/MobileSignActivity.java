@@ -199,7 +199,6 @@ public class MobileSignActivity extends AppCompatActivity implements  AMap.InfoW
      */
     private void initData() {
         String nowDate = DateUtils.getNowDate();
-        Log.i("test","nowDate"+nowDate);
         String userid = (String) SPUtils.get(this, SPConstant.USERID, "");
         OkGo.post(UrlConstant.formatUrl(UrlConstant.ALLPRESONURL))
                 .connTimeOut(10000)

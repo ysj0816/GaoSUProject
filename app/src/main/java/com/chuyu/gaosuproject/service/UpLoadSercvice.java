@@ -137,6 +137,7 @@ public class UpLoadSercvice extends Service {
                     public void onError(Call call, Response response, Exception e) {
                         e.printStackTrace();
                         Log.e("test","失败了");
+                        delete();
                     }
                 });
 
@@ -179,6 +180,11 @@ public class UpLoadSercvice extends Service {
         OnWifiUpLoadLog.getInstace().deleteALL();
     }
 
+    /**
+     * 日常检查的数据
+     * @param dailyChecks
+     * @return
+     */
     private List<DailyCheck> initCheckData(List<DailyCheck> dailyChecks) {
         List<DailyCheck> listCheck = new ArrayList<>();
         int size = dailyChecks.size();
@@ -211,6 +217,11 @@ public class UpLoadSercvice extends Service {
         return listCheck;
     }
 
+    /**
+     * 日志数据
+     * @param manageLogs
+     * @return
+     */
     private List<ManageLog> initLogDatas(List<ManageLog> manageLogs) {
         List<ManageLog> list = new ArrayList<>();
         int size = manageLogs.size();
@@ -228,6 +239,11 @@ public class UpLoadSercvice extends Service {
         return list;
     }
 
+    /**
+     * 签到请假的数据
+     * @param signAndLeaveDatas
+     * @return
+     */
     private List<SignAndLeaveData> initSignData(List<SignAndLeaveData> signAndLeaveDatas) {
         List<SignAndLeaveData> list = new ArrayList<>();
         int size = signAndLeaveDatas.size();

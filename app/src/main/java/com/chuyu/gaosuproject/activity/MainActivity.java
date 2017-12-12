@@ -176,9 +176,18 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter>
             //设置ip
             DBManager<IPPath> dbManager = IPPathDb.getInstace().getDbManager();
             List<IPPath> ipPaths = dbManager.queryAllList(dbManager.getQueryBuiler());
-            IPPath ipPath = ipPaths.get(0);
-            UrlConstant.setIP(ipPath.getIp());
-            UrlConstant.setPORT(ipPath.getPort());
+            if (ipPaths.isEmpty()){
+                //数据库为空
+                IPPath ipPath = new IPPath(null, "219.139.79.56", "8000");
+                dbManager.insertObj(ipPath);
+                UrlConstant.IP="219.139.79.56";
+                UrlConstant.PORT="8000";
+            }else{
+                IPPath ipPath = ipPaths.get(0);
+                UrlConstant.setIP(ipPath.getIp());
+                UrlConstant.setPORT(ipPath.getPort());
+            }
+
         }
 
         //添加activity
