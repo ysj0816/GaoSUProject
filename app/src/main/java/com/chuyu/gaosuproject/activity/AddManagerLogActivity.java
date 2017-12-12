@@ -226,14 +226,14 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
 									 * 取消后，提示数据缓存
 									 */
 									cacheSignData();
-
+									svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
 								}
 							})
 							.show();
 				}
 			} else {
-				Log.i("test", "当前无网");
 				cacheSignData();
+				svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
 			}
 
 		} else if (flag.equals("two")) {
