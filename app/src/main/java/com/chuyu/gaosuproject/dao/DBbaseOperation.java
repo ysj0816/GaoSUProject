@@ -145,10 +145,16 @@ public class DBbaseOperation<T,K> {
         }
     }
 
-    public void queryBytiao(){
-
+    /**
+     *更新一条数据
+     */
+    public void updateEntiy(T t){
+        dao.update(t);
     }
 
+    /**
+     * 删除所有数据
+     */
     public void delelteAll(){
         getDao().deleteAll();
     }

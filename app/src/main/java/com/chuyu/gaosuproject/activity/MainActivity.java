@@ -26,14 +26,17 @@ import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.adapter.MainGrideAdapter;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.QrCodeBean;
+import com.chuyu.gaosuproject.bean.urlip.IPPath;
 import com.chuyu.gaosuproject.bean.weather.WeatherInfo;
 import com.chuyu.gaosuproject.bean.weather.Weather_data;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
+import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.presenter.MainPresenter;
 import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.service.UpLoadSercvice;
 import com.chuyu.gaosuproject.util.AppManager;
+import com.chuyu.gaosuproject.util.IPPathDb;
 import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
 import com.chuyu.gaosuproject.util.PermissionsChecker;
@@ -168,7 +171,15 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter>
 
     @Override
     protected void initData() {
-
+        //先找ip
+        if (UrlConstant.IP==null||UrlConstant.PORT==null){
+            //设置ip
+            DBManager<IPPath> dbManager = IPPathDb.getInstace().getDbManager();
+            List<IPPath> ipPaths = dbManager.queryAllList(dbManager.getQueryBuiler());
+            IPPath ipPath = ipPaths.get(0);
+            UrlConstant.setIP(ipPath.getIp());
+            UrlConstant.setPORT(ipPath.getPort());
+        }
 
         //添加activity
         AppManager.getAppManager().addActivity(this);
@@ -254,13 +265,12 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter>
     @Override
     public void setWeather(WeatherInfo weatherInfo) {
         Weather_data weather_data = weatherInfo.getResults().get(0).getWeather_data().get(0);
-        Log.i("test","weather_data:"+weather_data.toString());
+
         //天气图片
         Glide.with(this).load(weather_data.getDayPictureUrl()).into(wetherIcon);
         //实时温度
         //获取当天温度
         String dataWen = weather_data.getDate();
-        String dat = "周一 07月10日 (实时：-127℃)";
         int left = dataWen.indexOf('：');
         int right=dataWen.indexOf(')');
         //截取

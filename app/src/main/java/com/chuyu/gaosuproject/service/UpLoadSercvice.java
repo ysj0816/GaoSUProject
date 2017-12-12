@@ -57,7 +57,6 @@ public class UpLoadSercvice extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("test", "创建服务");
     }
 
     @Override
@@ -69,13 +68,14 @@ public class UpLoadSercvice extends Service {
         myHandle = new MyHandle();
         MyThread myThread = new MyThread();
         if (signAndLeaveDatas != null || manageLogs != null || dailyChecks != null) {
-            Log.i("test", "启动服务 签到：" + signAndLeaveDatas.size()
-                    + "\n日志：" + manageLogs.size()
-                    + "\n日常检查：" + dailyChecks.size()
-            );
-            myThread.start();
+            if (!signAndLeaveDatas.isEmpty() || !manageLogs.isEmpty() || !dailyChecks.isEmpty()) {
+                Log.i("test", "启动服务 签到：" + signAndLeaveDatas.size()
+                        + "\n日志：" + manageLogs.size()
+                        + "\n日常检查：" + dailyChecks.size()
+                );
+                myThread.start();
+            }
         }
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -123,7 +123,7 @@ public class UpLoadSercvice extends Service {
                             boolean success = object.getBoolean("success");
                             if (success){
                                 //后台上传成功
-
+                                delete();
                             }else{
 
                             }
@@ -135,8 +135,8 @@ public class UpLoadSercvice extends Service {
 
                     @Override
                     public void onError(Call call, Response response, Exception e) {
-
                         e.printStackTrace();
+                        Log.e("test","失败了");
                     }
                 });
 

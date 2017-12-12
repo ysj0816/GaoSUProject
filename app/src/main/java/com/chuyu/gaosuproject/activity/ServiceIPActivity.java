@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +13,15 @@ import android.widget.ImageView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
+import com.chuyu.gaosuproject.bean.urlip.IPPath;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
+import com.chuyu.gaosuproject.dao.DBManager;
+import com.chuyu.gaosuproject.util.IPPathDb;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,11 +54,13 @@ public class ServiceIPActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_ip);
         ButterKnife.bind(this);
         svProgressHUD = new SVProgressHUD(this);
-        String ip = (String) SPUtils.get(this, SPConstant.URLIP, "");
-        String port = (String) SPUtils.get(this, SPConstant.PORT, "");
-        editIp.setText(ip);
-        editPort.setText(port);
-        editIp.setSelection(ip.length());
+        DBManager<IPPath> dbManager = IPPathDb.getInstace().getDbManager();
+        List<IPPath> ipPaths = dbManager.queryAllList(dbManager.getQueryBuiler());
+        Log.i("test","IP地址："+ipPaths.toString()+"\n几个："+ipPaths.size());
+        IPPath ipPath = ipPaths.get(0);
+        editIp.setText(ipPath.getIp());
+        editPort.setText(ipPath.getPort());
+        editIp.setSelection(ipPath.getIp().length());
     }
 
     @OnClick({R.id.iv_back, R.id.bt_recover, R.id.bt_save})
@@ -72,8 +79,9 @@ public class ServiceIPActivity extends AppCompatActivity {
                 UrlConstant.IP=ips;
                 UrlConstant.PORT=ports;
                 //保存
-                SPUtils.put(this, SPConstant.URLIP,ips);
-                SPUtils.put(this,SPConstant.PORT,ports);
+                IPPathDb pathDb = IPPathDb.getInstace();
+                IPPath ipPath = new IPPath(null,ips, ports);
+                pathDb.updateIP(ipPath);
                 break;
             case R.id.bt_save:
                 //保存修改后的IP
@@ -87,9 +95,11 @@ public class ServiceIPActivity extends AppCompatActivity {
                     UrlConstant.IP=ip;
                     UrlConstant.PORT=port;
                     //保存
-                    SPUtils.put(this, SPConstant.URLIP,ip);
-                    SPUtils.put(this,SPConstant.PORT,port);
                     boolean ip1 = isIP(ip);
+                    IPPathDb pathDbtace = IPPathDb.getInstace();
+                    Long i= Long.valueOf(1);
+                    IPPath ipPaths = new IPPath(i,ip, port);
+                    pathDbtace.updateIP(ipPaths);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

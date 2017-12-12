@@ -17,13 +17,18 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.chuyu.gaosuproject.R;
+import com.chuyu.gaosuproject.bean.urlip.IPPath;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
+import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.util.AppManager;
+import com.chuyu.gaosuproject.util.IPPathDb;
 import com.chuyu.gaosuproject.util.LocationCityUtil;
 import com.chuyu.gaosuproject.util.PermissionsChecker;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
+
+import java.util.List;
 
 /**
  * app 启动页
@@ -92,20 +97,21 @@ public class LauncherActivity extends Activity {
      * 初始化整个app的ip和端口
      */
     private void initIPPATH() {
-        String ip = (String) SPUtils.get(this, SPConstant.URLIP, "");
-        String port = (String) SPUtils.get(this, SPConstant.PORT, "");
-        if (TextUtils.isEmpty(ip)&&TextUtils.isEmpty(port)){
-            //如果第一次进来，没有IP和端口　　就设置默认值并保存
-            SPUtils.put(this,SPConstant.URLIP,"219.139.79.56");
-            SPUtils.put(this,SPConstant.PORT,"8000");
+        IPPathDb ipPathDb = IPPathDb.getInstace();
+        DBManager<IPPath> dbManager = ipPathDb.getDbManager();
+        List<IPPath> ipPaths = dbManager.queryAllList(dbManager.getQueryBuiler());
+        if (null!=ipPaths&&!ipPaths.isEmpty()){
+            IPPath ipPath = ipPaths.get(0);
+            UrlConstant.IP=ipPath.getIp();
+            UrlConstant.PORT=ipPath.getPort();
+        }else {
+            IPPath ipPath = new IPPath(null, "219.139.79.56", "8000");
+            dbManager.insertObj(ipPath);
             //赋值
             UrlConstant.setIP("219.139.79.56");
             UrlConstant.setPORT("8000");
-        }else{
-            //如果保存了  直接设置ip
-            UrlConstant.IP=ip;
-            UrlConstant.PORT=port;
         }
+
     }
 
     /**

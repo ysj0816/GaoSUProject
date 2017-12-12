@@ -78,7 +78,6 @@ public class OnWifiLoadDailyCheck {
 	 */
 	public List<DailyCheck> queryData() {
 		List<DailyCheck> dailycheckBean = dailyCheckDBManager.queryAllList(dailyCheckDBManager.getQueryBuiler());
-		Log.i("test","查询检查数据1："+dailycheckBean.size());
 		if (dailycheckBean != null) {
 			return dailycheckBean;
 		}
