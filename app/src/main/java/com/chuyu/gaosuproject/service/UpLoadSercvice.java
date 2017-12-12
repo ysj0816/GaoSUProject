@@ -32,6 +32,8 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static com.chuyu.gaosuproject.constant.UrlConstant.WIFIIPLOAD;
+
 /**
  * @author 杨仕俊
  * @description 打卡服务上传缓存数据
@@ -111,8 +113,7 @@ public class UpLoadSercvice extends Service {
             e.printStackTrace();
         }
 
-        String url = UrlConstant.formatUrl("/GS/a/mobile/wifi/dataSubmit?");
-        OkGo.post(url)
+        OkGo.post(UrlConstant.formatUrl(WIFIIPLOAD))
                 .connTimeOut(300000)
                 .upBytes(bytes)
                 .execute(new StringCallback() {

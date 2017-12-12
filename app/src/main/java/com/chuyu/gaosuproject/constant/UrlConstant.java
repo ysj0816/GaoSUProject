@@ -74,4 +74,6 @@ public class UrlConstant {
     public static String JudgeUserIsAdminURL="http://59.173.239.197:7066/Sys_Department/GetDeptInfoByUserId";
     //二维码扫描请求
     public static String QRECODEURL="/GS/a/mobile/check/ErWeiMa?";
+    //wifi状态下提交的接口
+    public static String WIFIIPLOAD="/GS/a/mobile/wifi/dataSubmit?";
 }
