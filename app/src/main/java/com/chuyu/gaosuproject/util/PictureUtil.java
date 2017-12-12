@@ -54,8 +54,6 @@ public class PictureUtil {
      */
     public static String bitmapToBase64(String filePath) {
         Bitmap bitmap = getSmallBitmap(filePath, 480, 800);
-        int bitmapSize = getBitmapSize(bitmap);
-        Log.i("test","获取bitmap大小："+bitmapSize);
         //convert to byte array
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
