@@ -130,11 +130,11 @@ public class LoginActivity extends
                 usernames = username.getText().toString().trim();
                 pwd = password.getText().toString().trim();
                 loginPresenter.logIn(usernames, pwd);
-                Log.i("test","地址："+ UrlConstant.formatUrl(UrlConstant.LOGINURL));
+                /*Log.i("test","地址："+ UrlConstant.formatUrl(UrlConstant.LOGINURL));
                 ToastUtils.show(this,"地址："+ UrlConstant.formatUrl(UrlConstant.LOGINURL));
                 boolean ping = NetworkUtils.isAvailableByPing(UrlConstant.IP);
                 Log.i("test","ping："+ UrlConstant.IP+"\n是否ping:"+ping);
-                ToastUtils.show(this,"地址："+ UrlConstant.IP+"\n是否ping:"+ping);
+                ToastUtils.show(this,"地址："+ UrlConstant.IP+"\n是否ping:"+ping);*/
                 break;
             case R.id.text_service:
                 startActivity(new Intent(this, ServiceIPActivity.class));

@@ -23,7 +23,7 @@
             android:layout_marginRight="@dimen/view_distance_10"
             android:layout_marginTop="@dimen/view_distance_4"
             android:gravity="center"
-            android:text="万超从"
+            android:text="万超人.."
             android:textSize="@dimen/text_size_12" />
 
         <TextView
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/names"
             android:layout_alignBottom="@+id/names"
-            android:layout_marginLeft="@dimen/view_distance_14"
+            android:layout_marginLeft="@dimen/view_distance_18"
             android:layout_toEndOf="@+id/names"
             android:layout_toRightOf="@+id/names"
             android:gravity="center"
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/view_distance_4"
-            android:layout_marginLeft="@dimen/view_distance_40"
+            android:layout_marginLeft="@dimen/view_distance_44"
             android:layout_marginRight="@dimen/view_distance_10"
             android:layout_marginTop="@dimen/view_distance_4"
             android:layout_toRightOf="@id/types"

@@ -76,16 +76,27 @@ public class InfoAdapter extends BaseAdapter {
                 hodler.ll_title.setVisibility(View.GONE);
                 hodler.ll_content.setVisibility(View.VISIBLE);
                 //根据名字来设置左边距
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams
+                        (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 //左边距
-                int  leftPx= OtherUtils.dip2px(context, 12);
+                int  leftPx= OtherUtils.dip2px(context, 19);
+                int  leftPx3= OtherUtils.dip2px(context, 7);
                 String name=list.get(position-1).getUserName();
                 int length = name.length();
                 if (length==2){
                     lp.setMargins(leftPx, 0, 0, 0);
                     hodler.type.setLayoutParams(lp);
+                    hodler.name.setText(name);
+                }else if(length>3){
+                    String namestr=name.substring(0,3);
+                    hodler.name.setText(namestr+"..");
+                }else{
+                    lp.setMargins(leftPx3, 0, 0, 0);
+                    hodler.type.setLayoutParams(lp);
+                    hodler.name.setText(name);
                 }
-                hodler.name.setText(name);
+
+
                 String type = list.get(position-1).getType();
                 switch ("" + list.get(position-1).getDutyType()) {
                     case 1 + "":
@@ -132,6 +143,8 @@ public class InfoAdapter extends BaseAdapter {
 
                         }
 
+                        break;
+                    default:
                         break;
                 }
                 hodler.time.setText(list.get(position-1).getDutyDate());

@@ -22,6 +22,7 @@
     <dimen name="view_distance_15">15dp</dimen>
     <dimen name="view_distance_16">16dp</dimen>
     <dimen name="view_distance_18">18dp</dimen>
+    <dimen name="view_distance_19">19dp</dimen>
     <dimen name="view_distance_20">20dp</dimen>
     <dimen name="view_distance_22">22dp</dimen>
     <dimen name="view_distance_25">25dp</dimen>
