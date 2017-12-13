@@ -189,6 +189,13 @@ public class MainActivity extends MVPBaseActivity<IMainView, MainPresenter>
             }
 
         }
+        /**
+         * 上传数据
+         */
+        if (NetworkUtils.getNetworkType()== NetworkUtils.NetworkType.NETWORK_WIFI){
+            Intent intent = new Intent(MainActivity.this, UpLoadSercvice.class);
+            startService(intent);
+        }
 
         //添加activity
         AppManager.getAppManager().addActivity(this);
