@@ -23,7 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.bumptech.glide.Glide;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
@@ -275,7 +275,7 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                                          */
                                         getEditTextString();
                                         cacheSignData();
-                                        svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
+                                        svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
                                     }
 
 
@@ -283,10 +283,9 @@ public class DailyCheckListFillActivity extends MVPBaseActivity<IDailyCheckListF
                                 .show();
                     }
                 } else {
-                    Log.i("test", "当前无网");
-                    svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
                     getEditTextString();
                     cacheSignData();
+                    svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
                 }
                 break;
             case R.id.layout_dailyphoto:

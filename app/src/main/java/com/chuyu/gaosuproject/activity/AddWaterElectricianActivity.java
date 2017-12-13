@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.bean.logmanagebean.ManageLog;
 import com.chuyu.gaosuproject.constant.SPConstant;
@@ -241,7 +241,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
                                      * 取消后，提示数据缓存
                                      */
                                     cacheSignData();
-                                    svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
+                                    svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
 
                                 }
 
@@ -251,7 +251,7 @@ public class AddWaterElectricianActivity extends AppCompatActivity implements Vi
                 }
             } else {
                 cacheSignData();
-                svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
+                svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
             }
 
         } else if (tag.equals("two")) {

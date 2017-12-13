@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.bean.urlip.IPPath;
 import com.chuyu.gaosuproject.constant.SPConstant;

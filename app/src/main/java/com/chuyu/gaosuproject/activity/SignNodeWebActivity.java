@@ -11,19 +11,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
-import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.presenter.SignNodePresenter;
-import com.chuyu.gaosuproject.util.SPUtils;
-import com.chuyu.gaosuproject.util.ToastUtils;
 import com.chuyu.gaosuproject.view.ISignNodeView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

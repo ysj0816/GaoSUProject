@@ -92,7 +92,7 @@ dependencies {
     //popupwindow
     compile 'com.zaaach:toprightmenu:1.0'
     //进度条 SVProgressHUD
-    compile 'com.bigkoo:svprogresshud:1.0.6'
+    //compile 'com.bigkoo:svprogresshud:1.0.6'
     //时间选择器
     compile 'com.airsaid.library:pickerview:1.0.3'
     ///compile files('libs/AMap3DMap_5.2.0_AMapSearch_5.2.1_AMapLocation_3.4.1_20170630.jar')

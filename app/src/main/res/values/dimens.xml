@@ -65,4 +65,18 @@
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_16">16sp</dimen>
     <dimen name="text_size_20">20sp</dimen>
+
+    <!--padding-->
+    <dimen name="padding_svprogresshuddefault">15dp</dimen>
+    <!--窗口最小宽度-->
+    <dimen name="size_minwidth_svprogresshuddefault">120dp</dimen>
+    <!--图片宽高-->
+    <dimen name="size_image_bigloading">80dp</dimen>
+    <!--图片宽高-->
+    <dimen name="size_image_smallloading">60dp</dimen>
+    <!--圆角-->
+    <dimen name="radius_svprogresshuddefault">25px</dimen>
+    <!--提示的文字大小-->
+    <dimen name="textSize_svprogresshuddefault_msg">15sp</dimen>
+    <dimen name="margintop_svprogresshuddefault_msg">10dp</dimen>
 </resources>

@@ -12,7 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.constant.SPConstant;
 import com.chuyu.gaosuproject.constant.UrlConstant;

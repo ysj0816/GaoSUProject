@@ -1,26 +1,19 @@
 package com.chuyu.gaosuproject.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.bigkoo.svprogresshud.SVProgressHUD;
+
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.LoginBean;
 import com.chuyu.gaosuproject.constant.SPConstant;
-import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.presenter.LoginPresenter;
 import com.chuyu.gaosuproject.util.AppManager;
-import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.SPUtils;
 import com.chuyu.gaosuproject.util.ToastUtils;
 import com.chuyu.gaosuproject.view.ILoginView;

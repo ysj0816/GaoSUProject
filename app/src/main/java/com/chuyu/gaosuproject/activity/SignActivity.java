@@ -33,26 +33,22 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.adapter.SignAdapter;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.daobean.SignAndLeaveData;
-import com.chuyu.gaosuproject.bean.daobean.SignDataDao;
 import com.chuyu.gaosuproject.constant.SPConstant;
-import com.chuyu.gaosuproject.constant.UrlConstant;
 import com.chuyu.gaosuproject.dao.DBManager;
 import com.chuyu.gaosuproject.presenter.SignPresenter;
-import com.chuyu.gaosuproject.receviver.NetCheckReceiver;
 import com.chuyu.gaosuproject.util.DateUtils;
 import com.chuyu.gaosuproject.util.LocationCityUtil;
 import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.PermissionsChecker;
 import com.chuyu.gaosuproject.util.PictureUtil;
 import com.chuyu.gaosuproject.util.SPUtils;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.util.ToastUtils;
-import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
-import com.chuyu.gaosuproject.util.upload.OnWifiUpLoadSign;
 import com.chuyu.gaosuproject.util.upload.SignLeaveDao;
 import com.chuyu.gaosuproject.view.ISignsView;
 import com.chuyu.gaosuproject.widget.AlertDialog;
@@ -133,6 +129,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
     private boolean isLocationSuccess = false;//定位是否成功
     private SVProgressHUD svProgressHUD;
     private DBManager<SignAndLeaveData> dbManager;
+
     @Override
     protected SignPresenter initPresenter() {
         signPresenter = new SignPresenter();
@@ -315,15 +312,15 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
                                          * 取消后，提示数据缓存
                                          */
                                         cacheSignData();
-                                        svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
+                                        svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
                                     }
                                 })
                                 .show();
 
                     }
                 } else {
-                    svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
                     cacheSignData();
+                    svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
                 }
 
 

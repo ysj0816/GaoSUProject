@@ -22,7 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.airsaid.pickerviewlibrary.TimePickerView;
-import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.daobean.LeaveDataBean;
@@ -162,7 +162,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                                             public void onClick(View v) {
                                                 //缓存请假的数据
                                                 cacheLeaveData();
-                                                svProgressHUD.showInfoWithStatus("已缓存，将在WiFi状态下自动提交！");
+                                                svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
                                             }
                                         })
                                         .show();
@@ -173,7 +173,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
                              * 提示缓存
                              */
                             cacheLeaveData();
-                            svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
+                            svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
                         }
                     } else {
                         svProgressHUD.showInfoWithStatus("开始时间不能大于结束时间，请重新选择时间！");

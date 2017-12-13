@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.chuyu.gaosuproject.R;
 import com.chuyu.gaosuproject.base.MVPBaseActivity;
 import com.chuyu.gaosuproject.bean.logmanagebean.ManageLog;
@@ -22,6 +21,7 @@ import com.chuyu.gaosuproject.presenter.LogManagePresenter;
 import com.chuyu.gaosuproject.util.NetworkUtils;
 import com.chuyu.gaosuproject.util.OtherUtils;
 import com.chuyu.gaosuproject.util.SPUtils;
+import com.chuyu.gaosuproject.util.SVP.SVProgressHUD;
 import com.chuyu.gaosuproject.util.ToastUtils;
 import com.chuyu.gaosuproject.util.observer.NetChangeObserver;
 import com.chuyu.gaosuproject.util.upload.OnWifiUpLoadLog;
@@ -43,7 +43,8 @@ import okhttp3.Response;
 /**
  * 添加管理员日志
  */
-public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogManagePresenter> implements ILogManageView, View.OnClickListener {
+public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogManagePresenter>
+        implements ILogManageView, View.OnClickListener {
     @BindView(R.id.textView)
     TextView textView;
     @BindView(R.id.tv_time)
@@ -268,14 +269,14 @@ public class AddManagerLogActivity extends MVPBaseActivity<ILogManageView, LogMa
                                      * 取消后，提示数据缓存
                                      */
                                     cacheSignData();
-                                    svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！");
+                                    svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
                                 }
                             })
                             .show();
                 }
             } else {
                 cacheSignData();
-                svProgressHUD.showInfoWithStatus("无网络，数据已缓存，将在WiFi状态下自动提交！");
+                svProgressHUD.showInfoWithStatus("数据已缓存，将在WiFi状态下自动提交！",2000);
             }
 
         } else if (flag.equals("two")) {
