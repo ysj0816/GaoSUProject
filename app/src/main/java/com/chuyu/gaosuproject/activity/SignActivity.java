@@ -389,7 +389,7 @@ public class SignActivity extends MVPBaseActivity<ISignsView, SignPresenter> imp
         String img64=PictureUtil.bitmapToBase64(filpath);
 
         SignAndLeaveData signAndLeaveData = new SignAndLeaveData(null, userId, dutyDate,
-                teType + "", dutyType, location, lng + "", lat + "", "", "", remark, img64);
+                teType + "", dutyType, location, lng + "", lat + "", "", "", remark, "",img64);
 
         /**
          * 数据库插入一条数据

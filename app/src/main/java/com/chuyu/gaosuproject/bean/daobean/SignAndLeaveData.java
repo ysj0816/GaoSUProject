@@ -30,13 +30,16 @@ public class SignAndLeaveData {
     private String startdate;
     private String enddate;
     private String rebark;
+    private String leavereason;
     @NotNull
     private String image;
 
-    @Generated(hash = 1459645009)
-    public SignAndLeaveData(Long id, String userid, String dutydate, String type,
-            int dutytype, String location, String lng, String lat, String startdate,
-            String enddate, String rebark, @NotNull String image) {
+
+
+    @Generated(hash = 2093369240)
+    public SignAndLeaveData(Long id, String userid, String dutydate, String type, int dutytype,
+            String location, String lng, String lat, String startdate, String enddate, String rebark,
+            String leavereason, @NotNull String image) {
         this.id = id;
         this.userid = userid;
         this.dutydate = dutydate;
@@ -48,12 +51,19 @@ public class SignAndLeaveData {
         this.startdate = startdate;
         this.enddate = enddate;
         this.rebark = rebark;
+        this.leavereason = leavereason;
         this.image = image;
     }
 
-    public SignAndLeaveData( String userid, String dutydate, String type,
-                            int dutytype, String location, String lng, String lat, String startdate,
-                            String enddate, String rebark, @NotNull String image) {
+    @Generated(hash = 838493861)
+    public SignAndLeaveData() {
+    }
+
+
+
+    public SignAndLeaveData( String userid, String dutydate, String type, int dutytype,
+                             String location, String lng, String lat, String startdate, String enddate, String rebark,
+                             String leavereason, @NotNull String image) {
         this.userid = userid;
         this.dutydate = dutydate;
         this.type = type;
@@ -64,11 +74,16 @@ public class SignAndLeaveData {
         this.startdate = startdate;
         this.enddate = enddate;
         this.rebark = rebark;
+        this.leavereason=leavereason;
         this.image = image;
     }
 
-    @Generated(hash = 838493861)
-    public SignAndLeaveData() {
+    public String getLeavereason() {
+        return leavereason;
+    }
+
+    public void setLeavereason(String leavereason) {
+        this.leavereason = leavereason;
     }
 
     public Long getId() {
@@ -165,5 +180,23 @@ public class SignAndLeaveData {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "SignAndLeaveData{" +
+                "id=" + id +
+                ", userid='" + userid + '\'' +
+                ", dutydate='" + dutydate + '\'' +
+                ", type='" + type + '\'' +
+                ", dutytype=" + dutytype +
+                ", location='" + location + '\'' +
+                ", lng='" + lng + '\'' +
+                ", lat='" + lat + '\'' +
+                ", startdate='" + startdate + '\'' +
+                ", enddate='" + enddate + '\'' +
+                ", rebark='" + rebark + '\'' +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

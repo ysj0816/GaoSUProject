@@ -261,6 +261,7 @@ public class UpLoadSercvice extends Service {
                     signAndLeaveDatas.get(i).getStartdate(),
                     signAndLeaveDatas.get(i).getEnddate(),
                     signAndLeaveDatas.get(i).getRebark(),
+                    signAndLeaveDatas.get(i).getLeavereason(),
                     signAndLeaveDatas.get(i).getImage());
             list.add(leaveData);
         }

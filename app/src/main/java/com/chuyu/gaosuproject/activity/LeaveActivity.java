@@ -195,7 +195,7 @@ public class LeaveActivity extends MVPBaseActivity<ILeaveView, LeavePresenter> i
         int type = leaveType;
         String dutyDate=DateUtils.getNowTime();
         SignAndLeaveData signAndLeaveData = new SignAndLeaveData(null, userid, dutyDate,
-                type + "", dutyType, "", "", "", startDate, endData, reason, "");
+                type + "", dutyType, "", "", "", startDate, endData,"", reason, "");
 
         dbManager.insertObj(signAndLeaveData);
         //缓存到数据库中
