@@ -39,7 +39,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
-                        android:text="服务器信息管理平台"
+                        android:text="服务区信息管理平台"
                         android:textColor="@color/t0e488f"
                         android:textSize="24sp" />
 
