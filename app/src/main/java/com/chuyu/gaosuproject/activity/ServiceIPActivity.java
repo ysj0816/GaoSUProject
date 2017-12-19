@@ -80,7 +80,8 @@ public class ServiceIPActivity extends AppCompatActivity {
                 UrlConstant.PORT=ports;
                 //保存
                 IPPathDb pathDb = IPPathDb.getInstace();
-                IPPath ipPath = new IPPath(null,ips, ports);
+                Long aLong = Long.valueOf(1);
+                IPPath ipPath = new IPPath(aLong,ips, ports);
                 pathDb.updateIP(ipPath);
                 break;
             case R.id.bt_save:

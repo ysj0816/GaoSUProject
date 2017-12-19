@@ -112,7 +112,6 @@ public class UpLoadSercvice extends Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         OkGo.post(UrlConstant.formatUrl(WIFIIPLOAD))
                 .connTimeOut(300000)
                 .upBytes(bytes)
